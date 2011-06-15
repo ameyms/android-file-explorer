@@ -96,8 +96,14 @@ public class FileListAdapter extends BaseAdapter {
 				
 				@Override
 				public void onClick(View v) {
-					Log.d(Constants.TAG, "Clicked list item more button");
-					showPopupMenu(v);
+					try
+					{
+						Log.d(Constants.TAG, "Clicked list item more button");
+						showPopupMenu(v);
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			});
         }
