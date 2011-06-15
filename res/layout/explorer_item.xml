@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+
+    android:padding="6dip">
+
+    <ImageView
+        android:id="@+id/explorer_resIcon"
+
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="6dip"
+
+        android:src="@drawable/filetype_generic" />
+        
+        
+    <ImageView
+        android:id="@+id/explorer_resActions"
+
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+
+		android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="6dip"
+        android:layout_marginRight="6dip"
+        android:src="@drawable/list_actions" 
+        android:onClick="showPopupMenu"
+        />
+
+    <TextView
+        android:id="@+id/explorer_resMeta"
+
+        android:layout_width="fill_parent"
+        android:layout_height="26dip" 
+		android:textColor="#1d1d1d"
+        android:layout_toRightOf="@id/explorer_resIcon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@id/explorer_resActions"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:text="Simple application that shows how to use RelativeLayout" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:id="@+id/explorer_resName"
+		android:layout_toLeftOf="@id/explorer_resActions"
+        android:layout_toRightOf="@id/explorer_resIcon"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/explorer_resMeta"
+        android:layout_alignWithParentIfMissing="true"
+        android:textSize="18dp"
+        android:textColor="#1d1d1d"
+        android:paddingLeft="5dp"
+        android:gravity="center_vertical"
+        android:ellipsize="marquee"
+        android:text="My Application" />
+
+</RelativeLayout>
