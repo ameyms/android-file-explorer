@@ -1,6 +1,9 @@
 package net.appositedesigns.fileexplorer;
 
 import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -104,6 +107,32 @@ final class FileExplorerUtils {
 		else
 		{
 			return length+" B";
+		}
+	}
+
+
+	static boolean delete(File fileToBeDeleted) {
+
+		if(fileToBeDeleted.isDirectory())
+		{
+			try
+			{
+				FileUtils.deleteDirectory(fileToBeDeleted);
+				return true;
+			}
+			catch (IOException e)
+			{
+				return false;
+			}
+		}
+		else
+		{
+			try {
+				FileUtils.forceDelete(fileToBeDeleted);
+				return true;
+			} catch (IOException e) {
+				return false;
+			}
 		}
 	}
 }

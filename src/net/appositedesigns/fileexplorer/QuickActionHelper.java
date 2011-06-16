@@ -1,74 +1,67 @@
 package net.appositedesigns.fileexplorer;
 
-import greendroid.widget.QuickAction;
-import greendroid.widget.QuickActionBar;
-import greendroid.widget.QuickActionWidget;
-import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
+import java.io.File;
+
+import net.appositedesigns.fileexplorer.quickactions.ActionItem;
+import net.appositedesigns.fileexplorer.quickactions.QuickAction;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.drawable.Drawable;
+import android.content.DialogInterface;
 import android.view.View;
-import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 public final class QuickActionHelper {
 
-	private QuickActionWidget mBar;
 
-	private Context mContext;
+	private FileExplorerMain mContext;
 
-	private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
-        public void onQuickActionClicked(QuickActionWidget widget, int position) {
-            Toast.makeText(mContext, "Item " + position + " clicked", Toast.LENGTH_SHORT).show();
-        }
-    };
     
-	public QuickActionHelper(Context mContext) {
+	public QuickActionHelper(FileExplorerMain mContext) {
 		super();
 		this.mContext = mContext;
 		prepareQuickActionBar();
 	}
 
-	 public void onShowBar(View v) {
-	        mBar.show(v);
+	 public void showQuickActions(final View view, final File file) {
+		 
+		 ActionItem item = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_copy));
+		 
+		 ActionItem trash = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_delete));
+		 trash.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(final View v) {
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+				builder.setCancelable(true);
+				builder.setMessage("Are you sure you want to delete "+file.getName()+"?")
+			       .setCancelable(false)
+			       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+
+			        	   mContext.deletePath(file);
+			           }
+			       })
+			       .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                dialog.cancel();
+			           }
+			       }).setTitle(R.string.msg_title_confim).setIcon(android.R.drawable.ic_dialog_alert);
+				
+				AlertDialog confirm = builder.create();
+				confirm.show();
+			}
+		});
+		 QuickAction actions = new QuickAction(view);
+		 actions.addActionItem(item);
+		 actions.addActionItem(trash);
+		 actions.setAnimStyle(QuickAction.ANIM_AUTO);
+		 actions.show();
+		 
 	 }
 	 
 	private void prepareQuickActionBar() {
 		
-		mBar = new QuickActionBar(mContext);
-		
-		mBar.addQuickAction(new MyQuickAction(mContext,
-				com.cyrilmottier.android.greendroid.R.drawable.gd_action_bar_slideshow, R.string.action_copy));
-		
-		mBar.addQuickAction(new MyQuickAction(mContext,
-				com.cyrilmottier.android.greendroid.R.drawable.gd_action_bar_export, R.string.action_move));
-		
-		mBar.addQuickAction(new MyQuickAction(mContext,
-				com.cyrilmottier.android.greendroid.R.drawable.gd_action_bar_edit, R.string.action_rename));
-		
-		mBar.addQuickAction(new MyQuickAction(mContext,
-				com.cyrilmottier.android.greendroid.R.drawable.gd_action_bar_trashcan, R.string.action_delete));
-		
-		mBar.addQuickAction(new MyQuickAction(mContext,
-				com.cyrilmottier.android.greendroid.R.drawable.gd_action_bar_info, R.string.action_prop));
-
-		mBar.setOnQuickActionClickListener(mActionListener);
 	}
-	
-	 private static class MyQuickAction extends QuickAction {
-	        
-	        private static final ColorFilter BLACK_CF = new LightingColorFilter(Color.BLACK, Color.BLACK);
-
-	        public MyQuickAction(Context ctx, int drawableId, int titleId) {
-	            super(ctx, buildDrawable(ctx, drawableId), titleId);
-	        }
-	        
-	        private static Drawable buildDrawable(Context ctx, int drawableId) {
-	            Drawable d = ctx.getResources().getDrawable(drawableId);
-	            d.setColorFilter(BLACK_CF);
-	            return d;
-	        }
-	        
-	    }
 }

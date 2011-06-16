@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,11 +22,11 @@ public class FileListAdapter extends BaseAdapter {
 	  public TextView resMeta;
 	}
 	  
-	private Context mContext;
+	private FileExplorerMain mContext;
 	private List<File> files;
 	private LayoutInflater mInflater;
 	 
-	public FileListAdapter(Context context, List<File> files) {
+	public FileListAdapter(FileExplorerMain context, List<File> files) {
 		super();
 		mContext = context;
 		this.files = files;
@@ -79,7 +78,7 @@ public class FileListAdapter extends BaseAdapter {
         {
             holder = (ViewHolder)convertView.getTag();
         }
-        File currentFile = files.get(position);
+        final File currentFile = files.get(position);
         holder.resName.setText(currentFile.getName());
         holder.resIcon.setImageDrawable(FileExplorerUtils.getIcon(mContext, currentFile));
         holder.resMeta.setText(FileExplorerUtils.getSize(currentFile.length()));
@@ -94,23 +93,15 @@ public class FileListAdapter extends BaseAdapter {
 				
 				@Override
 				public void onClick(View v) {
-					try
-					{
-						Log.d(Constants.TAG, "Clicked list item more button");
-						showPopupMenu(v);
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
+					
+					QuickActionHelper helper = new QuickActionHelper(mContext);
+					helper.showQuickActions(v, currentFile);
+
 				}
 			});
         }
         return convertView;
 	}
 
-	public void showPopupMenu(View v) {
-		QuickActionHelper helper = new QuickActionHelper(mContext);
-		helper.onShowBar(v);
-	}
 
 }
