@@ -3,8 +3,6 @@ package net.appositedesigns.fileexplorer;
 import java.io.File;
 import java.util.List;
 
-import net.apposite.fileexplorer.R;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;

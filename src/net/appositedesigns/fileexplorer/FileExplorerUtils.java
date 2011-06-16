@@ -2,8 +2,6 @@ package net.appositedesigns.fileexplorer;
 
 import java.io.File;
 
-import net.apposite.fileexplorer.R;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 

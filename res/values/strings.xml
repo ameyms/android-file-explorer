@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">File Explorer</string>
+    <string name="app_url">http://fileexplore.appositedesigns.net</string>
     
     <string name="action_rename">Rename</string>
     <string name="action_delete">Delete</string>

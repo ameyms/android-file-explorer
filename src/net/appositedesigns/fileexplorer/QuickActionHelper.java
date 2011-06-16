@@ -1,6 +1,5 @@
 package net.appositedesigns.fileexplorer;
 
-import net.apposite.fileexplorer.R;
 import greendroid.widget.QuickAction;
 import greendroid.widget.QuickActionBar;
 import greendroid.widget.QuickActionWidget;

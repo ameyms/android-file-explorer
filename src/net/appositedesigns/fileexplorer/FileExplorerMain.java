@@ -1,12 +1,11 @@
 package net.appositedesigns.fileexplorer;
 
+import greendroid.app.GDActivity;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.apposite.fileexplorer.R;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class FileExplorerMain extends Activity {
+public class FileExplorerMain extends GDActivity {
 
 
 	private ListView explorerListView;
