@@ -5,11 +5,10 @@ import java.io.File;
 import net.appositedesigns.fileexplorer.quickactions.ActionItem;
 import net.appositedesigns.fileexplorer.quickactions.QuickAction;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public final class QuickActionHelper {
 
@@ -23,11 +22,24 @@ public final class QuickActionHelper {
 		prepareQuickActionBar();
 	}
 
-	 public void showQuickActions(final View view, final File file) {
+	 public void showQuickActions(final View view, final FileListEntry entry) {
 		 
-		 ActionItem item = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_copy));
+		final File file = entry.getPath();
+		final QuickAction actions = new QuickAction(view);
+		
+		ActionItem copy = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_copy));
+		copy.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				FileExplorerUtils.COPIED_FILE = file;
+				Toast.makeText(mContext, ""+file.getName()+" copied", Toast.LENGTH_SHORT);
+				actions.dismiss();
+			}
+		});
+		
+		ActionItem trash = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_delete));
 		 
-		 ActionItem trash = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_delete));
 		 trash.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -40,12 +52,14 @@ public final class QuickActionHelper {
 			       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 
+			        	   actions.dismiss();
 			        	   mContext.deletePath(file);
 			           }
 			       })
 			       .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 			           public void onClick(DialogInterface dialog, int id) {
 			                dialog.cancel();
+			                actions.dismiss();
 			           }
 			       }).setTitle(R.string.msg_title_confim).setIcon(android.R.drawable.ic_dialog_alert);
 				
@@ -53,8 +67,22 @@ public final class QuickActionHelper {
 				confirm.show();
 			}
 		});
-		 QuickAction actions = new QuickAction(view);
-		 actions.addActionItem(item);
+		
+		 if(file.isFile())
+		 {
+				ActionItem share = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_share));
+				share.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View arg0) {
+						
+						FileExplorerUtils.share(file, mContext);
+						
+					}
+				});
+				actions.addActionItem(share);
+		 }
+		 actions.addActionItem(copy);
 		 actions.addActionItem(trash);
 		 actions.setAnimStyle(QuickAction.ANIM_AUTO);
 		 actions.show();

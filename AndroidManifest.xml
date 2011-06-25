@@ -6,7 +6,7 @@
       
     <uses-sdk android:minSdkVersion="7" />
     <permission-group android:name="android.permission-group.STORAGE"></permission-group>
-	
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".FileExplorerMain"
                   android:label="@string/app_name">

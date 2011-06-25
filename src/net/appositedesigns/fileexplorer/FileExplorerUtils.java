@@ -2,14 +2,19 @@ package net.appositedesigns.fileexplorer;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.apache.commons.io.FileUtils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 final class FileExplorerUtils {
 
+	public static File COPIED_FILE = null;
 	private FileExplorerUtils(){}
 	
 
@@ -94,23 +99,6 @@ final class FileExplorerUtils {
 	}
 
 
-	static CharSequence getSize(long length) {
-		
-		if(length >= 1024*1024)
-		{
-			return (length/(1024*1024))+" MB";
-		}
-		else if(length >= 1024)
-		{
-			return (length/(1024))+" KB";
-		}
-		else
-		{
-			return length+" B";
-		}
-	}
-
-
 	static boolean delete(File fileToBeDeleted) {
 
 		if(fileToBeDeleted.isDirectory())
@@ -133,6 +121,94 @@ final class FileExplorerUtils {
 			} catch (IOException e) {
 				return false;
 			}
+		}
+	}
+
+
+	public static boolean mkDir(String canonicalPath, CharSequence newDirName) {
+		
+		File newdir = new File(canonicalPath+File.separator+newDirName);
+		return newdir.mkdirs();
+		
+	}
+
+	public static String prepareMeta(File f) {
+		
+		try
+		{
+			if(f.isFile())
+			{
+				return FileUtils.byteCountToDisplaySize(FileUtils.sizeOf(f));
+			}
+			else if(isProtected(f))
+			{
+				return "System File";
+			}
+		}
+		catch (Exception e) {
+			Log.e(FileExplorerUtils.class.getName(), e.getMessage());
+		}
+		
+		return "";
+	}
+
+	static void share(File resource, Context mContext) {
+		final Intent intent = new Intent(Intent.ACTION_SEND);
+	
+		try {
+			intent.setType(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(resource.toURL().toString())));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			intent.setType("application/x-octet-stream");
+		}
+		intent.setAction(Intent.ACTION_SEND);
+		intent.putExtra(Intent.EXTRA_STREAM, resource);
+	
+		mContext.startActivity(Intent.createChooser(intent,"Send via"));
+	
+	}
+
+	static boolean paste(File destinationDir, AbortionFlag flag) {
+		
+		if(doPaste(COPIED_FILE, destinationDir, flag))
+		{
+			COPIED_FILE = null;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	static boolean doPaste(File srcFile, File destinationDir, AbortionFlag flag) {
+		
+		if(!flag.isAborted())
+		try
+		{
+			if(srcFile.isDirectory())
+			{
+				
+				File newDir = new File(destinationDir.getAbsolutePath()+File.separator+srcFile.getName());
+				newDir.mkdirs();
+				
+				for(File child : srcFile.listFiles())
+				{
+					doPaste(child, newDir, flag);
+				}
+				return true;
+			}
+			else
+			{
+				FileUtils.copyFileToDirectory(srcFile, destinationDir);
+				return true;
+			}
+		}
+		catch (Exception e) {
+			return false;
+		}
+		else
+		{
+			return false;
 		}
 	}
 }

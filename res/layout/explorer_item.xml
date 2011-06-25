@@ -36,7 +36,6 @@
 
         android:layout_width="fill_parent"
         android:layout_height="26dip" 
-		android:textColor="#1d1d1d"
         android:layout_toRightOf="@id/explorer_resIcon"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -56,7 +55,6 @@
         android:layout_above="@id/explorer_resMeta"
         android:layout_alignWithParentIfMissing="true"
         android:textSize="18dp"
-        android:textColor="#1d1d1d"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
         android:ellipsize="marquee"

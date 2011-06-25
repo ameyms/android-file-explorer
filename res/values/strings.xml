@@ -14,5 +14,8 @@
 	<string name="msg_title_confim">Confirm</string>
 	<string name="msg_title_success">Success</string>
 	<string name="msg_title_failed">Error</string>
+	
+	<string name="menu_paste">Paste</string>
+	<string name="menu_addfolder">New Folder</string>
 
 </resources>

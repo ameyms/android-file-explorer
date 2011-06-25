@@ -1,6 +1,5 @@
 package net.appositedesigns.fileexplorer;
 
-import java.io.File;
 import java.util.List;
 
 import android.content.Context;
@@ -23,10 +22,10 @@ public class FileListAdapter extends BaseAdapter {
 	}
 	  
 	private FileExplorerMain mContext;
-	private List<File> files;
+	private List<FileListEntry> files;
 	private LayoutInflater mInflater;
 	 
-	public FileListAdapter(FileExplorerMain context, List<File> files) {
+	public FileListAdapter(FileExplorerMain context, List<FileListEntry> files) {
 		super();
 		mContext = context;
 		this.files = files;
@@ -78,11 +77,11 @@ public class FileListAdapter extends BaseAdapter {
         {
             holder = (ViewHolder)convertView.getTag();
         }
-        final File currentFile = files.get(position);
+        final FileListEntry currentFile = files.get(position);
         holder.resName.setText(currentFile.getName());
-        holder.resIcon.setImageDrawable(FileExplorerUtils.getIcon(mContext, currentFile));
-        holder.resMeta.setText(FileExplorerUtils.getSize(currentFile.length()));
-        if(FileExplorerUtils.isProtected(currentFile))
+        holder.resIcon.setImageDrawable(FileExplorerUtils.getIcon(mContext, currentFile.getPath()));
+        holder.resMeta.setText(currentFile.getMeta());
+        if(FileExplorerUtils.isProtected(currentFile.getPath()))
         {
         	holder.resActions.setVisibility(View.INVISIBLE);
         }
