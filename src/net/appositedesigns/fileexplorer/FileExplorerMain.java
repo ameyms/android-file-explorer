@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -83,7 +84,8 @@ public class FileExplorerMain extends Activity {
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		Uri uri = Uri.fromFile(file);
-		intent.setDataAndType(uri, getContentResolver().getType(uri));
+		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
+		intent.setDataAndType(uri,type==null?"*/*":type);
 		startActivity(intent);
 	}
     void listContents(File dir)

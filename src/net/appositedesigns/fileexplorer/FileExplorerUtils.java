@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 final class FileExplorerUtils {
 
@@ -163,10 +164,11 @@ final class FileExplorerUtils {
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 	
 		Uri uri = Uri.fromFile(resource);
-		String type = mContext.getContentResolver().getType(uri);
+		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
 		intent.setType(type);
 		intent.setAction(Intent.ACTION_SEND);
-		intent.setDataAndType(uri,type);
+		intent.setType(type==null?"*/*":type);
+		intent.putExtra(Intent.EXTRA_STREAM, uri);
 	
 		mContext.startActivity(Intent.createChooser(intent,"Send via"));
 	
