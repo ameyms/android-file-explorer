@@ -80,7 +80,8 @@ public class FileListAdapter extends BaseAdapter {
         final FileListEntry currentFile = files.get(position);
         holder.resName.setText(currentFile.getName());
         holder.resIcon.setImageDrawable(FileExplorerUtils.getIcon(mContext, currentFile.getPath()));
-        holder.resMeta.setText(currentFile.getMeta());
+        String meta = FileExplorerUtils.prepareMeta(currentFile);
+        holder.resMeta.setText(meta);
         if(FileExplorerUtils.isProtected(currentFile.getPath()))
         {
         	holder.resActions.setVisibility(View.INVISIBLE);

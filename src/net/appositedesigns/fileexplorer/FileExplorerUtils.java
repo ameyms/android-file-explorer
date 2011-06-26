@@ -9,19 +9,41 @@ import org.apache.commons.io.FileUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 final class FileExplorerUtils {
 
-	public static File COPIED_FILE = null;
+	private static File COPIED_FILE = null;
+	private static int pasteMode = 1;
+	
+	
+	static final int PASTE_MODE_COPY = 0;
+	static final int PASTE_MODE_MOVE = 1;
+	
+	
 	private FileExplorerUtils(){}
 	
+	 public static synchronized void setPasteSrcFile(File f, int mode) 
+	  {  
+	         COPIED_FILE = f;  
+	         pasteMode = mode%2; 
+	  }  
 
+	 public static synchronized File getFileToPaste()
+	 {
+		 return COPIED_FILE;
+	 }
+	 
+	 public static synchronized int getPasteMode()
+	 {
+		 return pasteMode;
+	 }
 	static boolean isMusic(File file) {
 		
 		String fileName = file.getName();
-		return (fileName.endsWith(".mp3") || fileName.endsWith(".aac") || fileName.endsWith(".ogg") || fileName.endsWith(".wma"));
+		return (fileName.endsWith(".mp3") || fileName.endsWith(".aac") || fileName.endsWith(".ogg") || fileName.endsWith(".wav") || fileName.endsWith(".m4a") || fileName.endsWith(".wma"));
 	}
 	
 	static boolean isPicture(File file) {
@@ -132,13 +154,14 @@ final class FileExplorerUtils {
 		
 	}
 
-	public static String prepareMeta(File f) {
+	public static String prepareMeta(FileListEntry entry) {
 		
+		File f = entry.getPath();
 		try
 		{
 			if(f.isFile())
 			{
-				return FileUtils.byteCountToDisplaySize(FileUtils.sizeOf(f));
+				return FileUtils.byteCountToDisplaySize(entry.getSize());
 			}
 			else if(isProtected(f))
 			{
@@ -162,17 +185,30 @@ final class FileExplorerUtils {
 			intent.setType("application/x-octet-stream");
 		}
 		intent.setAction(Intent.ACTION_SEND);
-		intent.putExtra(Intent.EXTRA_STREAM, resource);
+		intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(resource).toString());
 	
 		mContext.startActivity(Intent.createChooser(intent,"Send via"));
 	
 	}
 
-	static boolean paste(File destinationDir, AbortionFlag flag) {
+	static boolean paste(int mode, File destinationDir, AbortionFlag flag) {
 		
-		if(doPaste(COPIED_FILE, destinationDir, flag))
+		File fileBeingPasted = new File(getFileToPaste().getParent(),getFileToPaste().getName());
+		if(doPaste(mode, getFileToPaste(), destinationDir, flag))
 		{
-			COPIED_FILE = null;
+			if(fileBeingPasted.isFile())
+			{
+				FileUtils.deleteQuietly(fileBeingPasted);
+			}
+			else
+			{
+				try {
+					FileUtils.deleteDirectory(fileBeingPasted);
+				} catch (IOException e) {
+					Log.e(FileExplorerUtils.class.getName(), e.getMessage());
+					e.printStackTrace();
+				}
+			}
 			return true;
 		}
 		else
@@ -180,7 +216,7 @@ final class FileExplorerUtils {
 			return false;
 		}
 	}
-	static boolean doPaste(File srcFile, File destinationDir, AbortionFlag flag) {
+	static boolean doPaste(int mode, File srcFile, File destinationDir, AbortionFlag flag) {
 		
 		if(!flag.isAborted())
 		try
@@ -193,7 +229,7 @@ final class FileExplorerUtils {
 				
 				for(File child : srcFile.listFiles())
 				{
-					doPaste(child, newDir, flag);
+					doPaste(mode, child, newDir, flag);
 				}
 				return true;
 			}
@@ -208,6 +244,34 @@ final class FileExplorerUtils {
 		}
 		else
 		{
+			return false;
+		}
+	}
+
+
+	static boolean canPaste(File destDir) {
+		
+		if(getFileToPaste() == null)
+		{
+			return false;
+		}
+		if(getFileToPaste().isFile())
+		{
+			return true;
+		}
+		try
+		{
+			if(destDir.getCanonicalPath().startsWith(COPIED_FILE.getCanonicalPath()))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch (Exception e) {
+			
 			return false;
 		}
 	}

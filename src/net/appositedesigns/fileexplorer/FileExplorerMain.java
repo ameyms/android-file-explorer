@@ -2,10 +2,12 @@ package net.appositedesigns.fileexplorer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -132,18 +134,23 @@ public class FileExplorerMain extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        if(FileExplorerUtils.COPIED_FILE!=null)
-        {
-        	inflater.inflate(R.menu.options_menu_with_paste, menu);
-        	return true;
-        }
-        else
-        {
-        	inflater.inflate(R.menu.options_menu_no_paste, menu);
-        	return true;
-        }
+    	inflater.inflate(R.menu.options_menu, menu);
+    	return true;
     }
     
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+    	 if(FileExplorerUtils.canPaste(currentDir))
+         {
+    		 menu.findItem(R.id.menu_paste).setVisible(true);
+         }
+    	 else
+    	 {
+    		 menu.findItem(R.id.menu_paste).setVisible(false);
+    	 }
+    	return super.onPrepareOptionsMenu(menu);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -170,14 +177,14 @@ public class FileExplorerMain extends Activity {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Confirm");
-		alert.setMessage("Are you sure you want to copy "+FileExplorerUtils.COPIED_FILE.getName()+"?");
+		alert.setMessage("Are you sure you want to paste "+FileExplorerUtils.getFileToPaste().getName()+"?");
 		alert.setIcon(android.R.drawable.ic_dialog_alert);
 
 		alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		 
 				dialog.dismiss();
-				new FileMover(FileMover.COPY).equals(currentDir);
+				new FileMover(FileExplorerUtils.getPasteMode()).execute(currentDir);
 			}
 		});
 
@@ -202,6 +209,7 @@ public class FileExplorerMain extends Activity {
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
 		input.setHint("Enter folder name");
+		input.setSingleLine();
 		alert.setView(input);
 
 		alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -270,13 +278,14 @@ public class FileExplorerMain extends Activity {
 			for(String fileName : children)
 			{
 				File f = new File(root.getAbsolutePath()+File.separator+fileName);
-				String meta = FileExplorerUtils.prepareMeta(f);
+				
 				String fname = f.getName();
 				
 				FileListEntry child = new FileListEntry();
 				child.setName(fname);
 				child.setPath(f);
-				child.setMeta(meta);
+				child.setSize(f.length());
+				child.setLastModified(new Date(f.lastModified()));
 				childFiles.add(child);
 			}
 			
@@ -287,11 +296,12 @@ public class FileExplorerMain extends Activity {
 
 	private class Trasher extends AsyncTask<File, Integer, Boolean>
 	{
+		
+		private File fileToBeDeleted;
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(result)
 			{
-				
 				runOnUiThread(new Runnable() {
 					
 					@Override
@@ -304,12 +314,19 @@ public class FileExplorerMain extends Activity {
 			}
 			else
 			{
+				FileExplorerUtils.setPasteSrcFile(fileToBeDeleted, FileExplorerUtils.getPasteMode());
 				runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
 						waitDialog.dismiss();
-						Toast.makeText(getApplicationContext(), "Could not delete file", Toast.LENGTH_LONG);
+						AlertDialog alert = new Builder(FileExplorerMain.this)
+						.setIcon(android.R.drawable.ic_dialog_alert)
+						.setTitle("Error")
+						.setMessage(fileToBeDeleted.getName()+" could not be deleted")
+						.show();
+						
+						
 					}
 				});
 			}
@@ -317,28 +334,38 @@ public class FileExplorerMain extends Activity {
 		@Override
 		protected Boolean doInBackground(File... params) {
 			
-			File fileToBeDeleted = params[0];
-			return FileExplorerUtils.delete(fileToBeDeleted);
+			fileToBeDeleted = params[0];
+			try
+			{
+				if(FileExplorerUtils.getFileToPaste().getCanonicalPath().equalsIgnoreCase(fileToBeDeleted.getCanonicalPath()))
+				{
+					FileExplorerUtils.setPasteSrcFile(null, FileExplorerUtils.getPasteMode());
+				}
+				return FileExplorerUtils.delete(fileToBeDeleted);
+			}
+			catch (Exception e) {
+				return false;
+			}
 			
 		}
 	}
 	
 	private class FileMover extends AsyncTask<File, Integer, Boolean>
 	{
-		static final int COPY = 1;
-		static final int MOVE = 2;
-		
 		private int mode= 1;
 		private AbortionFlag flag;
 		public FileMover(int mode) {
-			this.mode = mode;
+			this.mode =mode;
 			flag = new AbortionFlag();
 		}
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(result)
 			{
-				
+				if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
+				{
+					FileExplorerUtils.setPasteSrcFile(null, 0);
+				}
 				runOnUiThread(new Runnable() {
 					
 					@Override
@@ -347,7 +374,7 @@ public class FileExplorerMain extends Activity {
 						{
 							moveProgressDialog.dismiss();
 						}
-						if(mode==COPY)
+						if(mode==FileExplorerUtils.PASTE_MODE_COPY)
 						{
 							Toast.makeText(getApplicationContext(), "Copy complete ", Toast.LENGTH_LONG);
 						}
@@ -378,7 +405,7 @@ public class FileExplorerMain extends Activity {
 		protected Boolean doInBackground(File... params) {
 			
 			File destDir = params[0];
-			return FileExplorerUtils.paste(destDir, flag);
+			return FileExplorerUtils.paste(mode, destDir, flag);
 			
 		}
 		
@@ -389,11 +416,11 @@ public class FileExplorerMain extends Activity {
 				@Override
 				public void run() {
 					
-					String message =  "Copying "+FileExplorerUtils.COPIED_FILE.getName()+". Please wait...";
-					if(mode==MOVE)
+					String message =  "Copying "+FileExplorerUtils.getFileToPaste().getName()+". Please wait...";
+					if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
 					{
 						message = 
-				                "Moving "+FileExplorerUtils.COPIED_FILE.getName()+". Please wait...";
+				                "Moving "+FileExplorerUtils.getFileToPaste().getName()+". Please wait...";
 					}
 					moveProgressDialog = new ProgressDialog(FileExplorerMain.this);
 					moveProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

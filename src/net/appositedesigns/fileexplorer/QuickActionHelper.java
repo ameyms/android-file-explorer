@@ -32,8 +32,19 @@ public final class QuickActionHelper {
 
 			@Override
 			public void onClick(View arg0) {
-				FileExplorerUtils.COPIED_FILE = file;
+				FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_COPY);
 				Toast.makeText(mContext, ""+file.getName()+" copied", Toast.LENGTH_SHORT);
+				actions.dismiss();
+			}
+		});
+		
+		ActionItem cut = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_cut));
+		cut.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_MOVE);
+				Toast.makeText(mContext, ""+file.getName()+" cut", Toast.LENGTH_SHORT);
 				actions.dismiss();
 			}
 		});
@@ -82,6 +93,7 @@ public final class QuickActionHelper {
 				});
 				actions.addActionItem(share);
 		 }
+		 actions.addActionItem(cut);
 		 actions.addActionItem(copy);
 		 actions.addActionItem(trash);
 		 actions.setAnimStyle(QuickAction.ANIM_AUTO);

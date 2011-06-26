@@ -17,5 +17,6 @@
 	
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
+	<string name="menu_preferences">Preferences</string>
 
 </resources>
