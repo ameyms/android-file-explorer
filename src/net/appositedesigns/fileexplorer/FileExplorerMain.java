@@ -80,33 +80,11 @@ public class FileExplorerMain extends Activity {
     }
 	private void openFile(File file) {
 		
-		if(file.getName().endsWith(".apk"))
-		{
-			Uri fileUri = Uri.fromFile(file); 
-			Intent installationIntent = new Intent(Intent.ACTION_VIEW).setDataAndType(fileUri,"application/vnd.android.package-archive");
-			startActivity(installationIntent);
-		}
-		else if(FileExplorerUtils.isMusic(file))
-		{
-			Intent intent = new Intent();
-			intent.setAction(android.content.Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(file), "audio/*");
-			startActivity(intent);
-		}
-		else if(FileExplorerUtils.isPicture(file))
-		{
-			Intent intent = new Intent();
-			intent.setAction(android.content.Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(file), "image/*");
-			startActivity(intent);
-		}
-		else if(file.getName().endsWith(".html"))
-		{
-			Intent intent = new Intent();
-			intent.setAction(android.content.Intent.ACTION_VIEW);
-			intent.setDataAndType(Uri.fromFile(file), "text/html");
-			startActivity(intent);
-		}
+		Intent intent = new Intent();
+		intent.setAction(android.content.Intent.ACTION_VIEW);
+		Uri uri = Uri.fromFile(file);
+		intent.setDataAndType(uri, getContentResolver().getType(uri));
+		startActivity(intent);
 	}
     void listContents(File dir)
     {
@@ -320,7 +298,7 @@ public class FileExplorerMain extends Activity {
 					@Override
 					public void run() {
 						waitDialog.dismiss();
-						AlertDialog alert = new Builder(FileExplorerMain.this)
+						new Builder(FileExplorerMain.this)
 						.setIcon(android.R.drawable.ic_dialog_alert)
 						.setTitle("Error")
 						.setMessage(fileToBeDeleted.getName()+" could not be deleted")

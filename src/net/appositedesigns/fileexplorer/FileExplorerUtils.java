@@ -2,7 +2,6 @@ package net.appositedesigns.fileexplorer;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -11,7 +10,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
 
 final class FileExplorerUtils {
 
@@ -123,26 +121,12 @@ final class FileExplorerUtils {
 
 	static boolean delete(File fileToBeDeleted) {
 
-		if(fileToBeDeleted.isDirectory())
+		try
 		{
-			try
-			{
-				FileUtils.deleteDirectory(fileToBeDeleted);
-				return true;
-			}
-			catch (IOException e)
-			{
-				return false;
-			}
-		}
-		else
-		{
-			try {
-				FileUtils.forceDelete(fileToBeDeleted);
-				return true;
-			} catch (IOException e) {
-				return false;
-			}
+			FileUtils.forceDelete(fileToBeDeleted);
+			return true;
+		} catch (IOException e) {
+			return false;
 		}
 	}
 
@@ -178,14 +162,11 @@ final class FileExplorerUtils {
 	static void share(File resource, Context mContext) {
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 	
-		try {
-			intent.setType(MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(resource.toURL().toString())));
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-			intent.setType("application/x-octet-stream");
-		}
+		Uri uri = Uri.fromFile(resource);
+		String type = mContext.getContentResolver().getType(uri);
+		intent.setType(type);
 		intent.setAction(Intent.ACTION_SEND);
-		intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(resource).toString());
+		intent.setDataAndType(uri,type);
 	
 		mContext.startActivity(Intent.createChooser(intent,"Send via"));
 	
