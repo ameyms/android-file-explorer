@@ -170,7 +170,7 @@ final class FileExplorerUtils {
 		intent.setType(type==null?"*/*":type);
 		intent.putExtra(Intent.EXTRA_STREAM, uri);
 	
-		mContext.startActivity(Intent.createChooser(intent,"Send via"));
+		mContext.startActivity(Intent.createChooser(intent,mContext.getString(R.string.share_via)));
 	
 	}
 

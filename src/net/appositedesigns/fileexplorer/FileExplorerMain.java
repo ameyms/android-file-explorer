@@ -86,7 +86,7 @@ public class FileExplorerMain extends Activity {
 		Uri uri = Uri.fromFile(file);
 		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
 		intent.setDataAndType(uri,type==null?"*/*":type);
-		startActivity(intent);
+		startActivity((Intent.createChooser(intent, getString(R.string.open_using))));
 	}
     void listContents(File dir)
     {
@@ -144,6 +144,10 @@ public class FileExplorerMain extends Activity {
 			confirmCreateFolder();
         	return true;
         	
+		case R.id.menu_settings:
+			Intent prefsIntent = new Intent(FileExplorerMain.this, SettingsActivity.class);
+			startActivity(prefsIntent);
+			return true;
 		default:
 			super.onOptionsItemSelected(item);
 			break;
@@ -156,8 +160,8 @@ public class FileExplorerMain extends Activity {
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setTitle("Confirm");
-		alert.setMessage("Are you sure you want to paste "+FileExplorerUtils.getFileToPaste().getName()+"?");
+		alert.setTitle(getString(R.string.confirm));
+		alert.setMessage(getString(R.string.confirm_paste_text, FileExplorerUtils.getFileToPaste().getName()));
 		alert.setIcon(android.R.drawable.ic_dialog_alert);
 
 		alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -183,12 +187,12 @@ public class FileExplorerMain extends Activity {
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setTitle("Create Folder");
+		alert.setTitle(getString(R.string.create_folder));
 		alert.setIcon(android.R.drawable.ic_dialog_info);
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
-		input.setHint("Enter folder name");
+		input.setHint(getString(R.string.enter_folder_name));
 		input.setSingleLine();
 		alert.setView(input);
 
@@ -217,7 +221,7 @@ public class FileExplorerMain extends Activity {
 	void deletePath(File path)
 	{
 		waitDialog = ProgressDialog.show(FileExplorerMain.this, "", 
-                "Deleting "+path.getName()+"...", true);
+               getString(R.string.deleting_path,path.getName()), true);
 		new Trasher().execute(path);
 	}
 	
@@ -227,7 +231,7 @@ public class FileExplorerMain extends Activity {
 		@Override
 		protected void onPreExecute() {
 			waitDialog = ProgressDialog.show(FileExplorerMain.this, "", 
-	                "Querying file system. Please wait...", true);
+	                getString(R.string.querying_filesys), true);
 		
 		}
 		
@@ -302,8 +306,8 @@ public class FileExplorerMain extends Activity {
 						waitDialog.dismiss();
 						new Builder(FileExplorerMain.this)
 						.setIcon(android.R.drawable.ic_dialog_alert)
-						.setTitle("Error")
-						.setMessage(fileToBeDeleted.getName()+" could not be deleted")
+						.setTitle(getString(R.string.error))
+						.setMessage(getString(R.string.delete_failed, fileToBeDeleted.getName()))
 						.show();
 						
 						
@@ -356,11 +360,11 @@ public class FileExplorerMain extends Activity {
 						}
 						if(mode==FileExplorerUtils.PASTE_MODE_COPY)
 						{
-							Toast.makeText(getApplicationContext(), "Copy complete ", Toast.LENGTH_LONG);
+							Toast.makeText(getApplicationContext(), getString(R.string.copy_complete), Toast.LENGTH_LONG);
 						}
 						else
 						{
-							Toast.makeText(getApplicationContext(), "Resource has been moved ", Toast.LENGTH_LONG);
+							Toast.makeText(getApplicationContext(), getString(R.string.move_complete), Toast.LENGTH_LONG);
 						}
 						listContents(currentDir);
 					}
@@ -376,7 +380,7 @@ public class FileExplorerMain extends Activity {
 						{
 							moveProgressDialog.dismiss();
 						}
-						Toast.makeText(getApplicationContext(), "Could not perform operation", Toast.LENGTH_LONG);
+						Toast.makeText(getApplicationContext(), getString(R.string.generic_operation_failed), Toast.LENGTH_LONG);
 					}
 				});
 			}
@@ -396,16 +400,16 @@ public class FileExplorerMain extends Activity {
 				@Override
 				public void run() {
 					
-					String message =  "Copying "+FileExplorerUtils.getFileToPaste().getName()+". Please wait...";
+					String message = getString(R.string.copying_path,FileExplorerUtils.getFileToPaste().getName());
 					if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
 					{
 						message = 
-				                "Moving "+FileExplorerUtils.getFileToPaste().getName()+". Please wait...";
+							 getString(R.string.moving_path,FileExplorerUtils.getFileToPaste().getName());
 					}
 					moveProgressDialog = new ProgressDialog(FileExplorerMain.this);
 					moveProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 					moveProgressDialog.setMessage(message);
-					moveProgressDialog.setButton("Run in Background", new OnClickListener() {
+					moveProgressDialog.setButton(getString(R.string.run_in_background), new OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -414,7 +418,7 @@ public class FileExplorerMain extends Activity {
 							
 						}
 					});
-					moveProgressDialog.setButton2("Cancel", new OnClickListener() {
+					moveProgressDialog.setButton2(getString(R.string.cancel), new OnClickListener() {
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which) {

@@ -1,0 +1,4 @@
+This license agreement is a binding agreement between the user of the software (an individual person or a company described as a user) and Apposite Designs, which own all rights to the software, documentation and online available material.
+In this agreement "SOFTWARE" is defined as the application files, application components and all files that enclosed with the application.
+
+The software is delivered as is, and there is no guarantee of any sort. All use of the software or parts of the software is one the users own responsibility. Errors in the software or errors in the enclosed files there is taken NO responsibility for. Loss of data or loss of money or other consequences caused by the software or a part of the software, Apposite Designs and Amey Sakhadeo have no responsibility for, and is thereby the users own responsibility.

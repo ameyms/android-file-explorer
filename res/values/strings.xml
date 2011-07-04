@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">File Explorer</string>
+	<string name="settings">File Explorer Preferences</string>
+	
 	<string name="app_url">http://fileexplore.appositedesigns.net</string>
 
 	<string name="action_rename">Rename</string>
@@ -18,5 +20,76 @@
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
 	<string name="menu_preferences">Preferences</string>
+	
+	<string name="confirm">Confirm</string>
+	<string name="error">Error</string>
+	<string name="success">Success</string>
+	<string name="cancel">Cancel</string>
+	<string name="run_in_background">Run in Background</string>
+	<string name="share_via">Share via</string>
+	<string name="open_using">Open using</string>
+	
+	<string name="confirm_paste_text">Are you sure you want to paste %1$s ?</string>
+	<string name="delete_failed">%1$s could not be deleted</string>
+	
+	<string name="deleting_path">Deleting path %1$s ...</string>
+	<string name="copying_path">Copying %1$s . Please wait ...</string>
+	<string name="moving_path">Moving %1$s .Please wait...</string>
 
+	<string name="create_folder">Create Folder</string>
+	<string name="enter_folder_name">Enter folder name</string>
+	
+	<string name="querying_filesys">Querying File System. Please wait.</string>
+	
+	<string name="copy_complete">Copy complete.</string>
+	<string name="move_complete">Resource successfully moved to new location</string>
+	
+	<string name="generic_operation_failed">Could not complete operation</string>
+	
+	<string name="pref_cat_general">General Settings</string>
+	<string name="pref_home_folder">Start up folder</string>
+	<string name="pref_home_folder_desc">File explorer will open this folder at when started</string>
+
+	<string name="pref_showhidden">Show hidden paths</string>
+	<string name="pref_showhidden_on">Hidden files and folders are shown</string>
+	<string name="pref_showhidden_off">Hidden files and folders are omitted</string>
+	
+	<string name="pref_show_dir_sizes">Show folder sizes</string>
+	<string name="pref_show_dir_sizes_on_desc">Folder sizes are rolled up</string>
+	<string name="pref_show_dir_sizes_off_desc">Folder sizes are not shown</string>
+	
+	<string name="pref_cat_sorting">Sorting</string>
+	
+	<string name="pref_dirsfirst">Show directories on top</string>
+	<string name="pref_dirsfirst_on_desc">Will show directories on top</string>
+	<string name="pref_dirsfirst_off_desc">Will not give preference to directories in sorting</string>
+	
+	
+	<string name="pref_sort_field">Sort Field</string>
+	<string name="pref_sort_field_desc">Attribute on which path should be sorted</string>
+	
+	<string name="pref_sort_dir">Sort Direction</string>
+	
+	
+	<string-array name="sort_fields_entries">
+        <item>Name</item>
+        <item>Size</item>
+        <item>Last Modified</item>
+    </string-array>
+    
+    <string-array name="sort_fields_values">
+        <item>name</item>
+        <item>size</item>
+        <item>mtime</item>
+    </string-array>
+    
+    	<string-array name="sort_dir_entries">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+    
+    <string-array name="sort_dir_values">
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
 </resources>
