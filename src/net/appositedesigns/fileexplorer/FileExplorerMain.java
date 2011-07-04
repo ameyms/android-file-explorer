@@ -80,7 +80,10 @@ public class FileExplorerMain extends Activity {
         }
     }
 	private void openFile(File file) {
-		
+		if(FileExplorerUtils.isProtected(file) || file.isDirectory())
+		{
+			return;
+		}
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		Uri uri = Uri.fromFile(file);
