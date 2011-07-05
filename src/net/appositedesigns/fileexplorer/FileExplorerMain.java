@@ -17,13 +17,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -242,8 +241,8 @@ public class FileExplorerMain extends Activity {
 		alert.setTitle(getString(R.string.create_folder));
 		alert.setIcon(android.R.drawable.ic_dialog_info);
 		// Set an EditText view to get user input 
-		final EditText input = new EditText(this.getApplicationContext());
-		input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
+		final EditText input = new EditText(this);
+		input.setPadding(2, 2, 2, 2);
 		input.setHint(getString(R.string.enter_folder_name));
 		input.setSingleLine();
 		alert.setView(input);

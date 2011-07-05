@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.InputType;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -81,8 +80,8 @@ public class FileActionsHelper {
 		alert.setTitle(mContext.getString(R.string.rename_dialog_title, file.getName()));
 		alert.setIcon(android.R.drawable.ic_dialog_info);
 		// Set an EditText view to get user input 
-		final EditText input = new EditText(mContext.getApplicationContext());
-		input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
+		final EditText input = new EditText(mContext);
+		input.setPadding(2, 2, 2, 2);
 		input.setHint(mContext.getString(R.string.enter_new_name));
 		input.setSingleLine();
 		alert.setView(input);
