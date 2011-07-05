@@ -7,15 +7,14 @@
 		<CheckBoxPreference android:title="@string/pref_showhidden"
 			android:defaultValue="false" android:summaryOn="@string/pref_showhidden_on"
 			android:summaryOff="@string/pref_showhidden_off" android:key="showHidden" />
-		
+
 		<CheckBoxPreference android:title="@string/pref_show_sysfiles"
 			android:defaultValue="true" android:summaryOn="@string/pref_show_sysfiles_on"
 			android:summaryOff="@string/pref_show_sysfiles_off" android:key="showSysFiles" />
-			
-		<!-- <CheckBoxPreference android:title="@string/pref_show_dir_sizes"
-			android:defaultValue="false" android:summaryOn="@string/pref_show_dir_sizes_on_desc"
-			android:summaryOff="@string/pref_show_dir_sizes_off_desc" android:key="showDirSizes" />
-		-->
+
+		<!-- <CheckBoxPreference android:title="@string/pref_show_dir_sizes" android:defaultValue="false" 
+			android:summaryOn="@string/pref_show_dir_sizes_on_desc" android:summaryOff="@string/pref_show_dir_sizes_off_desc" 
+			android:key="showDirSizes" /> -->
 		<EditTextPreference android:defaultValue="/"
 			android:key="homeDir" android:title="@string/pref_home_folder"
 			android:summary="@string/pref_home_folder_desc" />
@@ -33,16 +32,51 @@
 
 
 		<ListPreference android:key="sort.dir" android:title="@string/pref_sort_dir"
-			android:entries="@array/sort_dir_entries"
-			android:defaultValue="asc"
+			android:entries="@array/sort_dir_entries" android:defaultValue="asc"
 			android:entryValues="@array/sort_dir_values" android:dialogTitle="@string/pref_sort_dir" />
 
 		<ListPreference android:key="sort.field" android:title="@string/pref_sort_field"
-			android:defaultValue="name"
-			android:summary="@string/pref_sort_field_desc" android:entries="@array/sort_fields_entries"
-			android:entryValues="@array/sort_fields_values" android:dialogTitle="@string/pref_sort_field" />
+			android:defaultValue="name" android:summary="@string/pref_sort_field_desc"
+			android:entries="@array/sort_fields_entries" android:entryValues="@array/sort_fields_values"
+			android:dialogTitle="@string/pref_sort_field" />
 
 
 	</PreferenceCategory>
 
+	<PreferenceCategory android:title="@string/pref_cat_geeky">
+
+		<CheckBoxPreference android:title="@string/pref_zipenable"
+			android:defaultValue="false" android:summaryOff="@string/pref_zipenable_off"
+			android:summaryOn="@string/pref_zipenable_on" android:key="zipEnable" />
+
+		<EditTextPreference android:defaultValue="/sdcard/zipped"
+			android:dependency="zipEnable"
+			android:key="homeDir" android:title="@string/pref_zip_location"
+			android:summary="@string/pref_zip_location_desc" />
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/pref_cat_misc">
+		<PreferenceScreen android:title="@string/pref_share"
+			android:summary="@string/pref_share_desc">
+			<intent android:action="android.intent.action.SEND">
+				<extra android:name="android.intent.extra.TEXT"
+					android:value="I have been using a FileExplorer for Android and thought you might like it too. \nHere is the download link - https://market.android.com/details?id=net.appositedesigns.fileexplorer " />
+			</intent>
+		</PreferenceScreen>
+
+		<PreferenceScreen android:title="@string/pref_website"
+			android:summary="@string/pref_website_desc">
+			<intent android:action="android.intent.action.VIEW"
+				android:data="http://amey.sakhadeo.com" />
+		</PreferenceScreen>
+
+		<PreferenceScreen android:title="@string/pref_feedback"
+			android:summary="@string/pref_feedback_desc">
+			<intent android:action="android.intent.action.SEND">
+				<extra android:name="android.intent.extra.EMAIL"
+					android:value="me@ameyms.com" />
+			</intent>
+		</PreferenceScreen>
+	</PreferenceCategory>
 </PreferenceScreen>

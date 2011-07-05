@@ -76,6 +76,23 @@
 	
 	<string name="pref_sort_dir">Sort Direction</string>
 	
+	<string name="pref_cat_geeky">Geeky Stuff</string>
+	<string name="pref_zipenable">Enable Zip</string>
+	<string name="pref_zipenable_on">Files and folders have an option to compress into another file</string>
+	<string name="pref_zipenable_off">Files and folders can not be zipped</string>
+	<string name="pref_zip_location">Zip Location</string>
+	<string name="pref_zip_location_desc">Zipped files and folders will be kept at this location</string>
+	
+	
+	<string name="pref_cat_misc">About</string>
+	<string name="pref_share">Tell your friends</string>
+	<string name="pref_share_desc">Share this app with your friends</string>
+	
+	<string name="pref_terms">Terms &amp; Conditions</string>
+	<string name="pref_website">Developer Website</string>
+	<string name="pref_website_desc">Visit my website</string>
+	<string name="pref_feedback">Send feedback</string>
+	<string name="pref_feedback_desc">Drop me an email. Feedback is most welcome!</string>
 	
 	<string-array name="sort_fields_entries">
         <item>Name</item>
