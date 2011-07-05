@@ -84,7 +84,7 @@ public final class FileExplorerUtils {
 
 	public static Drawable getIcon(Context mContext, File file) {
 		
-		if(file.isDirectory()) //dir
+		if(!file.isFile()) //dir
 		{
 			if(FileExplorerUtils.isProtected(file))
 			{

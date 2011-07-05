@@ -34,17 +34,17 @@ public class FileExplorerMain extends Activity {
 	private PreferenceUtil prefs;
 	private List<FileListEntry> files;
 	private FileListAdapter adapter;
-	
-	public FileExplorerMain() {
 
-		prefs = new PreferenceUtil(this);
-		currentDir = prefs.getStartDir();
-	}
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        prefs = new PreferenceUtil(this);
+		currentDir = prefs.getStartDir();
+		
         files = new ArrayList<FileListEntry>();
         
         explorerListView = (ListView)findViewById(R.id.mainExplorer_list);

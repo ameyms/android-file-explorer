@@ -30,16 +30,16 @@ public class FileListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private PreferenceUtil prefs;
 	
-	private boolean showDirSizes = false;
 	public FileListAdapter(FileExplorerMain context, List<FileListEntry> files) {
 		super();
 		mContext = context;
 		prefs = new PreferenceUtil(this.mContext);
-		showDirSizes = prefs.isFindDirSizes();
+		
 		this.files = files;
 		mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	
 	@Override
 	public int getCount() {
 		if(files == null)
@@ -70,6 +70,9 @@ public class FileListAdapter extends BaseAdapter {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		
+		boolean showDirSizes = prefs.isFindDirSizes();
+		
 		ViewHolder holder = null;
         if (convertView == null) 
         {

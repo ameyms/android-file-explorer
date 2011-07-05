@@ -31,11 +31,11 @@ public class FileListSorter implements Comparator<FileListEntry> {
 		{
 			if(file1.getPath().isDirectory() && file2.getPath().isFile())
 			{
-				return 1;
+				return -1;
 			}
 			else if(file2.getPath().isDirectory() && file1.getPath().isFile())
 			{
-				return -1;
+				return 1;
 			}
 		}
 		
