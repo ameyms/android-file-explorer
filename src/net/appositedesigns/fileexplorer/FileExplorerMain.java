@@ -63,7 +63,6 @@ public class FileExplorerMain extends Activity {
             }
 
          });
-
     }
 
     void select(File file)
@@ -104,7 +103,7 @@ public class FileExplorerMain extends Activity {
     	
     	if(FileExplorerUtils.isRoot(currentDir))
     	{
-    		super.onBackPressed();
+    		finish();
     	}
     	else
     	{
