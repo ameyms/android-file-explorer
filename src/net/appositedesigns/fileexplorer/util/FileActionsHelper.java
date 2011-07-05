@@ -81,7 +81,6 @@ public class FileActionsHelper {
 		alert.setIcon(android.R.drawable.ic_dialog_info);
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(mContext);
-		input.setPadding(2, 2, 2, 2);
 		input.setHint(mContext.getString(R.string.enter_new_name));
 		input.setSingleLine();
 		alert.setView(input);

@@ -242,7 +242,6 @@ public class FileExplorerMain extends Activity {
 		alert.setIcon(android.R.drawable.ic_dialog_info);
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
-		input.setPadding(2, 2, 2, 2);
 		input.setHint(getString(R.string.enter_folder_name));
 		input.setSingleLine();
 		alert.setView(input);
