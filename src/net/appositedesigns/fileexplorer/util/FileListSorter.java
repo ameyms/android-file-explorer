@@ -41,7 +41,7 @@ public class FileListSorter implements Comparator<FileListEntry> {
 		
 		switch (sortField) {
 		case NAME:
-			return dir * file1.getName().compareTo(file2.getName());
+			return dir * file1.getName().compareToIgnoreCase(file2.getName());
 			
 		case MTIME:
 			return dir * file1.getLastModified().compareTo(file2.getLastModified());
