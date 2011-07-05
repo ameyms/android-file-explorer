@@ -128,12 +128,16 @@ public class FileActionsHelper {
 			
 		case R.string.action_delete:
 			deleteFile(file, mContext);
+			break;
 			
 		case R.string.action_share:
 			share(file, mContext);
+			break;
 			
 		case R.string.action_rename:
 			rename(file, mContext);
+			break;
+			
 		default:
 			break;
 		}
