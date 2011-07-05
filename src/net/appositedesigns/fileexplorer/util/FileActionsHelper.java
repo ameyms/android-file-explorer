@@ -131,6 +131,9 @@ public class FileActionsHelper {
 			
 		case R.string.action_share:
 			share(file, mContext);
+			
+		case R.string.action_rename:
+			rename(file, mContext);
 		default:
 			break;
 		}
