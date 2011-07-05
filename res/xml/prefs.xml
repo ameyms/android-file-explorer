@@ -7,6 +7,10 @@
 		<CheckBoxPreference android:title="@string/pref_showhidden"
 			android:defaultValue="false" android:summaryOn="@string/pref_showhidden_on"
 			android:summaryOff="@string/pref_showhidden_off" android:key="showHidden" />
+		
+		<CheckBoxPreference android:title="@string/pref_show_sysfiles"
+			android:defaultValue="true" android:summaryOn="@string/pref_show_sysfiles_on"
+			android:summaryOff="@string/pref_show_sysfiles_off" android:key="showSysFiles" />
 			
 		<!-- <CheckBoxPreference android:title="@string/pref_show_dir_sizes"
 			android:defaultValue="false" android:summaryOn="@string/pref_show_dir_sizes_on_desc"

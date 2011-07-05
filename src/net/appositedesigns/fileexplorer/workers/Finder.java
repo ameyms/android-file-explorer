@@ -9,6 +9,7 @@ import java.util.List;
 import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.FileListSorter;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 
@@ -74,12 +75,17 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		
 		boolean findDirSizes = prefs.isFindDirSizes();
 		boolean showHidden = prefs.isShowHidden();
+		boolean showSystem = prefs.isShowSystemFiles();
 		
 		for(String fileName : children)
 		{
 			File f = new File(currentDir.getAbsolutePath()+File.separator+fileName);
 			
 			if(!f.exists())
+			{
+				continue;
+			}
+			if(FileExplorerUtils.isProtected(f) && !showSystem)
 			{
 				continue;
 			}

@@ -76,5 +76,8 @@ public final class PreferenceUtil {
 		return false;
 	//	return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIR_SIZES, false);
 	}
+	public boolean isShowSystemFiles() {
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_SYSFILES, true);
+	}
 	
 }
