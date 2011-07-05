@@ -5,8 +5,6 @@ import java.io.File;
 import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.R.drawable;
-import net.appositedesigns.fileexplorer.R.string;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.workers.Trasher;
 import android.app.AlertDialog;

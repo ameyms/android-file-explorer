@@ -58,6 +58,21 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 	protected Boolean doInBackground(File... params) {
 		
 		fileToBeDeleted = params[0];
+		
+		caller.runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				waitDialog = new ProgressDialog(caller);
+				waitDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				waitDialog.setMessage(caller.getString(R.string.deleting_path,fileToBeDeleted.getName()));
+				waitDialog.setCancelable(false);
+				
+				waitDialog.show();
+			}
+		});
+		
 		try
 		{
 			if(FileExplorerUtils.getFileToPaste().getCanonicalPath().equalsIgnoreCase(fileToBeDeleted.getCanonicalPath()))
@@ -71,18 +86,5 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 		}
 		
 	}
-	
-	@Override
-	protected void onPreExecute() {
 
-		caller.runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				waitDialog = ProgressDialog.show(caller, "", 
-			               caller.getString(R.string.deleting_path,fileToBeDeleted.getName()), true);
-			}
-		});
-		
-	}
 }
