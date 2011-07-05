@@ -192,7 +192,7 @@ public class FileExplorerMain extends Activity {
 		alert.setTitle(getString(R.string.create_folder));
 		alert.setIcon(android.R.drawable.ic_dialog_info);
 		// Set an EditText view to get user input 
-		final EditText input = new EditText(this);
+		final EditText input = new EditText(this.getApplicationContext());
 		input.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
 		input.setHint(getString(R.string.enter_folder_name));
 		input.setSingleLine();

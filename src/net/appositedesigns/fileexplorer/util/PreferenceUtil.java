@@ -73,7 +73,8 @@ public final class PreferenceUtil {
 	}
 	public boolean isFindDirSizes() {
 		
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIR_SIZES, false);
+		return false;
+	//	return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIR_SIZES, false);
 	}
 	
 }
