@@ -1,9 +1,14 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.quickactions;
 
 import java.io.File;
 
-import net.appositedesigns.fileexplorer.quickactions.ActionItem;
-import net.appositedesigns.fileexplorer.quickactions.QuickAction;
+import net.appositedesigns.fileexplorer.FileExplorerMain;
+import net.appositedesigns.fileexplorer.FileListEntry;
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.R.drawable;
+import net.appositedesigns.fileexplorer.R.string;
+import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
+import net.appositedesigns.fileexplorer.workers.Trasher;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.View;
@@ -64,7 +69,7 @@ public final class QuickActionHelper {
 			           public void onClick(DialogInterface dialog, int id) {
 
 			        	   actions.dismiss();
-			        	   mContext.deletePath(file);
+			        	   new Trasher(mContext).execute(file);
 			           }
 			       })
 			       .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

@@ -1,7 +1,10 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.util;
 
 import java.io.File;
 import java.io.IOException;
+
+import net.appositedesigns.fileexplorer.FileListEntry;
+import net.appositedesigns.fileexplorer.R;
 
 import org.apache.commons.io.FileUtils;
 
@@ -12,14 +15,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-final class FileExplorerUtils {
+public final class FileExplorerUtils {
 
 	private static File COPIED_FILE = null;
 	private static int pasteMode = 1;
 	
 	
-	static final int PASTE_MODE_COPY = 0;
-	static final int PASTE_MODE_MOVE = 1;
+	public static final int PASTE_MODE_COPY = 0;
+	public static final int PASTE_MODE_MOVE = 1;
 	
 	
 	private FileExplorerUtils(){}
@@ -45,25 +48,25 @@ final class FileExplorerUtils {
 		return (fileName.endsWith(".mp3") || fileName.endsWith(".aac") || fileName.endsWith(".ogg") || fileName.endsWith(".wav") || fileName.endsWith(".m4a") || fileName.endsWith(".wma"));
 	}
 	
-	static boolean isPicture(File file) {
+	public static boolean isPicture(File file) {
 		
 		String fileName = file.getName();
 		return (fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".bmp") || fileName.endsWith(".gif"));
 	}
 	
-	static boolean isProtected(File path)
+	public static boolean isProtected(File path)
 	{
 		return (!path.canRead() && !path.canWrite());
 	}
 
 
-	static boolean isRoot(File dir) {
+	public static boolean isRoot(File dir) {
 		
 		return dir.getAbsolutePath().equals("/");
 	}
 
 
-	static boolean isSdCard(File file) {
+	public static boolean isSdCard(File file) {
 		
 		if(file.isDirectory())
 		{
@@ -79,7 +82,7 @@ final class FileExplorerUtils {
 	}
 
 
-	static Drawable getIcon(Context mContext, File file) {
+	public static Drawable getIcon(Context mContext, File file) {
 		
 		if(file.isDirectory()) //dir
 		{
@@ -120,7 +123,7 @@ final class FileExplorerUtils {
 	}
 
 
-	static boolean delete(File fileToBeDeleted) {
+	public static boolean delete(File fileToBeDeleted) {
 
 		try
 		{
@@ -139,12 +142,12 @@ final class FileExplorerUtils {
 		
 	}
 
-	public static String prepareMeta(FileListEntry entry) {
+	public static String prepareMeta(FileListEntry entry, boolean showDirSizes) {
 		
 		File f = entry.getPath();
 		try
 		{
-			if(f.isFile())
+			if(f.isFile() || showDirSizes)
 			{
 				return FileUtils.byteCountToDisplaySize(entry.getSize());
 			}
@@ -160,7 +163,7 @@ final class FileExplorerUtils {
 		return "";
 	}
 
-	static void share(File resource, Context mContext) {
+	public static void share(File resource, Context mContext) {
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 	
 		Uri uri = Uri.fromFile(resource);
@@ -174,7 +177,7 @@ final class FileExplorerUtils {
 	
 	}
 
-	static boolean paste(int mode, File destinationDir, AbortionFlag flag) {
+	public static boolean paste(int mode, File destinationDir, AbortionFlag flag) {
 		
 		File fileBeingPasted = new File(getFileToPaste().getParent(),getFileToPaste().getName());
 		if(doPaste(mode, getFileToPaste(), destinationDir, flag))
@@ -199,7 +202,7 @@ final class FileExplorerUtils {
 			return false;
 		}
 	}
-	static boolean doPaste(int mode, File srcFile, File destinationDir, AbortionFlag flag) {
+	private static boolean doPaste(int mode, File srcFile, File destinationDir, AbortionFlag flag) {
 		
 		if(!flag.isAborted())
 		try
@@ -232,7 +235,7 @@ final class FileExplorerUtils {
 	}
 
 
-	static boolean canPaste(File destDir) {
+	public static boolean canPaste(File destDir) {
 		
 		if(getFileToPaste() == null)
 		{

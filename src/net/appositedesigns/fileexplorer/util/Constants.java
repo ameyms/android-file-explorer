@@ -1,4 +1,4 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.util;
 
 public interface Constants {
 
@@ -9,7 +9,8 @@ public interface Constants {
 	public static final String PREF_HOME_DIR = "homeDir";
 	public static final String PREF_SHOW_DIRS_FIRST = "showDirsFirst";
 	public static final String PREF_SHOW_HIDDEN = "showHidden";
-	
+	public static final String PREF_SHOW_DIR_SIZES = "showDirSizes";
+
 	public static final String SORT_DIR_ASC = "asc";
 	public static final String SORT_DIR_DESC = "desc";
 	public static final String SORT_FIELD_NAME = "name";

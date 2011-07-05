@@ -1,14 +1,14 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.util;
 
 public class AbortionFlag {
 
 	private boolean aborted = false;
 	
-	synchronized void abort()
+	public synchronized void abort()
 	{
 		aborted = true;
 	}
-	synchronized boolean isAborted()
+	public synchronized boolean isAborted()
 	{
 		return aborted;
 	}

@@ -2,18 +2,18 @@ package net.appositedesigns.fileexplorer;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
+import net.appositedesigns.fileexplorer.util.PreferenceUtil;
+import net.appositedesigns.fileexplorer.workers.FileMover;
+import net.appositedesigns.fileexplorer.workers.Finder;
+import net.appositedesigns.fileexplorer.workers.Trasher;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -25,22 +25,20 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class FileExplorerMain extends Activity {
 
 
 	private ListView explorerListView;
 	private File currentDir;
+	private PreferenceUtil prefs;
 	private List<FileListEntry> files;
 	private FileListAdapter adapter;
-	private ProgressDialog waitDialog;
-	
-	private ProgressDialog moveProgressDialog;
 	
 	public FileExplorerMain() {
 
-		currentDir = new File("/");
+		prefs = new PreferenceUtil(this);
+		currentDir = prefs.getStartDir();
 	}
     /** Called when the activity is first created. */
     @Override
@@ -91,13 +89,14 @@ public class FileExplorerMain extends Activity {
 		intent.setDataAndType(uri,type==null?"*/*":type);
 		startActivity((Intent.createChooser(intent, getString(R.string.open_using))));
 	}
-    void listContents(File dir)
+	
+    public void listContents(File dir)
     {
     	if(!dir.isDirectory() || FileExplorerUtils.isProtected(dir))
     	{
     		return;
     	}
-    	new Finder().execute(dir);
+    	new Finder(this).execute(dir);
 	}
 
     @Override
@@ -171,7 +170,7 @@ public class FileExplorerMain extends Activity {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		 
 				dialog.dismiss();
-				new FileMover(FileExplorerUtils.getPasteMode()).execute(currentDir);
+				new FileMover(FileExplorerMain.this,FileExplorerUtils.getPasteMode()).execute(currentDir);
 			}
 		});
 
@@ -223,217 +222,23 @@ public class FileExplorerMain extends Activity {
 
 	void deletePath(File path)
 	{
-		waitDialog = ProgressDialog.show(FileExplorerMain.this, "", 
-               getString(R.string.deleting_path,path.getName()), true);
-		new Trasher().execute(path);
+		new Trasher(this).execute(path);
+	}
+	public void setCurrentDir(File dir)
+	{
+		currentDir = dir;
 	}
 	
-	private class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
+	public void setNewChildren(List<FileListEntry> children)
 	{
-
-		@Override
-		protected void onPreExecute() {
-			waitDialog = ProgressDialog.show(FileExplorerMain.this, "", 
-	                getString(R.string.querying_filesys), true);
-		
-		}
-		
-		@Override
-		protected void onPostExecute(List<FileListEntry> result) {
-
-			final List<FileListEntry> childFiles = result;
-			
-			runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					waitDialog.dismiss();
-					files.clear();
-					files.addAll(childFiles);
-					adapter.notifyDataSetChanged();					
-				}
-			});
-		
-		}
-		@Override
-		protected List<FileListEntry> doInBackground(File... params) {
-			File root = params[0];
-			String[] children = root.list();
-			List<FileListEntry> childFiles = new ArrayList<FileListEntry>();
-			
-			for(String fileName : children)
-			{
-				File f = new File(root.getAbsolutePath()+File.separator+fileName);
-				
-				String fname = f.getName();
-				
-				FileListEntry child = new FileListEntry();
-				child.setName(fname);
-				child.setPath(f);
-				child.setSize(f.length());
-				child.setLastModified(new Date(f.lastModified()));
-				childFiles.add(child);
-			}
-			
-			currentDir = root;
-			return childFiles;
-		}
+		files.clear();
+		files.addAll(children);
+		adapter.notifyDataSetChanged();	
 	}
 
-	private class Trasher extends AsyncTask<File, Integer, Boolean>
-	{
-		
-		private File fileToBeDeleted;
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if(result)
-			{
-				runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						waitDialog.dismiss();
-						Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG);
-						listContents(currentDir);
-					}
-				});
-			}
-			else
-			{
-				FileExplorerUtils.setPasteSrcFile(fileToBeDeleted, FileExplorerUtils.getPasteMode());
-				runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						waitDialog.dismiss();
-						new Builder(FileExplorerMain.this)
-						.setIcon(android.R.drawable.ic_dialog_alert)
-						.setTitle(getString(R.string.error))
-						.setMessage(getString(R.string.delete_failed, fileToBeDeleted.getName()))
-						.show();
-						
-						
-					}
-				});
-			}
-		}
-		@Override
-		protected Boolean doInBackground(File... params) {
-			
-			fileToBeDeleted = params[0];
-			try
-			{
-				if(FileExplorerUtils.getFileToPaste().getCanonicalPath().equalsIgnoreCase(fileToBeDeleted.getCanonicalPath()))
-				{
-					FileExplorerUtils.setPasteSrcFile(null, FileExplorerUtils.getPasteMode());
-				}
-				return FileExplorerUtils.delete(fileToBeDeleted);
-			}
-			catch (Exception e) {
-				return false;
-			}
-			
-		}
+	public void refresh() {
+		listContents(currentDir);
 	}
 	
-	private class FileMover extends AsyncTask<File, Integer, Boolean>
-	{
-		private int mode= 1;
-		private AbortionFlag flag;
-		public FileMover(int mode) {
-			this.mode =mode;
-			flag = new AbortionFlag();
-		}
-		@Override
-		protected void onPostExecute(Boolean result) {
-			if(result)
-			{
-				if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
-				{
-					FileExplorerUtils.setPasteSrcFile(null, 0);
-				}
-				runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						if(moveProgressDialog.isShowing())
-						{
-							moveProgressDialog.dismiss();
-						}
-						if(mode==FileExplorerUtils.PASTE_MODE_COPY)
-						{
-							Toast.makeText(getApplicationContext(), getString(R.string.copy_complete), Toast.LENGTH_LONG);
-						}
-						else
-						{
-							Toast.makeText(getApplicationContext(), getString(R.string.move_complete), Toast.LENGTH_LONG);
-						}
-						listContents(currentDir);
-					}
-				});
-			}
-			else
-			{
-				runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						if(moveProgressDialog.isShowing())
-						{
-							moveProgressDialog.dismiss();
-						}
-						Toast.makeText(getApplicationContext(), getString(R.string.generic_operation_failed), Toast.LENGTH_LONG);
-					}
-				});
-			}
-		}
-		@Override
-		protected Boolean doInBackground(File... params) {
-			
-			File destDir = params[0];
-			return FileExplorerUtils.paste(mode, destDir, flag);
-			
-		}
-		
-		@Override
-		protected void onPreExecute() {
-			runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					
-					String message = getString(R.string.copying_path,FileExplorerUtils.getFileToPaste().getName());
-					if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
-					{
-						message = 
-							 getString(R.string.moving_path,FileExplorerUtils.getFileToPaste().getName());
-					}
-					moveProgressDialog = new ProgressDialog(FileExplorerMain.this);
-					moveProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-					moveProgressDialog.setMessage(message);
-					moveProgressDialog.setButton(getString(R.string.run_in_background), new OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							dialog.dismiss();
-							
-						}
-					});
-					moveProgressDialog.setButton2(getString(R.string.cancel), new OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							
-							dialog.dismiss();
-							FileMover.this.flag.abort();
-						}
-					});
-					moveProgressDialog.show();
-					
-				}
-			});
-		}
-	}
+	
 }
