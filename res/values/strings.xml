@@ -36,6 +36,9 @@
 	<string name="copied_toast">%1$s copied</string>
 	<string name="cut_toast">%1$s cut</string>
 	
+	<string name="access_denied">Access Denied</string>
+	<string name="cant_open_dir">%1$s is a protected directory. You will require root access on your device to open and browse this directory</string>
+	
 	<string name="confirm_delete">Are you sure you want to delete %1$s ?</string>
 	
 	<string name="confirm_paste_text">Are you sure you want to paste %1$s ?</string>
@@ -71,9 +74,9 @@
 	<string name="pref_show_dir_sizes_on_desc">Folder sizes are rolled up</string>
 	<string name="pref_show_dir_sizes_off_desc">Folder sizes are not shown</string>
 	
-	<string name="pref_show_sysfiles">Show System files</string>
-	<string name="pref_show_sysfiles_on">System files are folders are shown</string>
-	<string name="pref_show_sysfiles_off">System files and folders are hidden</string>
+	<string name="pref_show_sysfiles">Show Protected directories</string>
+	<string name="pref_show_sysfiles_on">Protected system folders are shown</string>
+	<string name="pref_show_sysfiles_off">Protected system folders are hidden</string>
 	
 	
 	<string name="pref_cat_sorting">Sorting</string>

@@ -12,6 +12,7 @@ import net.appositedesigns.fileexplorer.workers.Finder;
 import net.appositedesigns.fileexplorer.workers.Trasher;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -106,7 +107,15 @@ public class FileExplorerMain extends Activity {
     }
     void select(File file)
     {
-        if(file.isDirectory() && !FileExplorerUtils.isProtected(file))
+    	if(FileExplorerUtils.isProtected(file))
+    	{
+    		new Builder(this)
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setTitle(getString(R.string.access_denied))
+			.setMessage(getString(R.string.cant_open_dir, file.getName()))
+			.show();
+    	}
+    	else if(file.isDirectory())
         {
        	 listContents(file);
         }
