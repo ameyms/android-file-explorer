@@ -5,13 +5,9 @@ import java.io.File;
 import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
-import net.appositedesigns.fileexplorer.workers.Trasher;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 public final class QuickActionHelper {
 
@@ -35,8 +31,7 @@ public final class QuickActionHelper {
 
 			@Override
 			public void onClick(View arg0) {
-				FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_COPY);
-				Toast.makeText(mContext, ""+file.getName()+" copied", Toast.LENGTH_SHORT);
+				FileActionsHelper.copyFile(file, mContext);
 				actions.dismiss();
 			}
 		});
@@ -46,8 +41,7 @@ public final class QuickActionHelper {
 
 			@Override
 			public void onClick(View arg0) {
-				FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_MOVE);
-				Toast.makeText(mContext, ""+file.getName()+" cut", Toast.LENGTH_SHORT);
+				FileActionsHelper.cutFile(file, mContext);
 				actions.dismiss();
 			}
 		});
@@ -59,26 +53,9 @@ public final class QuickActionHelper {
 			@Override
 			public void onClick(final View v) {
 				
-				AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-				builder.setCancelable(true);
-				builder.setMessage("Are you sure you want to delete "+file.getName()+"?")
-			       .setCancelable(false)
-			       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-
-			        	   actions.dismiss();
-			        	   new Trasher(mContext).execute(file);
-			           }
-			       })
-			       .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-			           public void onClick(DialogInterface dialog, int id) {
-			                dialog.cancel();
-			                actions.dismiss();
-			           }
-			       }).setTitle(R.string.msg_title_confim).setIcon(android.R.drawable.ic_dialog_alert);
+				actions.dismiss();
+				FileActionsHelper.deleteFile(file, mContext);
 				
-				AlertDialog confirm = builder.create();
-				confirm.show();
 			}
 		});
 		
@@ -90,7 +67,7 @@ public final class QuickActionHelper {
 					@Override
 					public void onClick(View arg0) {
 						
-						FileExplorerUtils.share(file, mContext);
+						FileActionsHelper.share(file, mContext);
 						
 					}
 				});

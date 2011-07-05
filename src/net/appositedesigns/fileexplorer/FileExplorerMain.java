@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.workers.FileMover;
@@ -16,10 +17,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -63,8 +66,44 @@ public class FileExplorerMain extends Activity {
             }
 
          });
+        
+        registerForContextMenu(explorerListView);
     }
-
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+    		ContextMenuInfo menuInfo) {
+    	
+    	if(v.getId() == R.id.mainExplorer_list);
+    	{
+    		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+    		File selected = files.get(info.position).getPath();
+    		if(FileExplorerUtils.isProtected(selected))
+    		{
+    			return;
+    		}
+    		else
+    		{
+    			menu.setHeaderTitle(selected.getName());
+    			int[] actions = FileActionsHelper.getContextMenuOptions(selected);
+    			for(int i=0;i<actions.length;i++)
+    			{
+    				menu.add(Menu.NONE, actions[i], i, actions[i]);
+    			}
+    		}
+    		
+    	}
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+    	
+      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+      int action = item.getItemId();
+      File selected = files.get(info.position).getPath();
+      FileActionsHelper.doOperation(selected,action, this);
+      
+      return true;
+    }
     void select(File file)
     {
         if(file.isDirectory() && !FileExplorerUtils.isProtected(file))

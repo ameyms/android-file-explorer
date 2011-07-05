@@ -93,7 +93,7 @@ public class FileListAdapter extends BaseAdapter {
         holder.resIcon.setImageDrawable(FileExplorerUtils.getIcon(mContext, currentFile.getPath()));
         String meta = FileExplorerUtils.prepareMeta(currentFile, showDirSizes);
         holder.resMeta.setText(meta);
-        if(FileExplorerUtils.isProtected(currentFile.getPath()))
+        if(FileExplorerUtils.isProtected(currentFile.getPath()) || FileExplorerUtils.isSdCard(currentFile.getPath()))
         {
         	holder.resActions.setVisibility(View.INVISIBLE);
         }
