@@ -142,6 +142,9 @@ public class FileExplorerMain extends Activity {
 			confirmPaste();
 			return true;
 
+		case R.id.menu_refresh:
+			refresh();
+			return true;
 		case R.id.menu_newfolder:
 			confirmCreateFolder();
         	return true;
