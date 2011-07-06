@@ -153,7 +153,7 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 				
 				if(zippedAtleastOne)
 				{
-					return zipFile.getCanonicalPath();
+					return zipFile.getAbsolutePath();
 				}
 			}
 			

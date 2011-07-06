@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.Log;
 
 public final class FileExplorerUtils {
@@ -67,7 +68,11 @@ public final class FileExplorerUtils {
 
 	public static boolean isSdCard(File file) {
 		
-		return (file.getAbsolutePath().equals("/sdcard") && file.isDirectory());
+		try {
+			return (file.getCanonicalPath().equals(Environment.getExternalStorageDirectory().getCanonicalPath()));
+		} catch (IOException e) {
+			return false;
+		}
 		
 	}
 
