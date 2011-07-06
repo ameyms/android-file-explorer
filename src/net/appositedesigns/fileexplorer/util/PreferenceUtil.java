@@ -17,7 +17,7 @@ public final class PreferenceUtil {
 	}
 	public boolean isShowDirsOnTop()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIRS_FIRST, false);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIRS_FIRST, true);
 	}
 	public boolean isShowHidden()
 	{
