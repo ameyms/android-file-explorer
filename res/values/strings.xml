@@ -28,6 +28,7 @@
 	<string name="error">Error</string>
 	<string name="success">Success</string>
 	<string name="abort">Aborted</string>
+	<string name="zip">Zip</string>
 	
 	<string name="cancel">Cancel</string>
 	<string name="cancelling">Cancelling...</string>
@@ -39,6 +40,8 @@
 	<string name="cut_toast">%1$s cut</string>
 	
 	<string name="zip_success">Selected files(s) have been zipped to %1$s</string>
+	<string name="zip_dir_empty">Zip failed. Specified folder is empty.</string>
+	
 	<string name="zip_dest_invalid">Zip file destination was invalid. Please check the destination in Menu &gt; and try again</string>
 	<string name="zip_failed">One or more selected file(s) could not be zipped. Please verify zip file name and try again</string>
 	<string name="zip_in_progress">Files are being zipped. Please wait.</string>

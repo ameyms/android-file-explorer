@@ -100,15 +100,45 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 				{
 					if(fileToBeZipped.isDirectory())
 					{
-						ZipUtil.zipFolder(fileToBeZipped.getAbsolutePath(), zipFile.getAbsolutePath(),flag);
+						if(fileToBeZipped.listFiles().length==0)
+						{
+							caller.runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+					
+									new Builder(caller)
+									.setIcon(android.R.drawable.ic_dialog_alert)
+									.setTitle(caller.getString(R.string.error))
+									.setMessage(caller.getString(R.string.zip_dest_invalid))
+									.setPositiveButton(android.R.string.ok, new OnClickListener() {
+										
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+					
+											dialog.dismiss();
+										}
+									})
+									.show();
+								}
+							});
+							
+							continue;
+						}
+						else
+						{
+							ZipUtil.zipFolder(fileToBeZipped.getAbsolutePath(), zipFile.getAbsolutePath(),flag);
+							zippedAtleastOne = true;
+						}
 						
 					}
 					else
 					{
 						ZipUtil.zipFile(fileToBeZipped.getAbsolutePath(), zipFile.getAbsolutePath(),flag);
+						zippedAtleastOne = true;
 					}
 				}
-				zippedAtleastOne = true;
+				
 			}
 			
 			return zipFile.getCanonicalPath();
@@ -147,8 +177,8 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 	
 					new Builder(caller)
 					.setIcon(android.R.drawable.ic_dialog_alert)
-					.setTitle(caller.getString(R.string.error))
-					.setMessage(caller.getString(R.string.zip_failed))
+					.setTitle(caller.getString(R.string.zip))
+					.setMessage(caller.getString(R.string.zip_dir_empty))
 					.setPositiveButton(android.R.string.ok, new OnClickListener() {
 						
 						@Override
@@ -208,4 +238,6 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 			}
 		});
 	}
+
+
 }

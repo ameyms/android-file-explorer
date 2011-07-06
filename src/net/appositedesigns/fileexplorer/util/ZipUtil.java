@@ -14,28 +14,48 @@ public class ZipUtil {
 
 	static public void zipFolder(String srcFolder, String destZipFile,
 			AbortionFlag flag) throws Exception {
+		
+		if (flag.isAborted()) {
+			return;
+		}
 		ZipOutputStream zip = null;
 		FileOutputStream fileWriter = null;
-
-		fileWriter = new FileOutputStream(destZipFile);
-		zip = new ZipOutputStream(fileWriter);
-
-		addFolderToZip("", srcFolder, flag, zip);
-		zip.flush();
-		zip.close();
+		
+		try
+		{
+			fileWriter = new FileOutputStream(destZipFile);
+			zip = new ZipOutputStream(fileWriter);
+	
+			addFolderToZip("", srcFolder, flag, zip);
+		}
+		finally
+		{
+			zip.flush();
+			zip.close();
+		}
 	}
 
 	static public void zipFile(String srcFile, String destZipFile,
 			AbortionFlag flag) throws Exception {
+		
+		if (flag.isAborted()) {
+			return;
+		}
 		ZipOutputStream zip = null;
 		FileOutputStream fileWriter = null;
 
-		fileWriter = new FileOutputStream(destZipFile);
-		zip = new ZipOutputStream(fileWriter);
-
-		addFileToZip("", srcFile, flag, zip);
-		zip.flush();
-		zip.close();
+		try
+		{
+			fileWriter = new FileOutputStream(destZipFile);
+			zip = new ZipOutputStream(fileWriter);
+	
+			addFileToZip("", srcFile, flag, zip);
+		}
+		finally
+		{
+			zip.flush();
+			zip.close();
+		}
 	}
 
 	static private void addFileToZip(String path, String srcFile,
