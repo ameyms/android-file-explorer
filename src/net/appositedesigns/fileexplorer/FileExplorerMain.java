@@ -73,7 +73,7 @@ public class FileExplorerMain extends ListActivity {
     public void onCreateContextMenu(ContextMenu menu, View v,
     		ContextMenuInfo menuInfo) {
     	
-    	if(v.getId() == android.R.id.list);
+    	if(v.getId() == getListView().getId());
     	{
     		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
     		File selected = files.get(info.position).getPath();
