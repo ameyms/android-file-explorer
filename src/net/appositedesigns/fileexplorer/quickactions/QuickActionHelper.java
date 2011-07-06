@@ -70,6 +70,7 @@ public final class QuickActionHelper {
 						
 					}
 				});
+				break;
 				
 			case R.string.action_share:
 				action = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_share));
