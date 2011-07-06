@@ -32,21 +32,7 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		this.caller = caller;
 		prefs = new PreferenceUtil(this.caller);
 	}
-	@Override
-	protected void onPreExecute() {
-		caller.runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				waitDialog = ProgressDialog.show(caller, "", 
-		                caller.getString(R.string.querying_filesys), true);
-				
-			}
-		});
-		
-	
-	}
-	
+
 	@Override
 	protected void onPostExecute(List<FileListEntry> result) {
 
@@ -69,6 +55,36 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 	}
 	@Override
 	protected List<FileListEntry> doInBackground(File... params) {
+		
+		Thread waitForASec = new Thread() {
+			
+			@Override
+			public void run() {
+				
+				waitDialog = new ProgressDialog(caller);
+				waitDialog.setTitle("");
+				waitDialog.setMessage(caller.getString(R.string.querying_filesys));
+				waitDialog.setIndeterminate(true);
+				
+				try {
+					Thread.sleep(100);
+					if(this.isInterrupted())
+					{
+						return;
+					}
+					else
+					{
+						waitDialog.show();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				
+			}
+		};
+		caller.runOnUiThread(waitForASec);
+		
 		currentDir = params[0];
 		String[] children = currentDir.list();
 		List<FileListEntry> childFiles = new ArrayList<FileListEntry>();
@@ -113,6 +129,7 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		FileListSorter sorter = new FileListSorter(caller);
 		Collections.sort(childFiles, sorter);
 		
+		waitForASec.interrupt();
 		return childFiles;
 	}
 }
