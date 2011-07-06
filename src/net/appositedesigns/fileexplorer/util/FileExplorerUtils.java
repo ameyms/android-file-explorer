@@ -272,4 +272,11 @@ public final class FileExplorerUtils {
 			return true;
 		}
 	}
+
+	public static CharSequence[] getFileProperties(FileListEntry file, FileExplorerMain context) {
+		
+		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
+				context.getString(R.string.mtime_is, file.getLastModified().toLocaleString()),
+				context.getString(R.string.size_is, file.getSize())};
+	}
 }

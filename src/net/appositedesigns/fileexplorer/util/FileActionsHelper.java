@@ -3,6 +3,7 @@ package net.appositedesigns.fileexplorer.util;
 import java.io.File;
 
 import net.appositedesigns.fileexplorer.FileExplorerMain;
+import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.workers.Trasher;
 import net.appositedesigns.fileexplorer.workers.Zipper;
@@ -10,8 +11,8 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -36,6 +37,26 @@ public class FileActionsHelper {
 		Toast.makeText(mContext.getApplicationContext(),  mContext.getString(R.string.cut_toast, file.getName()), Toast.LENGTH_SHORT).show();
 	}
 	
+	public static void showProperties(final FileListEntry file, final FileExplorerMain mContext)
+	{
+		new Builder(mContext)
+		.setTitle(mContext.getString(R.string.properties_for, file.getName()))
+		.setIcon(android.R.drawable.ic_dialog_info)
+		.setItems(FileExplorerUtils.getFileProperties(file, mContext), new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		})
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  
+			dialog.dismiss();
+		  }
+		})
+		.show();
+	}
 	public static void deleteFile(final File file, final FileExplorerMain mContext)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -176,8 +197,9 @@ public class FileActionsHelper {
 			});
 		}
 	}
-	public static void doOperation(File file,int action, FileExplorerMain mContext) {
+	public static void doOperation(FileListEntry entry,int action, FileExplorerMain mContext) {
 		
+		File file = entry.getPath();
 		switch (action) {
 		case R.string.action_copy:
 			copyFile(file, mContext);
@@ -201,6 +223,11 @@ public class FileActionsHelper {
 			
 		case R.string.action_zip:
 			zip(file, mContext);
+			break;
+			
+		case R.string.action_prop:
+			showProperties(entry, mContext);
+			break;
 		default:
 			break;
 		}

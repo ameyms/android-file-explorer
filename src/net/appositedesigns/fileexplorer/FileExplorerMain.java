@@ -99,7 +99,7 @@ public class FileExplorerMain extends ListActivity {
     	
       AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
       int action = item.getItemId();
-      File selected = files.get(info.position).getPath();
+      FileListEntry selected = files.get(info.position);
       FileActionsHelper.doOperation(selected,action, this);
       
       return true;
