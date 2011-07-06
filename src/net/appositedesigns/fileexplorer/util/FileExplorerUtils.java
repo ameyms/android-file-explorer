@@ -3,6 +3,7 @@ package net.appositedesigns.fileexplorer.util;
 import java.io.File;
 import java.io.IOException;
 
+import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
 
@@ -251,6 +252,24 @@ public final class FileExplorerUtils {
 		catch (Exception e) {
 			
 			return false;
+		}
+	}
+
+	public static boolean canShowActions(FileListEntry currentFile, FileExplorerMain mContext) {
+		
+		PreferenceUtil prefs = new PreferenceUtil(mContext);
+		File path = currentFile.getPath();
+		if(isProtected(path))
+		{
+			return false;
+		}
+		if(isSdCard(path))
+		{
+			return prefs.isEnableSdCardOptions();
+		}
+		else
+		{
+			return true;
 		}
 	}
 }
