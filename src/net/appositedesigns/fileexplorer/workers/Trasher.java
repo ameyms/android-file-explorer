@@ -8,10 +8,12 @@ import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Trasher extends AsyncTask<File, Integer, Boolean>
 {
+	private static final String TAG = Trasher.class.getName();
 	
 	private File fileToBeDeleted;
 	private FileExplorerMain caller;
@@ -23,8 +25,11 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 	}
 	@Override
 	protected void onPostExecute(Boolean result) {
+		
+		Log.v(TAG, "In post execute. Result of deletion was - "+result);
 		if(result)
 		{
+			Log.i(TAG, fileToBeDeleted.getAbsolutePath()+" deleted successfully");
 			caller.runOnUiThread(new Runnable() {
 				
 				@Override
@@ -75,13 +80,16 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 		
 		try
 		{
-			if(FileExplorerUtils.getFileToPaste().getCanonicalPath().equalsIgnoreCase(fileToBeDeleted.getCanonicalPath()))
+			Log.v(TAG, "Checking if file on clipboard is same as that being deleted");
+			if(FileExplorerUtils.getFileToPaste().getCanonicalPath().equals(fileToBeDeleted.getCanonicalPath()))
 			{
+				Log.v(TAG, "File on clipboard is being deleted");
 				FileExplorerUtils.setPasteSrcFile(null, FileExplorerUtils.getPasteMode());
 			}
 			return FileExplorerUtils.delete(fileToBeDeleted);
 		}
 		catch (Exception e) {
+			Log.e(TAG, "Error occured while deleting file "+fileToBeDeleted.getAbsolutePath(),e);
 			return false;
 		}
 		

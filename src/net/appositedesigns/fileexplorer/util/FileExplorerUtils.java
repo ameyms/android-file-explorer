@@ -14,6 +14,7 @@ import android.util.Log;
 
 public final class FileExplorerUtils {
 
+	private static final String TAG = FileExplorerUtils.class.getName();
 	private static File COPIED_FILE = null;
 	private static int pasteMode = 1;
 	
@@ -162,20 +163,28 @@ public final class FileExplorerUtils {
 
 	public static boolean paste(int mode, File destinationDir, AbortionFlag flag) {
 		
+		Log.v(TAG, "Will now paste file on clipboard");
 		File fileBeingPasted = new File(getFileToPaste().getParent(),getFileToPaste().getName());
 		if(doPaste(mode, getFileToPaste(), destinationDir, flag))
 		{
 			if(fileBeingPasted.isFile())
 			{
-				FileUtils.deleteQuietly(fileBeingPasted);
+				if(FileUtils.deleteQuietly(fileBeingPasted))
+				{
+					Log.i(TAG, "File deleted after paste "+fileBeingPasted.getAbsolutePath());
+				}
+				else
+				{
+					Log.w(TAG, "File NOT deleted after paste "+fileBeingPasted.getAbsolutePath());
+				}
 			}
 			else
 			{
 				try {
 					FileUtils.deleteDirectory(fileBeingPasted);
 				} catch (IOException e) {
-					Log.e(FileExplorerUtils.class.getName(), e.getMessage());
-					e.printStackTrace();
+					Log.e(TAG, "Error while deleting directory after paste - "+fileBeingPasted.getAbsolutePath(), e);
+					return false;
 				}
 			}
 			return true;

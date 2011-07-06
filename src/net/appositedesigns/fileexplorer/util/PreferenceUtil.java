@@ -2,6 +2,7 @@ package net.appositedesigns.fileexplorer.util;
 
 import java.io.File;
 
+import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
@@ -80,4 +81,29 @@ public final class PreferenceUtil {
 		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_SYSFILES, true);
 	}
 	
+	public File getZipDestinationDir() throws LocationInvalidException
+	{
+		String dirPath= PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_ZIP_LOCATION, "/sdcard/zipped");
+		File dir = new File(dirPath);
+		
+		if(dir.exists() && dir.isDirectory())
+		{
+			return dir;
+		}
+		else if(!dir.exists())
+		{
+			dir.mkdirs();
+			return dir;
+		}
+		else
+		{
+			throw new LocationInvalidException(dirPath);
+		}
+	}
+	public boolean isEnableSdCardOptions() {
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SDCARD_OPTIONS, true);
+	}
+	public boolean isZipEnabled() {
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_ZIP_ENABLE, true);
+	}
 }

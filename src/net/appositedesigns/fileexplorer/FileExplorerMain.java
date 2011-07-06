@@ -10,9 +10,9 @@ import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
 import net.appositedesigns.fileexplorer.workers.Trasher;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,8 +28,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class FileExplorerMain extends Activity {
+public class FileExplorerMain extends ListActivity {
 
 
 	private ListView explorerListView;
@@ -44,13 +45,11 @@ public class FileExplorerMain extends Activity {
         
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
         prefs = new PreferenceUtil(this);
 		currentDir = prefs.getStartDir();
-		
         files = new ArrayList<FileListEntry>();
         
-        explorerListView = (ListView)findViewById(R.id.mainExplorer_list);
+        explorerListView = (ListView)getListView();
         
         adapter = new FileListAdapter(this, files);
         explorerListView.setAdapter(adapter);
@@ -74,7 +73,7 @@ public class FileExplorerMain extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v,
     		ContextMenuInfo menuInfo) {
     	
-    	if(v.getId() == R.id.mainExplorer_list);
+    	if(v.getId() == android.R.id.list);
     	{
     		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
     		File selected = files.get(info.position).getPath();
@@ -82,10 +81,11 @@ public class FileExplorerMain extends Activity {
     		{
     			return;
     		}
-    		else
+    		
+    		int[] actions = FileActionsHelper.getContextMenuOptions(selected, this);
+			if(actions.length>0)
     		{
     			menu.setHeaderTitle(selected.getName());
-    			int[] actions = FileActionsHelper.getContextMenuOptions(selected);
     			for(int i=0;i<actions.length;i++)
     			{
     				menu.add(Menu.NONE, actions[i], i, actions[i]);
@@ -279,6 +279,11 @@ public class FileExplorerMain extends Activity {
 	
 	public void setNewChildren(List<FileListEntry> children)
 	{
+		TextView emptyText = (TextView)findViewById(android.R.id.empty);
+		if(emptyText!=null)
+		{
+			emptyText.setText(R.string.empty_folder);
+		}
 		files.clear();
 		files.addAll(children);
 		adapter.notifyDataSetChanged();	

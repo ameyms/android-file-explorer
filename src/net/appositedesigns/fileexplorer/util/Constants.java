@@ -17,6 +17,12 @@ public interface Constants {
 	public static final String SORT_FIELD_NAME = "name";
 	public static final String SORT_FIELD_SIZE = "size";
 	public static final String SORT_FIELD_M_TIME = "mtime";
+
+	public static final String PREF_ZIP_LOCATION = "zipLocation";
+
+	public static final String PREF_SDCARD_OPTIONS = "sdCardOptions";
+
+	public static final String PREF_ZIP_ENABLE = "zipEnable";
 	
 	
 }

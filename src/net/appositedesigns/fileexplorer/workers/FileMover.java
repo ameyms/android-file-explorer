@@ -10,10 +10,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 public class FileMover extends AsyncTask<File, Integer, Boolean>
 {
+	private static final String TAG = FileMover.class.getName();
+	
 	private int mode= 1;
 	private AbortionFlag flag;
 	private FileExplorerMain caller;
@@ -26,10 +29,13 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 	}
 	@Override
 	protected void onPostExecute(Boolean result) {
+		
+		Log.v(TAG, "Inside post execute. Result of paste operation is - "+result);
 		if(result)
 		{
 			if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
 			{
+				Log.v(TAG, "Paste mode was MOVE - set src file to null");
 				FileExplorerUtils.setPasteSrcFile(null, 0);
 			}
 			caller.runOnUiThread(new Runnable() {
@@ -70,6 +76,7 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 	@Override
 	protected Boolean doInBackground(File... params) {
 		
+		Log.v(TAG, "Started doInBackground");
 		File destDir = params[0];
 		return FileExplorerUtils.paste(mode, destDir, flag);
 		

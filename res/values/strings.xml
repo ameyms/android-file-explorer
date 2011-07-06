@@ -13,13 +13,12 @@
 	<string name="action_unmount">Unmount</string>
 	<string name="action_format">Format</string>
 	<string name="action_share">Share</string>
+	<string name="action_zip">Zip</string>
 
 	<string name="msg_delete_success">Path successfully deleted</string>
 	<string name="msg_delete_fail">Path could not be deleted</string>
-	<string name="msg_title_confim">Confirm</string>
-	<string name="msg_title_success">Success</string>
-	<string name="msg_title_failed">Error</string>
 	
+	<string name="empty_folder">This folder is empty</string>
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
 	<string name="menu_preferences">Preferences</string>
@@ -28,13 +27,31 @@
 	<string name="confirm">Confirm</string>
 	<string name="error">Error</string>
 	<string name="success">Success</string>
+	<string name="abort">Aborted</string>
+	
 	<string name="cancel">Cancel</string>
+	<string name="cancelling">Cancelling...</string>
 	<string name="run_in_background">Run in Background</string>
 	<string name="share_via">Share via</string>
 	<string name="open_using">Open using</string>
 	
 	<string name="copied_toast">%1$s copied</string>
 	<string name="cut_toast">%1$s cut</string>
+	
+	<string name="zip_success">Selected files(s) have been zipped to %1$s</string>
+	<string name="zip_dest_invalid">Zip file destination was invalid. Please check the destination in Menu &gt; and try again</string>
+	<string name="zip_failed">One or more selected file(s) could not be zipped. Please verify zip file name and try again</string>
+	<string name="zip_in_progress">Files are being zipped. Please wait.</string>
+	<string name="zip_aborted">Zip was aborted.</string>
+	<string name="zip_dialog">Create Zip in %1$s</string>
+	<string name="enter_zip_file_name">Enter zip file name</string>
+	<string name="zip_abort_partial">Zip operation was aborted. However, one or more files were copied to %1$s</string>
+	
+	<string name="copy_aborted">Copy was aborted.</string>
+	<string name="copy_abort_partial">Copy operation was aborted. However, one or more files were copied.</string>
+	
+	<string name="move_aborted">Move was aborted.</string>
+	<string name="move_abort_partial">Move operation was aborted. However, one or more files were moved.</string>
 	
 	<string name="access_denied">Access Denied</string>
 	<string name="cant_open_dir">%1$s is a protected directory. You will require root access on your device to open and browse this directory</string>
@@ -74,7 +91,7 @@
 	<string name="pref_show_dir_sizes_on_desc">Folder sizes are rolled up</string>
 	<string name="pref_show_dir_sizes_off_desc">Folder sizes are not shown</string>
 	
-	<string name="pref_show_sysfiles">Show Protected directories</string>
+	<string name="pref_show_sysfiles">Show protected folders</string>
 	<string name="pref_show_sysfiles_on">Protected system folders are shown</string>
 	<string name="pref_show_sysfiles_off">Protected system folders are hidden</string>
 	
@@ -98,6 +115,9 @@
 	<string name="pref_zip_location">Zip Location</string>
 	<string name="pref_zip_location_desc">Zipped files and folders will be kept at this location</string>
 	
+	<string name="pref_show_sdcard_options">SD Card Options</string>
+	<string name="pref_show_sdcard_options_on">Unmount, format options are shown for SD card</string>
+	<string name="pref_show_sdcard_options_off">SD Card Options are hidden</string>
 	
 	<string name="pref_cat_misc">About</string>
 	<string name="pref_share">Tell your friends</string>
