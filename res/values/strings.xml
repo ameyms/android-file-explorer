@@ -138,6 +138,7 @@
 	<string name="mtime_is">Last Modified on %1$s</string>
 	<string name="size_is">Size: %1$s</string>
 
+	<string name="system_path">System</string>
 	<string-array name="sort_fields_entries">
         <item>Name</item>
         <item>Size</item>

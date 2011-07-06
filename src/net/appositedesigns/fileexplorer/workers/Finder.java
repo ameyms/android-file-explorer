@@ -12,11 +12,9 @@ import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.FileListSorter;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
-
-import org.apache.commons.io.FileUtils;
-
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.StatFs;
 import android.util.Log;
 
 public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
@@ -97,7 +95,6 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		String[] children = currentDir.list();
 		List<FileListEntry> childFiles = new ArrayList<FileListEntry>();
 		
-		boolean findDirSizes = prefs.isFindDirSizes();
 		boolean showHidden = prefs.isShowHidden();
 		boolean showSystem = prefs.isShowSystemFiles();
 		
@@ -122,9 +119,11 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 			FileListEntry child = new FileListEntry();
 			child.setName(fname);
 			child.setPath(f);
-			if(f.isDirectory() && findDirSizes)
+			if(f.isDirectory())
 			{
-				child.setSize(FileUtils.sizeOfDirectory(f));
+				StatFs stat = new StatFs(f.getPath());
+				long bytesAvailable = (long)stat.getBlockSize() *(long)stat.getAvailableBlocks();
+				child.setSize((bytesAvailable));
 			}
 			else
 			{

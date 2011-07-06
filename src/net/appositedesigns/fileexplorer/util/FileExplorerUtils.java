@@ -67,17 +67,8 @@ public final class FileExplorerUtils {
 
 	public static boolean isSdCard(File file) {
 		
-		if(file.isDirectory())
-		{
-			if(file.getName().equalsIgnoreCase("sdcard"))
-			{
-				if(file.getParentFile().getAbsolutePath().equalsIgnoreCase("/"))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
+		return (file.getAbsolutePath().equals("/sdcard") && file.isDirectory());
+		
 	}
 
 
@@ -141,19 +132,17 @@ public final class FileExplorerUtils {
 		
 	}
 
-	public static String prepareMeta(FileListEntry entry, boolean showDirSizes) {
+	public static String prepareMeta(FileListEntry file,FileExplorerMain context) {
 		
-		File f = entry.getPath();
+		File f = file.getPath();
 		try
 		{
-			if(f.isFile() || showDirSizes)
+			if(isProtected(f))
 			{
-				return FileUtils.byteCountToDisplaySize(entry.getSize());
+				return context.getString(R.string.system_path);
 			}
-			else if(isProtected(f))
-			{
-				return "System File";
-			}
+			return context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()));
+			
 		}
 		catch (Exception e) {
 			Log.e(FileExplorerUtils.class.getName(), e.getMessage());
@@ -277,6 +266,6 @@ public final class FileExplorerUtils {
 		
 		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
 				context.getString(R.string.mtime_is, file.getLastModified().toLocaleString()),
-				context.getString(R.string.size_is, file.getSize())};
+				context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()))};
 	}
 }
