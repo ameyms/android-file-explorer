@@ -37,6 +37,18 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 
 		final String zipFile = result;
 		
+		
+		caller.runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				if (zipProgress != null && zipProgress.isShowing()) {
+					zipProgress.dismiss();
+				}
+			}
+		});
+		
 		if(zipFile!=null)
 		{
 			caller.runOnUiThread(new Runnable() {
@@ -68,7 +80,7 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 		try
 		{
 			File zipDest = new PreferenceUtil(caller).getZipDestinationDir();
-			File zipFile = new File(zipDest, zipName);
+			File zipFile = new File(zipDest, zipName+".zip");
 			zippedAtleastOne = false;
 			for(File fileToBeZipped : params)
 			{
@@ -109,8 +121,8 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 					
 									new Builder(caller)
 									.setIcon(android.R.drawable.ic_dialog_alert)
-									.setTitle(caller.getString(R.string.error))
-									.setMessage(caller.getString(R.string.zip_dest_invalid))
+									.setTitle(caller.getString(R.string.zip))
+									.setMessage(caller.getString(R.string.zip_dir_empty))
 									.setPositiveButton(android.R.string.ok, new OnClickListener() {
 										
 										@Override
@@ -139,9 +151,12 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 					}
 				}
 				
+				if(zippedAtleastOne)
+				{
+					return zipFile.getCanonicalPath();
+				}
 			}
 			
-			return zipFile.getCanonicalPath();
 			
 		}
 		catch (LocationInvalidException e) {
@@ -191,17 +206,7 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 				}
 			});
 		}
-		
-		caller.runOnUiThread(new Runnable() {
 
-			@Override
-			public void run() {
-
-				if (zipProgress != null && zipProgress.isShowing()) {
-					zipProgress.dismiss();
-				}
-			}
-		});
 		return null;
 	}
 
