@@ -28,7 +28,8 @@ public final class QuickActionHelper {
 		
 		ActionItem action = null;
 		
-		for(int i=availableActions.length-1;i>=0;i--)
+//		for(int i=availableActions.length-1;i>=0;i--)
+		for(int i=0;i<availableActions.length;i++)
 		{
 			int a = availableActions[i];
 			action = null;
@@ -79,7 +80,9 @@ public final class QuickActionHelper {
 					@Override
 					public void onClick(View arg0) {
 						
+						actions.dismiss();
 						FileActionsHelper.share(file, mContext);
+						
 						
 					}
 				});
@@ -97,8 +100,11 @@ public final class QuickActionHelper {
 		}
 		
 
-		 actions.setAnimStyle(QuickAction.ANIM_AUTO);
-		 actions.show();
+		if(availableActions.length>0)
+		{
+			actions.setAnimStyle(QuickAction.ANIM_AUTO);
+			actions.show();
+		}
 		 
 	 }
 
