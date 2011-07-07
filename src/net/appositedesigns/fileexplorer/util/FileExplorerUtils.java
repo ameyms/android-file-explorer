@@ -287,7 +287,7 @@ public final class FileExplorerUtils {
 		
 		try {
 			
-			Process du = Runtime.getRuntime().exec("du -b -d1 "+dir.getCanonicalPath(), new String[]{}, Environment.getRootDirectory());
+			Process du = Runtime.getRuntime().exec("/system/bin/du -b -d1 "+dir.getCanonicalPath(), new String[]{}, Environment.getRootDirectory());
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					du.getInputStream()));
