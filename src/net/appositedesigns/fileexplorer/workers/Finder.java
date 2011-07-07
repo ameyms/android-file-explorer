@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
@@ -14,7 +15,6 @@ import net.appositedesigns.fileexplorer.util.FileListSorter;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.StatFs;
 import android.util.Log;
 
 public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
@@ -76,7 +76,16 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 					}
 					else
 					{
-						waitDialog.show();
+						caller.runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+
+								if(waitDialog!=null)
+									waitDialog.show();
+							}
+						});
+
 					}
 				} catch (InterruptedException e) {
 					
@@ -98,6 +107,8 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		boolean showHidden = prefs.isShowHidden();
 		boolean showSystem = prefs.isShowSystemFiles();
 		
+		Map<String, Long> dirSizes = FileExplorerUtils.getDirSizes(currentDir);
+		
 		for(String fileName : children)
 		{
 			File f = new File(currentDir.getAbsolutePath()+File.separator+fileName);
@@ -114,6 +125,7 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 			{
 				continue;
 			}
+			
 			String fname = f.getName();
 			
 			FileListEntry child = new FileListEntry();
@@ -121,9 +133,16 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 			child.setPath(f);
 			if(f.isDirectory())
 			{
-				StatFs stat = new StatFs(f.getPath());
-				long bytesAvailable = (long)stat.getBlockSize() *(long)stat.getAvailableBlocks();
-				child.setSize((bytesAvailable));
+				try
+				{
+					Long dirSize = dirSizes.get(f.getCanonicalPath());
+					child.setSize(dirSize);
+				}
+				catch (Exception e) {
+
+					Log.w(TAG, "Could not find size for "+child.getPath().getAbsolutePath());
+					child.setSize(0);
+				}
 			}
 			else
 			{

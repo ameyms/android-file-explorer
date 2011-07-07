@@ -1,7 +1,11 @@
 package net.appositedesigns.fileexplorer.util;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
@@ -23,6 +27,9 @@ public final class FileExplorerUtils {
 	
 	public static final int PASTE_MODE_COPY = 0;
 	public static final int PASTE_MODE_MOVE = 1;
+	private static final Long GIG = 1024*1024*1024L;
+	private static final Long MEG = 1024*1024L;
+	private static final Long KILO = 1024L;
 	
 	
 	private FileExplorerUtils(){}
@@ -272,5 +279,36 @@ public final class FileExplorerUtils {
 		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
 				context.getString(R.string.mtime_is, file.getLastModified().toLocaleString()),
 				context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()))};
+	}
+	
+	public static Map<String, Long> getDirSizes(File dir)
+	{
+		Map<String, Long> sizes = new HashMap<String, Long>();
+		
+		try {
+			
+			Process du = Runtime.getRuntime().exec("du -b -d1 "+dir.getCanonicalPath(), new String[]{}, Environment.getRootDirectory());
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					du.getInputStream()));
+			String line = null;
+			while ((line = in.readLine()) != null)
+			{
+				String[] parts = line.split("\\s+");
+				
+				String sizeStr = parts[0];
+				Long size = Long.parseLong(sizeStr);
+				
+				String path = parts[1];
+				
+				sizes.put(path, size);
+			}
+			
+		} catch (IOException e) {
+			Log.e(TAG, "Could not execute DU command for "+dir.getAbsolutePath(), e);
+		}
+		
+		return sizes;
+		
 	}
 }
