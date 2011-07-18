@@ -81,7 +81,7 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 		try
 		{
 			Log.v(TAG, "Checking if file on clipboard is same as that being deleted");
-			if(FileExplorerUtils.getFileToPaste().getCanonicalPath().equals(fileToBeDeleted.getCanonicalPath()))
+			if(FileExplorerUtils.getFileToPaste() != null && FileExplorerUtils.getFileToPaste().getCanonicalPath().equals(fileToBeDeleted.getCanonicalPath()))
 			{
 				Log.v(TAG, "File on clipboard is being deleted");
 				FileExplorerUtils.setPasteSrcFile(null, FileExplorerUtils.getPasteMode());

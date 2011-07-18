@@ -27,9 +27,6 @@ public final class FileExplorerUtils {
 	
 	public static final int PASTE_MODE_COPY = 0;
 	public static final int PASTE_MODE_MOVE = 1;
-	private static final Long GIG = 1024*1024*1024L;
-	private static final Long MEG = 1024*1024L;
-	private static final Long KILO = 1024L;
 	
 	
 	private FileExplorerUtils(){}
@@ -91,6 +88,7 @@ public final class FileExplorerUtils {
 			if(FileExplorerUtils.isProtected(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_sys_dir);
+					
 			}
 			else if(FileExplorerUtils.isSdCard(file))
 			{
@@ -104,9 +102,18 @@ public final class FileExplorerUtils {
 		else //file
 		{
 			String fileName = file.getName();
+			if(FileExplorerUtils.isProtected(file))
+			{
+				return mContext.getResources().getDrawable(R.drawable.filetype_sys_file);
+					
+			}
 			if(fileName.endsWith(".apk"))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_apk);
+			}
+			if(fileName.endsWith(".zip"))
+			{
+				return mContext.getResources().getDrawable(R.drawable.filetype_zip);
 			}
 			else if(FileExplorerUtils.isMusic(file))
 			{
@@ -276,9 +283,16 @@ public final class FileExplorerUtils {
 
 	public static CharSequence[] getFileProperties(FileListEntry file, FileExplorerMain context) {
 		
+		if(file.getPath().isFile())
 		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
 				context.getString(R.string.mtime_is, file.getLastModified().toLocaleString()),
 				context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()))};
+		
+		else
+		{
+			return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
+					context.getString(R.string.mtime_is, file.getLastModified().toLocaleString())};
+		}
 	}
 	
 	public static Map<String, Long> getDirSizes(File dir)

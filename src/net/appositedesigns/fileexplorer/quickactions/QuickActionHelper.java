@@ -88,6 +88,21 @@ public final class QuickActionHelper {
 				});
 
 				break;
+				
+			case R.string.action_zip:
+				action = new ActionItem(mContext.getResources().getDrawable(R.drawable.action_zip));
+				action.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View arg0) {
+						
+						actions.dismiss();
+						FileActionsHelper.zip(file, mContext);
+						
+					}
+				});
+
+				break;
 
 			default:
 				break;

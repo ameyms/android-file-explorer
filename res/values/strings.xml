@@ -155,10 +155,11 @@
         <item>Ascending</item>
         <item>Descending</item>
     </string-array>
-    
+
     <string-array name="sort_dir_values">
         <item>asc</item>
         <item>desc</item>
     </string-array>
+        
 </resources>
 
