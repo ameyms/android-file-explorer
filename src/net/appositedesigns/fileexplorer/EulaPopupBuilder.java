@@ -1,5 +1,6 @@
 package net.appositedesigns.fileexplorer;
 
+import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -26,6 +27,7 @@ public class EulaPopupBuilder {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
+						new PreferenceUtil(context).markEulaAccepted();
 						dialog.dismiss();
 						context.refresh();
 						

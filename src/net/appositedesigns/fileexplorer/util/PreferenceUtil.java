@@ -112,12 +112,12 @@ public final class PreferenceUtil {
 	
 	public boolean isEulaAccepted()
 	{
-		return mContext.getSharedPreferences(Constants.EULA_MARKER, mContext.MODE_PRIVATE).getBoolean(Constants.EULA_ACCEPTED, false);
+		return mContext.getSharedPreferences(Constants.EULA_MARKER, Context.MODE_PRIVATE).getBoolean(Constants.EULA_ACCEPTED, false);
 	}
 	
 	public void markEulaAccepted()
 	{
-		SharedPreferences.Editor editor = mContext.getSharedPreferences(Constants.EULA_MARKER, mContext.MODE_WORLD_WRITEABLE).edit();
+		SharedPreferences.Editor editor = mContext.getSharedPreferences(Constants.EULA_MARKER, Context.MODE_WORLD_WRITEABLE).edit();
 		editor.putBoolean(Constants.EULA_ACCEPTED, true);
 		editor.commit();
 	}

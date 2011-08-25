@@ -160,7 +160,10 @@ public final class FileExplorerUtils {
 			{
 				return context.getString(R.string.system_path);
 			}
-			return context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()));
+			if(file.getPath().isFile())
+			{
+				return context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()));
+			}
 			
 		}
 		catch (Exception e) {

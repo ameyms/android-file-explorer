@@ -45,11 +45,7 @@ public class FileExplorerMain extends ListActivity {
         
     	super.onCreate(savedInstanceState);
     	
-    	if(!new PreferenceUtil(this).isEulaAccepted())
-    	{
-    		EulaPopupBuilder.create(this).show();
-    	}
-    	
+
         setContentView(R.layout.main);
         prefs = new PreferenceUtil(this);
 		currentDir = prefs.getStartDir();
@@ -74,6 +70,14 @@ public class FileExplorerMain extends ListActivity {
 
         registerForContextMenu(explorerListView);
         
+    	if(new PreferenceUtil(this).isEulaAccepted())
+    	{
+    		listContents(currentDir);
+    	}
+    	else
+    	{
+    		EulaPopupBuilder.create(this).show();
+    	}
 
     }
     

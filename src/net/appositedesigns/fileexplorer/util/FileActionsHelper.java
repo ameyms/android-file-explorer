@@ -88,9 +88,13 @@ public class FileActionsHelper {
 		{
 			if(prefs.isEnableSdCardOptions())
 			{
+				return new int[]{R.string.action_format, R.string.action_unmount, R.string.action_prop};
+			}
+			else
+			{
 				return new int[]{};
 			}
-			return new int[]{R.string.action_format, R.string.action_unmount, R.string.action_prop};
+			
 		}
 		else if(file.isDirectory())
 		{
