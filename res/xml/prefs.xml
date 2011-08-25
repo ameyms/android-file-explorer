@@ -54,33 +54,31 @@
 			android:key="zipLocation" android:title="@string/pref_zip_location"
 			android:summary="@string/pref_zip_location_desc" />
 
-	<CheckBoxPreference android:title="@string/pref_show_sdcard_options"
+	<!-- <CheckBoxPreference android:title="@string/pref_show_sdcard_options"
 		android:defaultValue="false" android:summaryOff="@string/pref_show_sdcard_options_off"
 		android:summaryOn="@string/pref_show_sdcard_options_on" android:key="sdCardOptions" />
-
+	-->
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_cat_misc">
+	<!-- 
 		<PreferenceScreen android:title="@string/pref_share"
 			android:summary="@string/pref_share_desc">
-			<intent android:action="android.intent.action.SEND">
-				<extra android:name="android.intent.extra.TEXT"
-					android:value="I have been using a FileExplorer for Android and thought you might like it too. \nHere is the download link - https://market.android.com/details?id=net.appositedesigns.fileexplorer " />
+			<intent android:action="net.appositedesigns.fileexplorer.SHARE_APP">
 			</intent>
 		</PreferenceScreen>
-
+ 	-->
 		<PreferenceScreen android:title="@string/pref_website"
 			android:summary="@string/pref_website_desc">
 			<intent android:action="android.intent.action.VIEW"
 				android:data="http://amey.sakhadeo.com" />
 		</PreferenceScreen>
-
-		<PreferenceScreen android:title="@string/pref_feedback"
-			android:summary="@string/pref_feedback_desc">
-			<intent android:action="android.intent.action.SEND">
-				<extra android:name="android.intent.extra.EMAIL"
-					android:value="me@ameyms.com" />
-			</intent>
+		
+		<PreferenceScreen android:title="@string/pref_terms">
+			<intent android:action="android.intent.action.VIEW"
+				android:data="http://fileexplorer.appositedesigns.net/eula" />
 		</PreferenceScreen>
+
+
 	</PreferenceCategory>
 </PreferenceScreen>

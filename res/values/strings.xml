@@ -3,7 +3,12 @@
 	<string name="app_name">File Explorer</string>
 	<string name="settings">File Explorer Preferences</string>
 	
-	<string name="app_url">http://fileexplore.appositedesigns.net</string>
+	<string name="eula_popup_title">Welcome to File Explorer</string>
+	<string name="eula_popup_text">Thanks you for installing FileExplorer, the free, opern source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
+
+
+	<string name="eula_accept">I accept</string>
+	<string name="eula_decline">Decline</string>
 
 	<string name="action_rename">Rename</string>
 	<string name="action_delete">Delete</string>
@@ -84,6 +89,7 @@
 	
 	<string name="generic_operation_failed">Could not complete operation</string>
 	
+	<string name="share_msg">I have been using FileExplorer for Android and thought you might like it too. \nHere is the download link - %2$s </string>
 	<string name="pref_cat_general">View Options</string>
 	<string name="pref_home_folder">Start up folder</string>
 	<string name="pref_home_folder_desc">File explorer will open this folder at when started</string>

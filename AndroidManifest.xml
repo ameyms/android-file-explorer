@@ -8,6 +8,7 @@
     <permission-group android:name="android.permission-group.STORAGE"></permission-group>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application android:icon="@drawable/icon" android:label="@string/app_name">
+        
         <activity android:name=".FileExplorerMain"  android:configChanges="orientation"
                   android:label="@string/app_name">
             <intent-filter>
@@ -15,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <receiver android:name=".ShareAppRequestReceiver">
+             <intent-filter>
+                <action android:name="net.appositedesigns.fileexplorer.SHARE_APP" />
+            </intent-filter>
+        </receiver>
+        
         <activity android:name=".SettingsActivity" android:label="@string/settings"></activity>
 
     </application>

@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public final class PreferenceUtil {
@@ -101,9 +102,23 @@ public final class PreferenceUtil {
 		}
 	}
 	public boolean isEnableSdCardOptions() {
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SDCARD_OPTIONS, true);
+
+		return false;
+		//		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SDCARD_OPTIONS, true);
 	}
 	public boolean isZipEnabled() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_ZIP_ENABLE, false);
+	}
+	
+	public boolean isEulaAccepted()
+	{
+		return mContext.getSharedPreferences(Constants.EULA_MARKER, mContext.MODE_PRIVATE).getBoolean(Constants.EULA_ACCEPTED, false);
+	}
+	
+	public void markEulaAccepted()
+	{
+		SharedPreferences.Editor editor = mContext.getSharedPreferences(Constants.EULA_MARKER, mContext.MODE_WORLD_WRITEABLE).edit();
+		editor.putBoolean(Constants.EULA_ACCEPTED, true);
+		editor.commit();
 	}
 }

@@ -44,6 +44,12 @@ public class FileExplorerMain extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         
     	super.onCreate(savedInstanceState);
+    	
+    	if(!new PreferenceUtil(this).isEulaAccepted())
+    	{
+    		EulaPopupBuilder.create(this).show();
+    	}
+    	
         setContentView(R.layout.main);
         prefs = new PreferenceUtil(this);
 		currentDir = prefs.getStartDir();
@@ -54,7 +60,6 @@ public class FileExplorerMain extends ListActivity {
         adapter = new FileListAdapter(this, files);
         explorerListView.setAdapter(adapter);
 
-        listContents(currentDir);
         explorerListView.setOnItemClickListener(new OnItemClickListener() {
         	
             public void onItemClick(AdapterView<?> parent, View view,
@@ -66,7 +71,10 @@ public class FileExplorerMain extends ListActivity {
 
          });
         
+
         registerForContextMenu(explorerListView);
+        
+
     }
     
     @Override
