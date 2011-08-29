@@ -54,10 +54,10 @@
 			android:key="zipLocation" android:title="@string/pref_zip_location"
 			android:summary="@string/pref_zip_location_desc" />
 
-	<!-- <CheckBoxPreference android:title="@string/pref_show_sdcard_options"
+	<CheckBoxPreference android:title="@string/pref_show_sdcard_options"
 		android:defaultValue="false" android:summaryOff="@string/pref_show_sdcard_options_off"
 		android:summaryOn="@string/pref_show_sdcard_options_on" android:key="sdCardOptions" />
-	-->
+		
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/pref_cat_misc">

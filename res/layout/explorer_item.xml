@@ -18,10 +18,8 @@
         
     <ImageView
         android:id="@+id/explorer_resActions"
-
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-
 		android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
@@ -38,11 +36,10 @@
         android:layout_height="26dip" 
         android:layout_toRightOf="@id/explorer_resIcon"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_toLeftOf="@id/explorer_resActions"
         android:singleLine="true"
         android:ellipsize="marquee"
-        android:text="Simple application that shows how to use RelativeLayout" />
+        android:text="Path meta" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -50,14 +47,14 @@
 		android:id="@+id/explorer_resName"
 		android:layout_toLeftOf="@id/explorer_resActions"
         android:layout_toRightOf="@id/explorer_resIcon"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_above="@id/explorer_resMeta"
         android:layout_alignWithParentIfMissing="true"
+        android:singleLine="true"
         android:textSize="18dp"
         android:paddingLeft="5dp"
         android:gravity="center_vertical"
         android:ellipsize="marquee"
-        android:text="My Application" />
+        android:text="Folder name can be really really really long" />
 
 </RelativeLayout>

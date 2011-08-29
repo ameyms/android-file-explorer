@@ -103,8 +103,7 @@ public final class PreferenceUtil {
 	}
 	public boolean isEnableSdCardOptions() {
 
-		return false;
-		//		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SDCARD_OPTIONS, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SDCARD_OPTIONS, true);
 	}
 	public boolean isZipEnabled() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_ZIP_ENABLE, false);

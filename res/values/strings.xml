@@ -11,6 +11,7 @@
 	<string name="eula_decline">Decline</string>
 
 	<string name="action_rename">Rename</string>
+	<string name="action_rescan">Rescan Media</string>
 	<string name="action_delete">Delete</string>
 	<string name="action_cut">Cut</string>
 	<string name="action_copy">Copy</string>
@@ -20,6 +21,7 @@
 	<string name="action_share">Share</string>
 	<string name="action_zip">Zip</string>
 
+	<string name="media_rescan_started">Media rescan started</string>
 	<string name="msg_delete_success">Path successfully deleted</string>
 	<string name="msg_delete_fail">Path could not be deleted</string>
 	
@@ -143,6 +145,8 @@
 	<string name="filepath_is">Path: %1$s </string>
 	<string name="mtime_is">Last Modified on %1$s</string>
 	<string name="size_is">Size: %1$s</string>
+	<string name="total_capacity">Total Capacity: %1$s</string>
+	<string name="free_space">Free Space: %1$s</string>
 
 	<string name="system_path">System</string>
 	<string-array name="sort_fields_entries">

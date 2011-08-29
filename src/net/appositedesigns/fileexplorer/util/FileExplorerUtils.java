@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.os.StatFs;
 import android.util.Log;
 
 public final class FileExplorerUtils {
@@ -46,16 +47,37 @@ public final class FileExplorerUtils {
 	 {
 		 return pasteMode;
 	 }
+
 	static boolean isMusic(File file) {
-		
+
 		String fileName = file.getName();
-		return (fileName.endsWith(".mp3") || fileName.endsWith(".aac") || fileName.endsWith(".ogg") || fileName.endsWith(".wav") || fileName.endsWith(".m4a") || fileName.endsWith(".wma"));
+		return (fileName.toLowerCase().endsWith(".mp3")
+				|| fileName.toLowerCase().endsWith(".aac")
+				|| fileName.toLowerCase().endsWith(".ogg")
+				|| fileName.toLowerCase().endsWith(".wav")
+				|| fileName.toLowerCase().endsWith(".m4a") || fileName
+				.toLowerCase().endsWith(".wma"));
 	}
-	
+
+	static boolean isVideo(File file) {
+
+		String fileName = file.getName();
+		return (fileName.toLowerCase().endsWith(".mp4")
+				|| fileName.toLowerCase().endsWith(".avi")
+				|| fileName.toLowerCase().endsWith(".vob")
+				|| fileName.toLowerCase().endsWith(".mov")
+				|| fileName.toLowerCase().endsWith(".flv") 
+				|| fileName.toLowerCase().endsWith(".wmv")
+				|| fileName.toLowerCase().endsWith(".3gp"));
+	}
+
 	public static boolean isPicture(File file) {
 		
 		String fileName = file.getName();
-		return (fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".bmp") || fileName.endsWith(".gif"));
+		return (fileName.toLowerCase().endsWith(".jpg")
+				|| fileName.toLowerCase().endsWith(".png")
+				|| fileName.toLowerCase().endsWith(".bmp") || fileName
+				.toLowerCase().endsWith(".gif"));
 	}
 	
 	public static boolean isProtected(File path)
@@ -119,6 +141,10 @@ public final class FileExplorerUtils {
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_music);
 			}
+			else if(FileExplorerUtils.isVideo(file))
+			{
+				return mContext.getResources().getDrawable(R.drawable.filetype_video);
+			}
 			else if(FileExplorerUtils.isPicture(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_image);
@@ -179,24 +205,27 @@ public final class FileExplorerUtils {
 		File fileBeingPasted = new File(getFileToPaste().getParent(),getFileToPaste().getName());
 		if(doPaste(mode, getFileToPaste(), destinationDir, flag))
 		{
-			if(fileBeingPasted.isFile())
+			if(getPasteMode() == PASTE_MODE_MOVE)
 			{
-				if(FileUtils.deleteQuietly(fileBeingPasted))
+				if(fileBeingPasted.isFile())
 				{
-					Log.i(TAG, "File deleted after paste "+fileBeingPasted.getAbsolutePath());
+					if(FileUtils.deleteQuietly(fileBeingPasted))
+					{
+						Log.i(TAG, "File deleted after paste "+fileBeingPasted.getAbsolutePath());
+					}
+					else
+					{
+						Log.w(TAG, "File NOT deleted after paste "+fileBeingPasted.getAbsolutePath());
+					}
 				}
 				else
 				{
-					Log.w(TAG, "File NOT deleted after paste "+fileBeingPasted.getAbsolutePath());
-				}
-			}
-			else
-			{
-				try {
-					FileUtils.deleteDirectory(fileBeingPasted);
-				} catch (IOException e) {
-					Log.e(TAG, "Error while deleting directory after paste - "+fileBeingPasted.getAbsolutePath(), e);
-					return false;
+					try {
+						FileUtils.deleteDirectory(fileBeingPasted);
+					} catch (IOException e) {
+						Log.e(TAG, "Error while deleting directory after paste - "+fileBeingPasted.getAbsolutePath(), e);
+						return false;
+					}
 				}
 			}
 			return true;
@@ -286,7 +315,16 @@ public final class FileExplorerUtils {
 
 	public static CharSequence[] getFileProperties(FileListEntry file, FileExplorerMain context) {
 		
-		if(file.getPath().isFile())
+		if(FileExplorerUtils.isSdCard(file.getPath()))
+		{
+			StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
+			long sdAvailSize = (long)stat.getAvailableBlocks() *(long)stat.getBlockSize();
+			long totalSize = (long)stat.getBlockCount() *(long)stat.getBlockSize();
+			
+			return new CharSequence[]{context.getString(R.string.total_capacity, FileExplorerUtils.getSizeStr(totalSize)),
+					context.getString(R.string.free_space, FileExplorerUtils.getSizeStr(sdAvailSize))};
+		}
+		else if(file.getPath().isFile())
 		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
 				context.getString(R.string.mtime_is, file.getLastModified().toLocaleString()),
 				context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()))};
@@ -298,6 +336,24 @@ public final class FileExplorerUtils {
 		}
 	}
 	
+	private static String getSizeStr(long bytes) {
+		
+		if(bytes >= FileUtils.ONE_GB)
+		{
+			return (double)Math.round((((double)bytes / FileUtils.ONE_GB)*100))/100 + " GB";
+		}
+		else if(bytes >= FileUtils.ONE_MB)
+		{
+			return (double)Math.round((((double)bytes / FileUtils.ONE_MB)*100))/100 + " MB";
+		}
+		else if(bytes >= FileUtils.ONE_KB)
+		{
+			return (double)Math.round((((double)bytes / FileUtils.ONE_KB)*100))/100 + " KB";
+		}
+
+		return bytes+" bytes";
+	}
+
 	public static Map<String, Long> getDirSizes(File dir)
 	{
 		Map<String, Long> sizes = new HashMap<String, Long>();

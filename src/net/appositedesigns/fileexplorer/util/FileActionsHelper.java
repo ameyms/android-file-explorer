@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -88,7 +89,7 @@ public class FileActionsHelper {
 		{
 			if(prefs.isEnableSdCardOptions())
 			{
-				return new int[]{R.string.action_format, R.string.action_unmount, R.string.action_prop};
+				return new int[]{R.string.action_rescan, R.string.action_prop};
 			}
 			else
 			{
@@ -229,6 +230,10 @@ public class FileActionsHelper {
 			zip(file, mContext);
 			break;
 			
+		case R.string.action_rescan:
+			rescanMedia(mContext);
+			break;
+			
 		case R.string.action_prop:
 			showProperties(entry, mContext);
 			break;
@@ -238,6 +243,14 @@ public class FileActionsHelper {
 		
 	}
 	
+	private static void rescanMedia(FileExplorerMain mContext) {
+
+		mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri
+				.parse("file://" + Environment.getExternalStorageDirectory()))); 
+		
+		Toast.makeText(mContext, R.string.media_rescan_started, Toast.LENGTH_SHORT).show();
+	}
+
 	public static void share(File file, Context mContext) {
 		final Intent intent = new Intent(Intent.ACTION_SEND);
 	
