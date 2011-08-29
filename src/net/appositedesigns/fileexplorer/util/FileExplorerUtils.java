@@ -297,7 +297,6 @@ public final class FileExplorerUtils {
 
 	public static boolean canShowActions(FileListEntry currentFile, FileExplorerMain mContext) {
 		
-		PreferenceUtil prefs = new PreferenceUtil(mContext);
 		File path = currentFile.getPath();
 		if(isProtected(path))
 		{
@@ -305,7 +304,7 @@ public final class FileExplorerUtils {
 		}
 		if(isSdCard(path))
 		{
-			return prefs.isEnableSdCardOptions();
+			return false;
 		}
 		else
 		{
