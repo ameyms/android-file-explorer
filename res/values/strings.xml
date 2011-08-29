@@ -129,7 +129,7 @@
 	<string name="pref_zip_location_desc">Zipped files and folders will be kept at this location</string>
 	
 	<string name="pref_show_sdcard_options">SD Card Options</string>
-	<string name="pref_show_sdcard_options_on">Unmount, format options are shown for SD card</string>
+	<string name="pref_show_sdcard_options_on">Enable advanced options like media rescan</string>
 	<string name="pref_show_sdcard_options_off">SD Card Options are hidden</string>
 	
 	<string name="pref_cat_misc">About</string>
