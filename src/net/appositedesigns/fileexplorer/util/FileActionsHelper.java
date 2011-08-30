@@ -132,8 +132,21 @@ public class FileActionsHelper {
 			CharSequence newName = input.getText();
 			try
 			{
-				file.renameTo(new File(newName.toString()));
-				mContext.refresh();
+				File parentFolder = file.getParentFile();
+				if(file.renameTo(new File(parentFolder, newName.toString())))
+				{
+					Toast.makeText(mContext, mContext.getString(R.string.rename_toast, file.getName(), newName), Toast.LENGTH_LONG).show();
+					mContext.refresh();
+				}
+				else
+				{
+					new Builder(mContext)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(mContext.getString(R.string.error))
+					.setMessage(mContext.getString(R.string.rename_failed, file.getName()))
+					.show();
+				}
+				
 			}
 			catch (Exception e) {
 				Log.e(TAG, "Error occured while renaming path", e);

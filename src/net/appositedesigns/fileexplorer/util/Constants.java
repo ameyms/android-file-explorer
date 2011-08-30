@@ -24,9 +24,9 @@ public interface Constants {
 
 	public static final String PREF_ZIP_ENABLE = "zipEnable";
 
-	public static final String EULA_ACCEPTED = "eula_accepted_v1.2";
+	public static final String EULA_ACCEPTED = "eula_accepted_v1.1.2";
 
-	public static final String EULA_MARKER = "eula_marker_file_v1.2";
+	public static final String EULA_MARKER = "eula_marker_file_v1.1.2";
 	
 	
 }

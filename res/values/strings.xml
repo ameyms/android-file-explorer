@@ -45,6 +45,7 @@
 	
 	<string name="copied_toast">%1$s copied</string>
 	<string name="cut_toast">%1$s cut</string>
+	<string name="rename_toast">%1$s renamed to %2$s</string>
 	
 	<string name="zip_success">Selected files(s) have been zipped to %1$s</string>
 	<string name="zip_dir_empty">Zip failed. Specified folder is empty.</string>
