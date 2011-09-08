@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -38,24 +39,31 @@ public class FileExplorerMain extends ListActivity {
 	private PreferenceUtil prefs;
 	private List<FileListEntry> files;
 	private FileListAdapter adapter;
-
+	private TextView header;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        
+    	setTheme(new PreferenceUtil(this).getTheme());
     	super.onCreate(savedInstanceState);
-    	
-
         setContentView(R.layout.main);
         prefs = new PreferenceUtil(this);
 		currentDir = prefs.getStartDir();
         files = new ArrayList<FileListEntry>();
         
         explorerListView = (ListView)getListView();
+        header = (TextView)findViewById(R.id.header_fqpath);
+        header.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				FileExplorerUtils.gotoPath(currentDir.getAbsolutePath(),FileExplorerMain.this);
+			}
+		});
         
         adapter = new FileListAdapter(this, files);
         explorerListView.setAdapter(adapter);
-
+        explorerListView.setTextFilterEnabled(true);
         explorerListView.setOnItemClickListener(new OnItemClickListener() {
         	
             public void onItemClick(AdapterView<?> parent, View view,
@@ -292,6 +300,7 @@ public class FileExplorerMain extends ListActivity {
 	public void setNewChildren(List<FileListEntry> children)
 	{
 		TextView emptyText = (TextView)findViewById(android.R.id.empty);
+		header.setText(currentDir.getAbsolutePath());
 		if(emptyText!=null)
 		{
 			emptyText.setText(R.string.empty_folder);

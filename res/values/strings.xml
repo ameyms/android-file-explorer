@@ -67,6 +67,12 @@
 	<string name="access_denied">Access Denied</string>
 	<string name="cant_open_dir">%1$s is a protected directory. You will require root access on your device to open and browse this directory</string>
 	
+	
+	<string name="goto_path_hint">Enter directory path eg. /sdcard/foo</string>
+	<string name="goto_path">Navigate to</string>
+	<string name="goto_path_not_exist">Sorry. The directory could not be found</string>
+	
+	
 	<string name="confirm_delete">Are you sure you want to delete %1$s ?</string>
 	
 	<string name="confirm_paste_text">Are you sure you want to paste %1$s ?</string>
@@ -122,6 +128,11 @@
 	
 	<string name="pref_sort_dir">Sort Direction</string>
 	
+	<string name="pref_theme">Theme</string>
+	<string name="pref_theme_desc">Requires app restart</string>
+	<string name="pref_theme_title">Choose Theme</string>
+	
+	
 	<string name="pref_cat_geeky">Geeky Stuff</string>
 	<string name="pref_zipenable">Enable Zip</string>
 	<string name="pref_zipenable_on">Files and folders have an option to compress into another file</string>
@@ -162,7 +173,7 @@
         <item>mtime</item>
     </string-array>
     
-    	<string-array name="sort_dir_entries">
+    <string-array name="sort_dir_entries">
         <item>Ascending</item>
         <item>Descending</item>
     </string-array>
@@ -171,6 +182,18 @@
         <item>asc</item>
         <item>desc</item>
     </string-array>
+    
+    
+    <string-array name="theme_entries">
+        <item>Black</item>
+        <item>White</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>theme_black</item>
+        <item>theme_white</item>
+    </string-array>
+    
         
 </resources>
 

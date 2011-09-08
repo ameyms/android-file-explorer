@@ -2,6 +2,7 @@ package net.appositedesigns.fileexplorer.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -13,11 +14,14 @@ import net.appositedesigns.fileexplorer.R;
 
 import org.apache.commons.io.FileUtils;
 
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+import android.widget.EditText;
 
 public final class FileExplorerUtils {
 
@@ -382,5 +386,51 @@ public final class FileExplorerUtils {
 		
 		return sizes;
 		
+	}
+
+	public static void gotoPath(final String currentPath, final FileExplorerMain mContext) {
+		
+		final EditText input = new EditText(mContext);
+		
+		input.setSingleLine();
+		new Builder(mContext)
+		.setTitle(mContext.getString(R.string.goto_path))
+		.setIcon(android.R.drawable.ic_dialog_info)
+		.setView(input)
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  
+			CharSequence toPath = input.getText();
+			try
+			{
+				File toDir = new File(toPath.toString());
+				if(toDir.isDirectory() && toDir.exists())
+				{
+					mContext.listContents(toDir);
+				}
+				else
+				{
+					throw new FileNotFoundException();
+				}
+				
+			}
+			catch (Exception e) {
+				Log.e(TAG, "Error navigating to path"+toPath, e);
+				new Builder(mContext)
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle(mContext.getString(R.string.error))
+				.setMessage(mContext.getString(R.string.goto_path_not_exist))
+				.show();
+			}
+		  }
+		})
+		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		   
+			  dialog.dismiss();
+		  }
+		})
+		.show();
+		input.setText(currentPath);
 	}
 }

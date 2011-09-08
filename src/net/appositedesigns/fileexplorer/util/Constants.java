@@ -23,10 +23,14 @@ public interface Constants {
 	public static final String PREF_SDCARD_OPTIONS = "sdCardOptions";
 
 	public static final String PREF_ZIP_ENABLE = "zipEnable";
+	public static final String PREF_THEME = "theme";
 
 	public static final String EULA_ACCEPTED = "eula_accepted_v1.1.3";
 
 	public static final String EULA_MARKER = "eula_marker_file_v1.1.3";
+
+	public static final String THEME_BLACK = "theme_black";
+	public static final String THEME_WHITE = "theme_white";
 	
 	
 }

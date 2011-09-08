@@ -3,6 +3,7 @@ package net.appositedesigns.fileexplorer.util;
 import java.io.File;
 
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
+import android.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -119,5 +120,17 @@ public final class PreferenceUtil {
 		SharedPreferences.Editor editor = mContext.getSharedPreferences(Constants.EULA_MARKER, Context.MODE_WORLD_WRITEABLE).edit();
 		editor.putBoolean(Constants.EULA_ACCEPTED, true);
 		editor.commit();
+	}
+	public int getTheme() {
+		
+		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_THEME, Constants.THEME_BLACK);
+		if(Constants.THEME_BLACK.equalsIgnoreCase(theme))
+		{
+			return R.style.Theme_Black_NoTitleBar_Fullscreen;
+		}
+		else
+		{
+			return R.style.Theme_Light_NoTitleBar_Fullscreen;
+		}
 	}
 }
