@@ -128,7 +128,7 @@ public class QuickAction extends CustomPopupWindow {
 		//int screenHeight 	= windowManager.getDefaultDisplay().getHeight();
 
 		int xPos 			= (screenWidth - rootWidth) / 2;
-		int yPos	 		= anchorRect.top - rootHeight;
+		int yPos	 		= anchorRect.top + anchorRect.height()/4 - rootHeight;
 
 		boolean onTop		= true;
 		

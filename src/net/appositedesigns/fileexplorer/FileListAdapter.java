@@ -99,7 +99,7 @@ public class FileListAdapter extends BaseAdapter {
 				public void onClick(View v) {
 					
 					QuickActionHelper helper = new QuickActionHelper(mContext);
-					helper.showQuickActions(v, currentFile);
+					helper.showQuickActions((ImageView)v, currentFile);
 
 				}
 			});

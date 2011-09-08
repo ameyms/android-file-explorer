@@ -8,6 +8,8 @@ import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.PopupWindow.OnDismissListener;
 
 public final class QuickActionHelper {
 
@@ -20,15 +22,15 @@ public final class QuickActionHelper {
 		this.mContext = mContext;
 	}
 
-	 public void showQuickActions(final View view, final FileListEntry entry) {
+	 public void showQuickActions(final ImageView view, final FileListEntry entry) {
 		 
 		final File file = entry.getPath();
 		final QuickAction actions = new QuickAction(view);
 		int[] availableActions = FileActionsHelper.getContextMenuOptions(file, mContext);
 		
+		view.setImageDrawable(mContext.getResources().getDrawable(R.drawable.list_actions_glow));
 		ActionItem action = null;
 		
-//		for(int i=availableActions.length-1;i>=0;i--)
 		for(int i=0;i<availableActions.length;i++)
 		{
 			int a = availableActions[i];
@@ -118,6 +120,14 @@ public final class QuickActionHelper {
 		if(availableActions.length>0)
 		{
 			actions.setAnimStyle(QuickAction.ANIM_AUTO);
+			actions.setOnDismissListener(new OnDismissListener() {
+				
+				@Override
+				public void onDismiss() {
+					view.setImageDrawable(mContext.getResources().getDrawable(R.drawable.list_actions));
+					
+				}
+			});
 			actions.show();
 		}
 		 
