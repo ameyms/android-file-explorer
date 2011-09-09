@@ -9,6 +9,11 @@
 			android:layout_height="wrap_content" android:id="@+id/header_fqpath"
 			android:textColor="#FFF" android:textSize="18dp" android:background="#666"
 			android:ellipsize="start" android:padding="8dip"
+			android:includeFontPadding="true"
+			android:shadowDy="5.0"
+			android:focusableInTouchMode="true"
+			android:focusable="true"
+			
 			android:singleLine="true" android:clickable="true"/>
 	</LinearLayout>
 	<ListView android:layout_height="fill_parent"

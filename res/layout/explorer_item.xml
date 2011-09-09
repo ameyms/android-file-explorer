@@ -53,6 +53,7 @@
         android:singleLine="true"
         android:textSize="18dp"
         android:paddingLeft="5dp"
+        android:includeFontPadding="true"
         android:gravity="center_vertical"
         android:ellipsize="marquee"
         android:text="Folder name can be really really really long" />
