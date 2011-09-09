@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.util.Constants;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
@@ -15,8 +16,11 @@ import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -40,14 +44,33 @@ public class FileExplorerMain extends ListActivity {
 	private List<FileListEntry> files;
 	private FileListAdapter adapter;
 	private TextView header;
+	private OnSharedPreferenceChangeListener listener;
+	protected boolean shouldRestartApp = false;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	setTheme(new PreferenceUtil(this).getTheme());
+    	
+    	prefs = new PreferenceUtil(this);
+    	
+    	setTheme(prefs.getTheme());
     	super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        prefs = new PreferenceUtil(this);
-		currentDir = prefs.getStartDir();
+        
+        currentDir = prefs.getStartDir();
+        
+        //If app was restarted programmatically, find where the user last left it
+        String restartDirPath = getIntent().getStringExtra(Constants.RESTART_DIR);
+        if(restartDirPath!=null)
+        {
+        	File restartDir = new File(restartDirPath);
+        	if(restartDir.exists() && restartDir.isDirectory())
+        	{
+        		currentDir = restartDir;
+        	}
+        }
+
+		
         files = new ArrayList<FileListEntry>();
         
         explorerListView = (ListView)getListView();
@@ -61,6 +84,8 @@ public class FileExplorerMain extends ListActivity {
 			}
 		});
         
+        listenToThemeChange();
+		
         adapter = new FileListAdapter(this, files);
         explorerListView.setAdapter(adapter);
         explorerListView.setTextFilterEnabled(true);
@@ -70,15 +95,14 @@ public class FileExplorerMain extends ListActivity {
                     int position, long id) {
             	
             	FileListEntry file = (FileListEntry)explorerListView.getAdapter().getItem(position);
-                 select(file.getPath());
+                select(file.getPath());
             }
 
          });
         
-
         registerForContextMenu(explorerListView);
         
-    	if(new PreferenceUtil(this).isEulaAccepted())
+    	if(prefs.isEulaAccepted())
     	{
     		listContents(currentDir);
     	}
@@ -89,7 +113,35 @@ public class FileExplorerMain extends ListActivity {
 
     }
     
+    private void listenToThemeChange() {
+
+		listener = new OnSharedPreferenceChangeListener() {
+
+			@Override
+			public void onSharedPreferenceChanged(
+					SharedPreferences sharedPreferences, String key) {
+				if (Constants.PREF_THEME.equals(key)) {
+						
+					shouldRestartApp  = true;
+
+				}
+			}
+		};
+
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.registerOnSharedPreferenceChangeListener(listener);
+	}
+
     @Override
+    protected void onResume() {
+    	super.onResume();
+    	if(shouldRestartApp)
+    	{
+    		shouldRestartApp = false;
+    		restartApp();
+    	}
+    }
+	@Override
     public void onCreateContextMenu(ContextMenu menu, View v,
     		ContextMenuInfo menuInfo) {
     	
@@ -314,5 +366,19 @@ public class FileExplorerMain extends ListActivity {
 		listContents(currentDir);
 	}
 	
+
+	private void restartApp() {
+		Intent i = getBaseContext().getPackageManager()
+				.getLaunchIntentForPackage(getBaseContext().getPackageName());
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtra(Constants.RESTART_DIR, currentDir.getAbsolutePath());
+		startActivity(i);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(listener);
+	}
 	
 }

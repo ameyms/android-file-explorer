@@ -8,9 +8,10 @@ public class SettingsActivity extends PreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
 		setTheme(new PreferenceUtil(this).getTheme());
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
+
 	}
-	
 }

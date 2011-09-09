@@ -107,6 +107,7 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
 				}
 			});
         }
+        
         return convertView;
 	}
 

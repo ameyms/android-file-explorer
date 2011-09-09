@@ -134,7 +134,7 @@ public class QuickAction extends CustomPopupWindow {
 		
 		// display on bottom
 		if (rootHeight > anchorRect.top) {
-			yPos 	= anchorRect.bottom;
+			yPos 	= anchorRect.bottom - anchorRect.height()/4;
 			onTop	= false;
 		}
 

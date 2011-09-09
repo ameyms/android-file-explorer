@@ -19,7 +19,12 @@
 	<string name="action_unmount">Unmount</string>
 	<string name="action_format">Format</string>
 	<string name="action_share">Share</string>
+	<string name="action_addTo">Add to...</string>
 	<string name="action_zip">Zip</string>
+	
+	<string name="ringtones">Ringtones</string>
+	<string name="notifications">Notifications</string>
+	<string name="alarms">Alarms</string>
 
 	<string name="media_rescan_started">Media rescan started</string>
 	<string name="msg_delete_success">Path successfully deleted</string>
@@ -31,6 +36,9 @@
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_refresh">Refresh</string>
 	
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	<string name="not_now">Not Now</string>
 	<string name="confirm">Confirm</string>
 	<string name="error">Error</string>
 	<string name="success">Success</string>
@@ -72,7 +80,7 @@
 	<string name="goto_path">Navigate to</string>
 	<string name="goto_path_not_exist">Sorry. The directory could not be found</string>
 	
-	
+	<string name="confirm_app_restart">Do you wish to restart app and apply new theme?</string>
 	<string name="confirm_delete">Are you sure you want to delete %1$s ?</string>
 	
 	<string name="confirm_paste_text">Are you sure you want to paste %1$s ?</string>
@@ -129,7 +137,7 @@
 	<string name="pref_sort_dir">Sort Direction</string>
 	
 	<string name="pref_theme">Theme</string>
-	<string name="pref_theme_desc">Requires app restart</string>
+	<string name="pref_theme_desc">Select app theme</string>
 	<string name="pref_theme_title">Choose Theme</string>
 	
 	
@@ -185,8 +193,8 @@
     
     
     <string-array name="theme_entries">
-        <item>Black</item>
-        <item>White</item>
+        <item>Dark</item>
+        <item>Light</item>
     </string-array>
 
     <string-array name="theme_values">

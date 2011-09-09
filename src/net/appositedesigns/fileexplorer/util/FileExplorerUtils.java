@@ -18,9 +18,11 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 
 public final class FileExplorerUtils {
@@ -54,34 +56,36 @@ public final class FileExplorerUtils {
 
 	static boolean isMusic(File file) {
 
-		String fileName = file.getName();
-		return (fileName.toLowerCase().endsWith(".mp3")
-				|| fileName.toLowerCase().endsWith(".aac")
-				|| fileName.toLowerCase().endsWith(".ogg")
-				|| fileName.toLowerCase().endsWith(".wav")
-				|| fileName.toLowerCase().endsWith(".m4a") || fileName
-				.toLowerCase().endsWith(".wma"));
+		Uri uri = Uri.fromFile(file);
+		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
+		
+		if(type == null)
+			return false;
+		else
+		return (type.toLowerCase().startsWith("audio/"));
+
 	}
 
 	static boolean isVideo(File file) {
 
-		String fileName = file.getName();
-		return (fileName.toLowerCase().endsWith(".mp4")
-				|| fileName.toLowerCase().endsWith(".avi")
-				|| fileName.toLowerCase().endsWith(".vob")
-				|| fileName.toLowerCase().endsWith(".mov")
-				|| fileName.toLowerCase().endsWith(".flv") 
-				|| fileName.toLowerCase().endsWith(".wmv")
-				|| fileName.toLowerCase().endsWith(".3gp"));
+		Uri uri = Uri.fromFile(file);
+		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
+		
+		if(type == null)
+			return false;
+		else
+		return (type.toLowerCase().startsWith("video/"));
 	}
 
 	public static boolean isPicture(File file) {
 		
-		String fileName = file.getName();
-		return (fileName.toLowerCase().endsWith(".jpg")
-				|| fileName.toLowerCase().endsWith(".png")
-				|| fileName.toLowerCase().endsWith(".bmp") || fileName
-				.toLowerCase().endsWith(".gif"));
+		Uri uri = Uri.fromFile(file);
+		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
+		
+		if(type == null)
+			return false;
+		else
+		return (type.toLowerCase().startsWith("image/"));
 	}
 	
 	public static boolean isProtected(File path)

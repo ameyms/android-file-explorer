@@ -31,6 +31,8 @@ public interface Constants {
 
 	public static final String THEME_BLACK = "theme_black";
 	public static final String THEME_WHITE = "theme_white";
+
+	public static final String RESTART_DIR = "net.appositedesigns.fileexplorer.RestartDirectory";
 	
 	
 }
