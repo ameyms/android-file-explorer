@@ -4,7 +4,7 @@
 	<string name="settings">File Explorer Preferences</string>
 	
 	<string name="eula_popup_title">Welcome to File Explorer</string>
-	<string name="eula_popup_text">Thanks you for installing FileExplorer, the free, opern source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
+	<string name="eula_popup_text">Thank you for installing FileExplorer, the free, opern source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
 
 
 	<string name="eula_accept">I accept</string>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">File Explorer</string>
+	<string name="settings">Les Préférences d\'Explorateur de Fichiers </string>
+	
+	<string name="app_url">http://fileexplore.appositedesigns.net</string>
+
+	<string name="action_rename">Renommer</string>
+	<string name="action_delete">Supprimer</string>
+	<string name="action_cut">Couper</string>
+	<string name="action_copy">Copier</string>
+	<string name="action_prop">Propriétés</string>
+	<string name="action_unmount">Démonter</string>
+	<string name="action_format">Format</string>
+	<string name="action_share">Partager</string>
+	<string name="action_zip">Zip</string>
+
+	<string name="msg_delete_success">Chemin supprimé avec succès</string>
+	<string name="msg_delete_fail">Chemin ne pouvait pas être supprimé</string>
+	
+	<string name="empty_folder">Ce dossier est vide</string>
+	<string name="menu_paste">Coller</string>
+	<string name="menu_addfolder">Nouveau dossier</string>
+	<string name="menu_preferences">Préférences</string>
+	<string name="menu_refresh">Rafraîchir</string>
+	
+	<string name="confirm">Confirmer</string>
+	<string name="error">Erreur</string>
+	<string name="success">Succès</string>
+	<string name="abort">Avorté</string>
+	<string name="zip">Zip</string>
+	
+	<string name="cancel">Annuler</string>
+	<string name="cancelling">Annulant...</string>
+	<string name="run_in_background">S\'exécuter en arrière plan</string>
+	<string name="share_via">Partager via</string>
+	<string name="open_using">Ouvrir à l\'aide</string>
+	
+	<string name="copied_toast">%1$s copiés</string>
+	<string name="cut_toast">%1$s coupé</string>
+	
+	<string name="zip_success">Les fichier(s) sélectionnés ont été compressés au %1$s</string>
+	<string name="zip_dir_empty">Zip échoué. Dossier spécifié est vide.</string>
+	
+	<string name="zip_dest_invalid">Destination du fichier Zip est invalide. S\'il vous plaît vérifier la destination dans le menu &gt; et réessayez.</string>
+	<string name="zip_failed">Un ou plusieurs fichiers n\'ont pas pu être compressé. S\'il vous plaît vérifier le nom du fichier zip et essayez à nouveau.</string>
+	<string name="zip_in_progress">Les dossiers sont compressés. S\'il vous plaît attendre.</string>
+	<string name="zip_aborted">Zip avorté.</string>
+	<string name="zip_dialog">Créer Zip dans %1$s</string>
+	<string name="enter_zip_file_name">Entrez le nom du fichier zip.</string>
+	<string name="zip_abort_partial">Zip opération avortée. Toutefois, un ou plusieurs fichiers ont été copiés à %1$s</string>
+	
+	<string name="copy_aborted">Copiez avorté.</string>
+	<string name="copy_abort_partial">Opération de copie avorté. Toutefois, un ou plusieurs fichiers ont été copiés.</string>
+	
+	<string name="move_aborted">Déplacer avorté.</string>
+	<string name="move_abort_partial">Déplacer opération avortée. Toutefois, un ou plusieurs fichiers ont été déplacés.</string>
+	
+	<string name="access_denied">Accès refusé.</string>
+	<string name="cant_open_dir">%1$s est un répertoire protégé. Vous aurez besoin d\'un accès root sur votre appareil pour ouvrir et naviguer dans ce répertoire.</string>
+	
+	<string name="confirm_delete">Etes-vous sûr de vouloir supprimer %1$s ?</string>
+	
+	<string name="confirm_paste_text">Etes-vous sûr de vouloir coller ce%1$s ?</string>
+	<string name="delete_failed">%1$s ne pouvait pas être supprimé</string>
+	
+	<string name="rename_failed">%1$s ne pouvait pas être renommé</string>
+	<string name="enter_new_name">Entrez le nouveau nom</string>
+	<string name="rename_dialog_title">Renommer %1$s</string>
+	
+	<string name="properties_for">Propriétés: %1$s</string>
+	
+	<string name="deleting_path">Suppression chemin %1$s ...</string>
+	<string name="copying_path">Copie %1$s . S\'il vous plaît attendre ...</string>
+	<string name="moving_path">Moving %1$s .S\'il vous plaît attendre...</string>
+
+	<string name="create_folder">Créer un dossier</string>
+	<string name="enter_folder_name">Entrez le nom du dossier</string>
+	
+	<string name="querying_filesys">Interrogation système de fichiers. S\'il vous plaît attendre.</string>
+	
+	<string name="copy_complete">Copie complète.</string>
+	<string name="move_complete">Ressources déplacé avec succès vers le nouvel emplacement.</string>
+	
+	<string name="generic_operation_failed">Impossible de terminer l\'opération.</string>
+	
+	<string name="pref_cat_general">Voir les options</string>
+	<string name="pref_home_folder">Dossier Démarrage</string>
+	<string name="pref_home_folder_desc">Explorateur de fichiers va ouvrir ce dossier au moment commencé.</string>
+
+	<string name="pref_showhidden">Montrer les chemins cachés.</string>
+	<string name="pref_showhidden_on">Fichiers et dossiers cachés sont affichés.</string>
+	<string name="pref_showhidden_off">Fichiers et dossiers cachés sont omises.</string>
+	
+	<string name="pref_show_dir_sizes">Voir le dossier tailles</string>
+	<string name="pref_show_dir_sizes_on_desc">Dossier tailles sont enroulés</string>
+	<string name="pref_show_dir_sizes_off_desc">Dossier tailles ne sont pas représentés</string>
+	
+	<string name="pref_show_sysfiles">Voir les dossiers protégés</string>
+	<string name="pref_show_sysfiles_on">Dossiers système protégées sont indiquées</string>
+	<string name="pref_show_sysfiles_off">Dossiers système protégés sont cachés</string>
+	
+	
+	<string name="pref_cat_sorting">Tri</string>
+	
+	<string name="pref_dirsfirst">Montrer les répertoires sur le dessus</string>
+	<string name="pref_dirsfirst_on_desc">Montrera des répertoires sur le dessus</string>
+	<string name="pref_dirsfirst_off_desc">Ne donnera pas la préférence à des répertoires dans le tri</string>
+	
+	
+	<string name="pref_sort_field">Le champ de Tri</string>
+	<string name="pref_sort_field_desc">Attribut sur quel chemin doit être trié</string>
+	
+	<string name="pref_sort_dir">Sens du tri</string>
+	
+	<string name="pref_cat_geeky">Stuff geeky</string>
+	<string name="pref_zipenable">Activer Zip</string>
+	<string name="pref_zipenable_on">Les fichiers et dossiers ont une option pour compresser dans un autre fichier</string>
+	<string name="pref_zipenable_off">Les fichiers et dossiers ne peuvent pas être compressés</string>
+	<string name="pref_zip_location">Lieu zip</string>
+	<string name="pref_zip_location_desc">Fichiers compressés et les dossiers seront conservés à cet endroit</string>
+	
+	<string name="pref_show_sdcard_options">SD Carte Options</string>
+	<string name="pref_show_sdcard_options_on">Démonter, format options sont présentées pour la carte SD.</string>
+	<string name="pref_show_sdcard_options_off">Options à la carte SD sont cachés</string>
+	
+	<string name="pref_cat_misc">À propos</string>
+	<string name="pref_share">Dites à vos amis</string>
+	<string name="pref_share_desc">Partager cette application avec vos amis</string>
+	
+	<string name="pref_terms">Termes &amp; conditions</string>
+	<string name="pref_website">Site Web Developer</string>
+	<string name="pref_website_desc">Visitez mon site web</string>
+	<string name="pref_feedback">Envoyer des commentaires</string>
+	<string name="pref_feedback_desc">Envoyez-moi un email. Vos commentaires sont les bienvenus!</string>
+
+	<string name="filepath_is">Chemin: %1$s </string>
+	<string name="mtime_is">Dernière modification: %1$s</string>
+	<string name="size_is">Taille: %1$s</string>
+
+	<string name="system_path">Système</string>
+	<string-array name="sort_fields_entries">
+        <item>Name</item>
+        <item>Size</item>
+        <item>Last Modified</item>
+    </string-array>
+    
+    <string-array name="sort_fields_values">
+        <item>name</item>
+        <item>size</item>
+        <item>mtime</item>
+    </string-array>
+    
+    	<string-array name="sort_dir_entries">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+    
+    <string-array name="sort_dir_values">
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
+</resources>
+

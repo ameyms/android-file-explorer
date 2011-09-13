@@ -399,7 +399,6 @@ public final class FileExplorerUtils {
 		input.setSingleLine();
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.goto_path))
-		.setIcon(android.R.drawable.ic_dialog_info)
 		.setView(input)
 		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {

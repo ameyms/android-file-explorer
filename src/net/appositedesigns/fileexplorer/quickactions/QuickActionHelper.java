@@ -6,6 +6,7 @@ import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
+import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -28,7 +29,14 @@ public final class QuickActionHelper {
 		final QuickAction actions = new QuickAction(view);
 		int[] availableActions = FileActionsHelper.getContextMenuOptions(file, mContext);
 		
-		view.setImageDrawable(mContext.getResources().getDrawable(R.drawable.list_actions_glow));
+		if(new PreferenceUtil(mContext).getTheme() == android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+		{
+			view.setImageDrawable(mContext.getResources().getDrawable(R.drawable.list_actions_glow));
+		}
+		else
+		{
+			view.setImageDrawable(mContext.getResources().getDrawable(R.drawable.list_actions_blu));
+		}
 		ActionItem action = null;
 		
 		for(int i=0;i<availableActions.length;i++)
