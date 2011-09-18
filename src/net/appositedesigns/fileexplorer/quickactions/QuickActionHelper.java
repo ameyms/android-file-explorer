@@ -29,7 +29,7 @@ public final class QuickActionHelper {
 		final QuickAction actions = new QuickAction(view);
 		int[] availableActions = FileActionsHelper.getContextMenuOptions(file, mContext);
 		
-		if(new PreferenceUtil(mContext).getTheme() == android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+		if(new PreferenceUtil(mContext).getTheme() == android.R.style.Theme_Black_NoTitleBar)
 		{
 			view.setImageDrawable(mContext.getResources().getDrawable(R.drawable.list_actions_glow));
 		}
