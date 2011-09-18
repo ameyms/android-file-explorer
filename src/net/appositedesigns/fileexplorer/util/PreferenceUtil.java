@@ -126,11 +126,11 @@ public final class PreferenceUtil {
 		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_THEME, Constants.THEME_BLACK);
 		if(Constants.THEME_BLACK.equalsIgnoreCase(theme))
 		{
-			return R.style.Theme_Black_NoTitleBar_Fullscreen;
+			return R.style.Theme_Black_NoTitleBar;
 		}
 		else
 		{
-			return R.style.Theme_Light_NoTitleBar_Fullscreen;
+			return R.style.Theme_Light_NoTitleBar;
 		}
 	}
 }
