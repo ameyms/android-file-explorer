@@ -385,7 +385,7 @@ public final class FileExplorerUtils {
 			}
 			
 		} catch (IOException e) {
-			Log.e(TAG, "Could not execute DU command for "+dir.getAbsolutePath(), e);
+			Log.w(TAG, "Could not execute DU command for "+dir.getAbsolutePath(), e);
 		}
 		
 		return sizes;
@@ -420,7 +420,6 @@ public final class FileExplorerUtils {
 			catch (Exception e) {
 				Log.e(TAG, "Error navigating to path"+toPath, e);
 				new Builder(mContext)
-				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setTitle(mContext.getString(R.string.error))
 				.setMessage(mContext.getString(R.string.goto_path_not_exist))
 				.show();

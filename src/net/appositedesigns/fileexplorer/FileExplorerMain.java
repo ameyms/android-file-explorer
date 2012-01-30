@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.appositedesigns.fileexplorer.util.Constants;
-import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
 import net.appositedesigns.fileexplorer.workers.Trasher;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
@@ -18,102 +18,149 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class FileExplorerMain extends ListActivity {
 
-
+	private static final String CURRENT_DIR_DIR = "current-dir";
 	private ListView explorerListView;
 	private File currentDir;
 	private PreferenceUtil prefs;
 	private List<FileListEntry> files;
 	private FileListAdapter adapter;
-	private TextView header;
 	private OnSharedPreferenceChangeListener listener;
 	protected boolean shouldRestartApp = false;
-	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-    	
-    	prefs = new PreferenceUtil(this);
-    	
-    	setTheme(prefs.getTheme());
-    	super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        currentDir = prefs.getStartDir();
-        
-        //If app was restarted programmatically, find where the user last left it
-        String restartDirPath = getIntent().getStringExtra(Constants.RESTART_DIR);
-        if(restartDirPath!=null)
-        {
-        	File restartDir = new File(restartDirPath);
-        	if(restartDir.exists() && restartDir.isDirectory())
-        	{
-        		currentDir = restartDir;
-        	}
-        }
+	protected Object mCurrentActionMode;
 
-		
-        files = new ArrayList<FileListEntry>();
-        
-        explorerListView = (ListView)getListView();
-        header = (TextView)findViewById(R.id.header_fqpath);
-        header.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				FileExplorerUtils.gotoPath(currentDir.getAbsolutePath(),FileExplorerMain.this);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+
+		prefs = new PreferenceUtil(this);
+
+		setTheme(prefs.getTheme());
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		explorerListView = (ListView) getListView();
+		prepareActionBar();
+
+		if (savedInstanceState==null || savedInstanceState.getSerializable(CURRENT_DIR_DIR) == null) {
+			currentDir = prefs.getStartDir();
+		} else {
+			currentDir = new File(savedInstanceState
+					.getSerializable(CURRENT_DIR_DIR).toString());
+		}
+
+		// If app was restarted programmatically, find where the user last left
+		// it
+		String restartDirPath = getIntent().getStringExtra(
+				Constants.RESTART_DIR);
+		if (restartDirPath != null) {
+			File restartDir = new File(restartDirPath);
+			if (restartDir.exists() && restartDir.isDirectory()) {
+				currentDir = restartDir;
 			}
+		}
+
+		listenToThemeChange();
+		files = new ArrayList<FileListEntry>();
+
+		explorerListView = (ListView) getListView();
+		adapter = new FileListAdapter(this, files);
+		explorerListView.setAdapter(adapter);
+		explorerListView.setTextFilterEnabled(true);
+		explorerListView.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (explorerListView.isClickable()) {
+					FileListEntry file = (FileListEntry) explorerListView
+							.getAdapter().getItem(position);
+					select(file.getPath());
+				}
+			}
+
 		});
-        
-        listenToThemeChange();
-		
-        adapter = new FileListAdapter(this, files);
-        explorerListView.setAdapter(adapter);
-        explorerListView.setTextFilterEnabled(true);
-        explorerListView.setOnItemClickListener(new OnItemClickListener() {
-        	
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
-            	
-            	FileListEntry file = (FileListEntry)explorerListView.getAdapter().getItem(position);
-                select(file.getPath());
-            }
 
-         });
-        
-        registerForContextMenu(explorerListView);
-        
-    	if(prefs.isEulaAccepted())
-    	{
-    		listContents(currentDir);
-    	}
-    	else
-    	{
-    		EulaPopupBuilder.create(this).show();
-    	}
+		registerForContextMenu(explorerListView);
 
-    }
-    
-    private void listenToThemeChange() {
+		if (prefs.isEulaAccepted()) {
+			listContents(currentDir);
+		} else {
+			EulaPopupBuilder.create(this).show();
+		}
+
+	}
+
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putSerializable(CURRENT_DIR_DIR, currentDir.getAbsolutePath());
+
+	}
+
+	private void prepareActionBar() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		explorerListView
+				.setOnItemLongClickListener(new OnItemLongClickListener() {
+					@Override
+					public boolean onItemLongClick(AdapterView<?> arg0,
+							final View view, int arg2, long arg3) {
+
+						final FileListEntry fileListEntry = (FileListEntry) adapter
+								.getItem(arg2);
+						if (mCurrentActionMode != null) {
+							return false;
+						}
+
+						if (FileExplorerUtils.isProtected(fileListEntry
+								.getPath())) {
+							return false;
+						}
+						explorerListView.setClickable(false);
+						explorerListView
+								.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+						mCurrentActionMode = FileExplorerMain.this
+								.startActionMode(new FileActionsCallback(
+										FileExplorerMain.this, fileListEntry) {
+
+									@Override
+									public void onDestroyActionMode(
+											ActionMode mode) {
+										view.setSelected(false);
+										explorerListView
+												.setChoiceMode(ListView.CHOICE_MODE_NONE);
+										mCurrentActionMode = null;
+										explorerListView.setClickable(true);
+									}
+
+								});
+
+						view.setSelected(true);
+						return true;
+					}
+
+				});
+	}
+
+	private void listenToThemeChange() {
 
 		listener = new OnSharedPreferenceChangeListener() {
 
@@ -121,8 +168,8 @@ public class FileExplorerMain extends ListActivity {
 			public void onSharedPreferenceChanged(
 					SharedPreferences sharedPreferences, String key) {
 				if (Constants.PREF_THEME.equals(key)) {
-						
-					shouldRestartApp  = true;
+
+					shouldRestartApp = true;
 
 				}
 			}
@@ -132,131 +179,107 @@ public class FileExplorerMain extends ListActivity {
 				.registerOnSharedPreferenceChangeListener(listener);
 	}
 
-    @Override
-    protected void onResume() {
-    	super.onResume();
-    	if(shouldRestartApp)
-    	{
-    		shouldRestartApp = false;
-    		restartApp();
-    	}
-    }
 	@Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-    		ContextMenuInfo menuInfo) {
-    	
-    	if(v.getId() == getListView().getId());
-    	{
-    		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-    		File selected = files.get(info.position).getPath();
-    		if(FileExplorerUtils.isProtected(selected))
-    		{
-    			return;
-    		}
-    		
-    		int[] actions = FileActionsHelper.getContextMenuOptions(selected, this);
-			if(actions.length>0)
-    		{
-    			menu.setHeaderTitle(selected.getName());
-    			for(int i=0;i<actions.length;i++)
-    			{
-    				menu.add(Menu.NONE, actions[i], i, actions[i]);
-    			}
-    		}
-    		
-    	}
-    }
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-    	
-      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-      int action = item.getItemId();
-      FileListEntry selected = files.get(info.position);
-      FileActionsHelper.doOperation(selected,action, this);
-      
-      return true;
-    }
-    void select(File file)
-    {
-    	if(FileExplorerUtils.isProtected(file))
-    	{
-    		new Builder(this)
-			.setIcon(android.R.drawable.ic_dialog_alert)
-			.setTitle(getString(R.string.access_denied))
-			.setMessage(getString(R.string.cant_open_dir, file.getName()))
-			.show();
-    	}
-    	else if(file.isDirectory())
-        {
-       	 listContents(file);
-        }
-        else
-        {
-       	 openFile(file);
-        }
-    }
+	protected void onResume() {
+		super.onResume();
+		if (shouldRestartApp) {
+			shouldRestartApp = false;
+			restartApp();
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		if (prefs.useBackNavigation()) {
+			if (FileExplorerUtils.isRoot(currentDir)) {
+				finish();
+			} else {
+				gotoParent();
+			}
+		} else {
+			super.onBackPressed();
+		}
+
+	}
+
+	void select(File file) {
+		if (FileExplorerUtils.isProtected(file)) {
+			new Builder(this)
+					.setTitle(getString(R.string.access_denied))
+					.setMessage(
+							getString(R.string.cant_open_dir, file.getName()))
+					.show();
+		} else if (file.isDirectory()) {
+			listContents(file);
+		} else {
+			openFile(file);
+		}
+	}
+
 	private void openFile(File file) {
-		if(FileExplorerUtils.isProtected(file) || file.isDirectory())
-		{
+		if (FileExplorerUtils.isProtected(file) || file.isDirectory()) {
 			return;
 		}
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		Uri uri = Uri.fromFile(file);
-		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
-		intent.setDataAndType(uri,type==null?"*/*":type);
-		startActivity((Intent.createChooser(intent, getString(R.string.open_using))));
-	}
-	
-    public void listContents(File dir)
-    {
-    	if(!dir.isDirectory() || FileExplorerUtils.isProtected(dir))
-    	{
-    		return;
-    	}
-    	new Finder(this).execute(dir);
+		String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+				MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
+		intent.setDataAndType(uri, type == null ? "*/*" : type);
+		startActivity((Intent.createChooser(intent,
+				getString(R.string.open_using))));
 	}
 
-    @Override
-    public void onBackPressed() {
-    	
-    	if(FileExplorerUtils.isRoot(currentDir))
-    	{
-    		finish();
-    	}
-    	else
-    	{
-    		listContents(currentDir.getParentFile());
-    	}
-    	
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-    	inflater.inflate(R.menu.options_menu, menu);
-    	return true;
-    }
-    
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+	public void listContents(File dir) {
+		if (!dir.isDirectory() || FileExplorerUtils.isProtected(dir)) {
+			return;
+		}
+		new Finder(this).execute(dir);
+	}
 
-    	 if(FileExplorerUtils.canPaste(currentDir))
-         {
-    		 menu.findItem(R.id.menu_paste).setVisible(true);
-         }
-    	 else
-    	 {
-    		 menu.findItem(R.id.menu_paste).setVisible(false);
-    	 }
-    	return super.onPrepareOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-    	
-    	switch (item.getItemId()) {
-		case  R.id.menu_paste:
+	private void gotoParent() {
+
+		if (FileExplorerUtils.isRoot(currentDir)) {
+			// Do nothing finish();
+		} else {
+			listContents(currentDir.getParentFile());
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.options_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		if (FileExplorerUtils.canPaste(currentDir)) {
+			menu.findItem(R.id.menu_paste).setVisible(true);
+		} else {
+			menu.findItem(R.id.menu_paste).setVisible(false);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+
+		switch (item.getItemId()) {
+
+		case android.R.id.home:
+			gotoParent();
+			return true;
+
+		case R.id.menu_goto:
+			FileExplorerUtils.gotoPath(currentDir.getAbsolutePath(), this);
+			return true;
+
+		case R.id.menu_paste:
 			confirmPaste();
 			return true;
 
@@ -265,107 +288,106 @@ public class FileExplorerMain extends ListActivity {
 			return true;
 		case R.id.menu_newfolder:
 			confirmCreateFolder();
-        	return true;
-        	
+			return true;
+
 		case R.id.menu_settings:
-			Intent prefsIntent = new Intent(FileExplorerMain.this, SettingsActivity.class);
+			Intent prefsIntent = new Intent(FileExplorerMain.this,
+					SettingsActivity.class);
 			startActivity(prefsIntent);
 			return true;
 		default:
 			super.onOptionsItemSelected(item);
 			break;
 		}
-        
-        return true;
-    }
-    
+
+		return true;
+	}
+
 	private void confirmPaste() {
-		
+
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(getString(R.string.confirm));
-		alert.setMessage(getString(R.string.confirm_paste_text, FileExplorerUtils.getFileToPaste().getName()));
-		alert.setIcon(android.R.drawable.ic_dialog_alert);
+		alert.setMessage(getString(R.string.confirm_paste_text,
+				FileExplorerUtils.getFileToPaste().getName()));
 
-		alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		 
-				dialog.dismiss();
-				new FileMover(FileExplorerMain.this,FileExplorerUtils.getPasteMode()).execute(currentDir);
-			}
-		});
+		alert.setPositiveButton(android.R.string.ok,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
 
-		alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		   
-			  dialog.dismiss();
-		  }
-		});
+						dialog.dismiss();
+						new FileMover(FileExplorerMain.this, FileExplorerUtils
+								.getPasteMode()).execute(currentDir);
+					}
+				});
+
+		alert.setNegativeButton(android.R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+						dialog.dismiss();
+					}
+				});
 
 		alert.show();
-		
-		
+
 	}
+
 	private void confirmCreateFolder() {
-		
+
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle(getString(R.string.create_folder));
-		alert.setIcon(android.R.drawable.ic_dialog_info);
-		// Set an EditText view to get user input 
+		// Set an EditText view to get user input
 		final EditText input = new EditText(this);
 		input.setHint(getString(R.string.enter_folder_name));
 		input.setSingleLine();
 		alert.setView(input);
 
-		alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		  CharSequence newDir = input.getText();
-		  if(FileExplorerUtils.mkDir(currentDir.getAbsolutePath(), newDir))
-		  {
-			  listContents(currentDir);
-		  }
-		  }
-		});
+		alert.setPositiveButton(android.R.string.ok,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						CharSequence newDir = input.getText();
+						if (FileExplorerUtils.mkDir(
+								currentDir.getAbsolutePath(), newDir)) {
+							listContents(currentDir);
+						}
+					}
+				});
 
-		alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		   
-			  dialog.dismiss();
-		  }
-		});
+		alert.setNegativeButton(android.R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+						dialog.dismiss();
+					}
+				});
 
 		alert.show();
-		
+
 	}
 
-
-	void deletePath(File path)
-	{
+	void deletePath(File path) {
 		new Trasher(this).execute(path);
 	}
-	public void setCurrentDir(File dir)
-	{
+
+	public void setCurrentDir(File dir) {
 		currentDir = dir;
 	}
-	
-	public void setNewChildren(List<FileListEntry> children)
-	{
-		TextView emptyText = (TextView)findViewById(android.R.id.empty);
-		header.setText(currentDir.getAbsolutePath());
-		if(emptyText!=null)
-		{
+
+	public void setNewChildren(List<FileListEntry> children) {
+		TextView emptyText = (TextView) findViewById(android.R.id.empty);
+		if (emptyText != null) {
 			emptyText.setText(R.string.empty_folder);
 		}
 		files.clear();
 		files.addAll(children);
-		adapter.notifyDataSetChanged();	
+		adapter.notifyDataSetChanged();
 	}
 
 	public void refresh() {
 		listContents(currentDir);
 	}
-	
 
 	private void restartApp() {
 		Intent i = getBaseContext().getPackageManager()
@@ -374,11 +396,12 @@ public class FileExplorerMain extends ListActivity {
 		i.putExtra(Constants.RESTART_DIR, currentDir.getAbsolutePath());
 		startActivity(i);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(listener);
+		PreferenceManager.getDefaultSharedPreferences(this)
+				.unregisterOnSharedPreferenceChangeListener(listener);
 	}
-	
+
 }

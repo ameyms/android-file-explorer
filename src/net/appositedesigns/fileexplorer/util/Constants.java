@@ -9,6 +9,7 @@ public interface Constants {
 	public static final String PREF_HOME_DIR = "homeDir";
 	public static final String PREF_SHOW_DIRS_FIRST = "showDirsFirst";
 	public static final String PREF_SHOW_HIDDEN = "showHidden";
+	public static final String PREF_USE_BACK_BUTTON = "useBackButton";
 	public static final String PREF_SHOW_DIR_SIZES = "showDirSizes";
 	public static final String PREF_SHOW_SYSFILES = "showSysFiles";
 	

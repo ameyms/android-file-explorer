@@ -25,6 +25,10 @@ public final class PreferenceUtil {
 	{
 		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_HIDDEN, true);
 	}
+	public boolean useBackNavigation()
+	{
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_HIDDEN, true);
+	}
 	
 	public SortField getSortField()
 	{
@@ -123,14 +127,14 @@ public final class PreferenceUtil {
 	}
 	public int getTheme() {
 		
-		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_THEME, Constants.THEME_BLACK);
+		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_THEME, Constants.THEME_WHITE);
 		if(Constants.THEME_BLACK.equalsIgnoreCase(theme))
 		{
-			return R.style.Theme_Black_NoTitleBar;
+			return R.style.Theme_Holo;
 		}
 		else
 		{
-			return R.style.Theme_Light_NoTitleBar;
+			return R.style.Theme_Holo_Light;
 		}
 	}
 }

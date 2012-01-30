@@ -24,6 +24,9 @@
 			android:entries="@array/theme_entries" android:defaultValue="theme_black"
 			android:entryValues="@array/theme_values" android:dialogTitle="@string/pref_theme_title" />
 
+				<CheckBoxPreference android:title="@string/pref_use_back"
+			android:defaultValue="true" android:summaryOn="@string/pref_use_back_on"
+			android:summaryOff="@string/pref_use_back_off"  android:key="useBackButton" />
 
 	</PreferenceCategory>
 

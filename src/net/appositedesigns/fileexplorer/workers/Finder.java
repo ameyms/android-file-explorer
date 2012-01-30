@@ -51,6 +51,18 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 				Log.v(TAG, "Children for "+currentDir.getAbsolutePath()+" passed to caller");
 				caller.setCurrentDir(currentDir);
 				caller.setNewChildren(childFiles);
+				caller.getActionBar().setSubtitle(caller.getString(R.string.item_count_subtitle, childFiles.size()));
+				
+				if(FileExplorerUtils.isRoot(currentDir))
+		    	{
+					caller.getActionBar().setDisplayHomeAsUpEnabled(false);
+					caller.getActionBar().setTitle(caller.getString(R.string.filesystem));
+		    	}
+		    	else
+		    	{
+		    		caller.getActionBar().setTitle(currentDir.getName());
+		    		caller.getActionBar().setDisplayHomeAsUpEnabled(true);
+		    	}
 			}
 		});
 	

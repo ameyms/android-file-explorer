@@ -42,7 +42,6 @@ public class FileActionsHelper {
 	{
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.properties_for, file.getName()))
-		.setIcon(android.R.drawable.ic_dialog_info)
 		.setItems(FileExplorerUtils.getFileProperties(file, mContext), new OnClickListener() {
 			
 			@Override
@@ -75,7 +74,7 @@ public class FileActionsHelper {
 	                dialog.cancel();
 	                
 	           }
-	       }).setTitle(R.string.confirm).setIcon(android.R.drawable.ic_dialog_alert);
+	       }).setTitle(R.string.confirm);
 		
 		AlertDialog confirm = builder.create();
 		confirm.show();
@@ -85,15 +84,19 @@ public class FileActionsHelper {
 
 		PreferenceUtil prefs = new PreferenceUtil(caller);
 		
+		if(FileExplorerUtils.isProtected(file))
+		{
+			return null;
+		}
 		if(FileExplorerUtils.isSdCard(file))
 		{
 			if(prefs.isEnableSdCardOptions())
 			{
-				return new int[]{R.string.action_rescan, R.string.action_prop};
+				return new int[]{R.id.menu_rescan, R.id.menu_props};
 			}
 			else
 			{
-				return new int[]{};
+				return new int[]{R.id.menu_props};
 			}
 			
 		}
@@ -101,18 +104,18 @@ public class FileActionsHelper {
 		{
 			if(prefs.isZipEnabled())
 			{
-				return new int[]{R.string.action_copy, R.string.action_cut, R.string.action_delete, R.string.action_rename, R.string.action_zip, R.string.action_prop};
+				return new int[]{R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_zip, R.id.menu_props};
 			}
-			return new int[]{R.string.action_copy, R.string.action_cut, R.string.action_delete, R.string.action_rename, R.string.action_prop};
+			return new int[]{R.id.menu_copy, R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_props};
 			
 		}
 		else
 		{
 			if(prefs.isZipEnabled())
 			{
-				return new int[]{R.string.action_share, R.string.action_copy, R.string.action_cut, R.string.action_delete,R.string.action_rename,R.string.action_zip, R.string.action_prop};
+				return new int[]{R.id.menu_share, R.id.menu_copy, R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_zip, R.id.menu_props};
 			}
-			return new int[]{R.string.action_share, R.string.action_copy, R.string.action_cut, R.string.action_delete,R.string.action_rename, R.string.action_prop};
+			return new int[]{R.id.menu_share, R.id.menu_copy, R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_props};
 		}
 	}
 
@@ -124,7 +127,6 @@ public class FileActionsHelper {
 		
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.rename_dialog_title, file.getName()))
-		.setIcon(android.R.drawable.ic_dialog_info)
 		.setView(input)
 		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
@@ -141,7 +143,6 @@ public class FileActionsHelper {
 				else
 				{
 					new Builder(mContext)
-					.setIcon(android.R.drawable.ic_dialog_alert)
 					.setTitle(mContext.getString(R.string.error))
 					.setMessage(mContext.getString(R.string.rename_failed, file.getName()))
 					.show();
@@ -177,7 +178,6 @@ public class FileActionsHelper {
 			input.setSingleLine();
 			new Builder(mContext)
 			.setTitle(mContext.getString(R.string.zip_dialog, zipLoc.getAbsolutePath()))
-			.setIcon(android.R.drawable.ic_dialog_info)
 			.setView(input).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 			  
@@ -199,7 +199,6 @@ public class FileActionsHelper {
 				public void run() {
 	
 					new Builder(mContext)
-					.setIcon(android.R.drawable.ic_dialog_alert)
 					.setTitle(mContext.getString(R.string.error))
 					.setMessage(mContext.getString(R.string.zip_dest_invalid))
 					.setPositiveButton(android.R.string.ok, new OnClickListener() {
@@ -219,35 +218,35 @@ public class FileActionsHelper {
 		
 		File file = entry.getPath();
 		switch (action) {
-		case R.string.action_copy:
+		case R.id.menu_copy:
 			copyFile(file, mContext);
 			break;
 
-		case R.string.action_cut:
+		case R.id.menu_cut:
 			cutFile(file, mContext);
 			break;
 			
-		case R.string.action_delete:
+		case R.id.menu_delete:
 			deleteFile(file, mContext);
 			break;
 			
-		case R.string.action_share:
+		case R.id.menu_share:
 			share(file, mContext);
 			break;
 			
-		case R.string.action_rename:
+		case R.id.menu_rename:
 			rename(file, mContext);
 			break;
 			
-		case R.string.action_zip:
+		case R.id.menu_zip:
 			zip(file, mContext);
 			break;
 			
-		case R.string.action_rescan:
+		case R.id.menu_rescan:
 			rescanMedia(mContext);
 			break;
 			
-		case R.string.action_prop:
+		case R.id.menu_props:
 			showProperties(entry, mContext);
 			break;
 		default:

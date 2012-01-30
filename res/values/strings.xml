@@ -19,7 +19,6 @@
 	<string name="action_unmount">Unmount</string>
 	<string name="action_format">Format</string>
 	<string name="action_share">Share</string>
-	<string name="action_addTo">Add to...</string>
 	<string name="action_zip">Zip</string>
 	
 	<string name="ringtones">Ringtones</string>
@@ -33,10 +32,12 @@
 	<string name="empty_folder">This folder is empty</string>
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
+	<string name="menu_navigate">Navigate</string>
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_refresh">Refresh</string>
 	
 	<string name="yes">Yes</string>
+	<string name="actions">Actions</string>
 	<string name="no">No</string>
 	<string name="not_now">Not Now</string>
 	<string name="confirm">Confirm</string>
@@ -44,6 +45,8 @@
 	<string name="success">Success</string>
 	<string name="abort">Aborted</string>
 	<string name="zip">Zip</string>
+	
+	<string name="selected_">Selected %1$s</string>
 	
 	<string name="cancel">Cancel</string>
 	<string name="cancelling">Cancelling...</string>
@@ -115,6 +118,10 @@
 	<string name="pref_showhidden_on">Hidden files and folders are shown</string>
 	<string name="pref_showhidden_off">Hidden files and folders are omitted</string>
 	
+		<string name="pref_use_back">Back button navigation</string>
+	<string name="pref_use_back_on">Uses phone back button navigate up to parent folder</string>
+	<string name="pref_use_back_off">Donot use phone back button to navigate within app</string>
+	
 	<string name="pref_show_dir_sizes">Show folder sizes</string>
 	<string name="pref_show_dir_sizes_on_desc">Folder sizes are rolled up</string>
 	<string name="pref_show_dir_sizes_off_desc">Folder sizes are not shown</string>
@@ -168,6 +175,13 @@
 	<string name="total_capacity">Total Capacity: %1$s</string>
 	<string name="free_space">Free Space: %1$s</string>
 
+	
+	<string name="item_count_subtitle">Total of %1$s items</string>
+	<string name="filesystem">File System</string>
+	<string name="goto_root">File System</string>
+	<string name="goto_sdcard">File System</string>
+	<string name="goto_other">File System</string>
+	
 	<string name="system_path">System</string>
 	<string-array name="sort_fields_entries">
         <item>Name</item>
@@ -175,6 +189,13 @@
         <item>Last Modified</item>
     </string-array>
     
+	<string-array name="goto_locations">
+        <item>Root</item>
+        <item>SD Card</item>
+        <item>Other...</item>
+    </string-array>
+    
+		
     <string-array name="sort_fields_values">
         <item>name</item>
         <item>size</item>
@@ -201,6 +222,7 @@
         <item>theme_black</item>
         <item>theme_white</item>
     </string-array>
+    
     
         
 </resources>

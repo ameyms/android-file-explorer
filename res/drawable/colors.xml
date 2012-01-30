@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<color xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+
+ <resources>
+    <drawable name="list_selected">#96FFFFFF</drawable>
+    <drawable name="list_active">#66000000</drawable>
+    <drawable name="list_pressed">#CA000000</drawable>
+</resources>
+
+    
+</color>

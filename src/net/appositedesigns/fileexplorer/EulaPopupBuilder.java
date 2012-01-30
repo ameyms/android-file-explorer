@@ -21,7 +21,6 @@ public class EulaPopupBuilder {
 
 		return new AlertDialog.Builder(context)
 				.setTitle(R.string.eula_popup_title).setCancelable(false)
-				.setIcon(android.R.drawable.ic_dialog_info)
 				.setPositiveButton(R.string.eula_accept, new OnClickListener() {
 
 					@Override

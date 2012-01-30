@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+  <!-- Selected --> 
+  <item 
+    android:state_focused="true" 
+    android:state_pressed="false" 
+    android:drawable="@drawable/colors" /> <!--  @drawable/tab_focus -->
+
+  <!-- Pressed -->
+  <item 
+    android:state_pressed="true" 
+    android:drawable="@drawable/colors" /> <!--  @drawable/tab_press -->
+
+
+</selector>
