@@ -27,7 +27,7 @@ public final class PreferenceUtil {
 	}
 	public boolean useBackNavigation()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_HIDDEN, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_BACK_BUTTON, true);
 	}
 	
 	public SortField getSortField()
