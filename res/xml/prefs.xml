@@ -21,7 +21,7 @@
 
 		<ListPreference android:key="theme" android:title="@string/pref_theme"
 			android:summary="@string/pref_theme_desc"
-			android:entries="@array/theme_entries" android:defaultValue="theme_black"
+			android:entries="@array/theme_entries" android:defaultValue="theme_white"
 			android:entryValues="@array/theme_values" android:dialogTitle="@string/pref_theme_title" />
 
 				<CheckBoxPreference android:title="@string/pref_use_back"
