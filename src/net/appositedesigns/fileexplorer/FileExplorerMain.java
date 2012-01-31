@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
 import net.appositedesigns.fileexplorer.util.Constants;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
@@ -18,7 +19,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -137,6 +137,7 @@ public class FileExplorerMain extends ListActivity {
 						explorerListView.setClickable(false);
 						explorerListView
 								.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+						QuickActionHelper.get(FileExplorerMain.this).setShowActions(false);
 						mCurrentActionMode = FileExplorerMain.this
 								.startActionMode(new FileActionsCallback(
 										FileExplorerMain.this, fileListEntry) {
@@ -148,6 +149,7 @@ public class FileExplorerMain extends ListActivity {
 										explorerListView
 												.setChoiceMode(ListView.CHOICE_MODE_NONE);
 										mCurrentActionMode = null;
+										QuickActionHelper.get(FileExplorerMain.this).setShowActions(true);
 										explorerListView.setClickable(true);
 									}
 
@@ -168,6 +170,11 @@ public class FileExplorerMain extends ListActivity {
 			public void onSharedPreferenceChanged(
 					SharedPreferences sharedPreferences, String key) {
 				if (Constants.PREF_THEME.equals(key)) {
+
+					shouldRestartApp = true;
+
+				}
+				if (Constants.PREF_USE_QUICKACTIONS.equals(key)) {
 
 					shouldRestartApp = true;
 

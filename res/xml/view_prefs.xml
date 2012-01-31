@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/pref_cat_view" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="showHidden"
+            android:summaryOff="@string/pref_showhidden_off"
+            android:summaryOn="@string/pref_showhidden_on"
+            android:title="@string/pref_showhidden" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="showSysFiles"
+            android:summaryOff="@string/pref_show_sysfiles_off"
+            android:summaryOn="@string/pref_show_sysfiles_on"
+            android:title="@string/pref_show_sysfiles" />
+
+        <EditTextPreference
+            android:defaultValue="/"
+            android:key="homeDir"
+            android:summary="@string/pref_home_folder_desc"
+            android:title="@string/pref_home_folder" />
+
+        <ListPreference
+            android:defaultValue="theme_white"
+            android:dialogTitle="@string/pref_theme_title"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:key="theme"
+            android:summary="@string/pref_theme_desc"
+            android:title="@string/pref_theme" />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/pref_cat_sorting" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="showDirsFirst"
+            android:summaryOff="@string/pref_dirsfirst_off_desc"
+            android:summaryOn="@string/pref_dirsfirst_on_desc"
+            android:title="@string/pref_dirsfirst" />
+
+        <ListPreference
+            android:defaultValue="asc"
+            android:dialogTitle="@string/pref_sort_dir"
+            android:entries="@array/sort_dir_entries"
+            android:entryValues="@array/sort_dir_values"
+            android:key="sort.dir"
+            android:title="@string/pref_sort_dir" />
+        <ListPreference
+            android:defaultValue="name"
+            android:dialogTitle="@string/pref_sort_field"
+            android:entries="@array/sort_fields_entries"
+            android:entryValues="@array/sort_fields_values"
+            android:key="sort.field"
+            android:summary="@string/pref_sort_field_desc"
+            android:title="@string/pref_sort_field" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

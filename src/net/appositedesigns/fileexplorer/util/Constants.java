@@ -12,7 +12,7 @@ public interface Constants {
 	public static final String PREF_USE_BACK_BUTTON = "useBackButton";
 	public static final String PREF_SHOW_DIR_SIZES = "showDirSizes";
 	public static final String PREF_SHOW_SYSFILES = "showSysFiles";
-	
+	public static final String PREF_USE_QUICKACTIONS = "useQuickActions";
 	public static final String SORT_DIR_ASC = "asc";
 	public static final String SORT_DIR_DESC = "desc";
 	public static final String SORT_FIELD_NAME = "name";

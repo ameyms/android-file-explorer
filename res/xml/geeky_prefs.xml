@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="zipEnable"
+            android:summaryOff="@string/pref_zipenable_off"
+            android:summaryOn="@string/pref_zipenable_on"
+            android:title="@string/pref_zipenable" />
+
+        <EditTextPreference
+            android:defaultValue="/sdcard/zipped"
+            android:dependency="zipEnable"
+            android:key="zipLocation"
+            android:summary="@string/pref_zip_location_desc"
+            android:title="@string/pref_zip_location" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sdCardOptions"
+            android:summaryOff="@string/pref_show_sdcard_options_off"
+            android:summaryOn="@string/pref_show_sdcard_options_on"
+            android:title="@string/pref_show_sdcard_options" />
+        
+</PreferenceScreen>

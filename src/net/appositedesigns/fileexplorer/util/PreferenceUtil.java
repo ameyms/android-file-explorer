@@ -30,6 +30,11 @@ public final class PreferenceUtil {
 		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_BACK_BUTTON, true);
 	}
 	
+	public boolean useQuickActions()
+	{
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_QUICKACTIONS, false);
+	}
+	
 	public SortField getSortField()
 	{
 		String field= PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_SORT_FIELD, Constants.SORT_FIELD_NAME);

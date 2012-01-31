@@ -3,10 +3,12 @@ package net.appositedesigns.fileexplorer;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
@@ -20,6 +22,7 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
 	{
 	  public TextView resName;
 	  public ImageView resIcon;
+	  public ImageView resActions;
 	  public TextView resMeta;
 	}
 
@@ -82,6 +85,7 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
             holder.resName = (TextView)convertView.findViewById(R.id.explorer_resName);
             holder.resMeta = (TextView)convertView.findViewById(R.id.explorer_resMeta);
             holder.resIcon = (ImageView)convertView.findViewById(R.id.explorer_resIcon);
+            holder.resActions = (ImageView)convertView.findViewById(R.id.explorer_resActions);
             convertView.setTag(holder);
         } 
         else
@@ -90,15 +94,27 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
         }
         final FileListEntry currentFile = files.get(position);
         holder.resName.setText(currentFile.getName());
-        final ImageView icon = holder.resIcon;
         holder.resIcon.setImageDrawable(FileExplorerUtils.getIcon(mContext, currentFile.getPath()));
-        if(FileExplorerUtils.isPicture(currentFile.getPath()))
-        {
-        	//figure out thumbnails
-        }
-        
         String meta = FileExplorerUtils.prepareMeta(currentFile, mContext);
         holder.resMeta.setText(meta);
+        if(!FileExplorerUtils.canShowQuickActions(currentFile, mContext))
+        {
+        	holder.resActions.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+        	holder.resActions.setVisibility(View.VISIBLE);
+        	holder.resActions.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					QuickActionHelper helper = QuickActionHelper.get(mContext);
+					helper.showQuickActions((ImageView)v, currentFile);
+
+				}
+			});
+        }
         
         return convertView;
 	}

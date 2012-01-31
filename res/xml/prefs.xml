@@ -1,87 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <header
+        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$ViewPreferences"
+        android:summary="@string/pref_cat_display_summary"
+        android:title="@string/pref_cat_display"	/>
+    <header
+        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$NavigationPreferences"
+        android:summary="@string/pref_cat_nav_summary"
+        android:title="@string/pref_cat_nav" />
+    
+    <header
+        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$GeekyPreferences"
+        android:title="@string/pref_cat_geeky"
+        android:summary="@string/pref_cat_geeky_summary" />
+    
+        <header
+        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$AboutPreferences"
+        android:title="@string/pref_cat_about"
+        android:summary="@string/pref_cat_about_summary" />
 
-	<PreferenceCategory android:title="@string/pref_cat_general">
-
-		<CheckBoxPreference android:title="@string/pref_showhidden"
-			android:defaultValue="false" android:summaryOn="@string/pref_showhidden_on"
-			android:summaryOff="@string/pref_showhidden_off" android:key="showHidden" />
-
-		<CheckBoxPreference android:title="@string/pref_show_sysfiles"
-			android:defaultValue="true" android:summaryOn="@string/pref_show_sysfiles_on"
-			android:summaryOff="@string/pref_show_sysfiles_off" android:key="showSysFiles" />
-
-		<EditTextPreference android:defaultValue="/"
-			android:key="homeDir" android:title="@string/pref_home_folder"
-			android:summary="@string/pref_home_folder_desc" />
-
-		<ListPreference android:key="theme" android:title="@string/pref_theme"
-			android:summary="@string/pref_theme_desc"
-			android:entries="@array/theme_entries" android:defaultValue="theme_white"
-			android:entryValues="@array/theme_values" android:dialogTitle="@string/pref_theme_title" />
-
-				<CheckBoxPreference android:title="@string/pref_use_back"
-			android:defaultValue="true" android:summaryOn="@string/pref_use_back_on"
-			android:summaryOff="@string/pref_use_back_off"  android:key="useBackButton" />
-
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/pref_cat_sorting">
-
-		<CheckBoxPreference android:title="@string/pref_dirsfirst"
-			android:defaultValue="true" android:summaryOff="@string/pref_dirsfirst_off_desc"
-			android:summaryOn="@string/pref_dirsfirst_on_desc" android:key="showDirsFirst" />
-
-
-		<ListPreference android:key="sort.dir" android:title="@string/pref_sort_dir"
-			android:entries="@array/sort_dir_entries" android:defaultValue="asc"
-			android:entryValues="@array/sort_dir_values" android:dialogTitle="@string/pref_sort_dir" />
-
-		<ListPreference android:key="sort.field" android:title="@string/pref_sort_field"
-			android:defaultValue="name" android:summary="@string/pref_sort_field_desc"
-			android:entries="@array/sort_fields_entries" android:entryValues="@array/sort_fields_values"
-			android:dialogTitle="@string/pref_sort_field" />
-
-
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/pref_cat_geeky">
-
-		<CheckBoxPreference android:title="@string/pref_zipenable"
-			android:defaultValue="false" android:summaryOff="@string/pref_zipenable_off"
-			android:summaryOn="@string/pref_zipenable_on" android:key="zipEnable" />
-
-		<EditTextPreference android:defaultValue="/sdcard/zipped"
-			android:dependency="zipEnable"
-			android:key="zipLocation" android:title="@string/pref_zip_location"
-			android:summary="@string/pref_zip_location_desc" />
-
-	<CheckBoxPreference android:title="@string/pref_show_sdcard_options"
-		android:defaultValue="true" android:summaryOff="@string/pref_show_sdcard_options_off"
-		android:summaryOn="@string/pref_show_sdcard_options_on" android:key="sdCardOptions" />
-		
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/pref_cat_misc">
-	<!-- 
-		<PreferenceScreen android:title="@string/pref_share"
-			android:summary="@string/pref_share_desc">
-			<intent android:action="net.appositedesigns.fileexplorer.SHARE_APP">
-			</intent>
-		</PreferenceScreen>
- 	-->
-		<PreferenceScreen android:title="@string/pref_website"
-			android:summary="@string/pref_website_desc">
-			<intent android:action="android.intent.action.VIEW"
-				android:data="http://amey.sakhadeo.com" />
-		</PreferenceScreen>
-		
-		<PreferenceScreen android:title="@string/pref_terms">
-			<intent android:action="android.intent.action.VIEW"
-				android:data="http://fileexplorer.appositedesigns.net/eula" />
-		</PreferenceScreen>
-
-
-	</PreferenceCategory>
-</PreferenceScreen>
+</preference-headers>

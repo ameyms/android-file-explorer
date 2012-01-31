@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">File Explorer</string>
-	<string name="settings">File Explorer Preferences</string>
+	<string name="settings">Preferences</string>
 	
 	<string name="eula_popup_title">Welcome to File Explorer</string>
 	<string name="eula_popup_text">Thank you for installing FileExplorer, the free, opern source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
@@ -49,7 +49,7 @@
 	<string name="selected_">Selected %1$s</string>
 	
 	<string name="cancel">Cancel</string>
-	<string name="cancelling">Cancelling...</string>
+	<string name="cancelling">Cancelling&#8230;</string>
 	<string name="run_in_background">Run in Background</string>
 	<string name="share_via">Share via</string>
 	<string name="open_using">Open using</string>
@@ -95,9 +95,9 @@
 	
 	<string name="properties_for">Properties: %1$s</string>
 	
-	<string name="deleting_path">Deleting path %1$s ...</string>
-	<string name="copying_path">Copying %1$s . Please wait ...</string>
-	<string name="moving_path">Moving %1$s .Please wait...</string>
+	<string name="deleting_path">Deleting path %1$s &#8230;</string>
+	<string name="copying_path">Copying %1$s . Please wait &#8230;</string>
+	<string name="moving_path">Moving %1$s .Please wait&#8230;</string>
 
 	<string name="create_folder">Create Folder</string>
 	<string name="enter_folder_name">Enter folder name</string>
@@ -110,7 +110,17 @@
 	<string name="generic_operation_failed">Could not complete operation</string>
 	
 	<string name="share_msg">I have been using FileExplorer for Android and thought you might like it too. \nHere is the download link - %2$s </string>
-	<string name="pref_cat_general">View Options</string>
+	<string name="pref_cat_view">View Options</string>
+	
+	<string name="pref_cat_display">Display Options</string>
+	<string name="pref_cat_display_summary">Set theme, sort order and other view options</string>
+	
+		<string name="pref_cat_about">About FileExplorer</string>
+	<string name="pref_cat_about_summary">About the developer, terms and conditions</string>
+	
+		<string name="pref_cat_nav">Navigation Options</string>
+	<string name="pref_cat_nav_summary">Configure navigation features like back button and quick actions popups</string>
+	
 	<string name="pref_home_folder">Start up folder</string>
 	<string name="pref_home_folder_desc">File explorer will open this folder at when started</string>
 
@@ -120,7 +130,11 @@
 	
 		<string name="pref_use_back">Back button navigation</string>
 	<string name="pref_use_back_on">Uses phone back button navigate up to parent folder</string>
-	<string name="pref_use_back_off">Donot use phone back button to navigate within app</string>
+	<string name="pref_use_back_off">Do not use phone back button to navigate within app</string>
+	
+	<string name="pref_quickactions">Use Quick Actions</string>
+	<string name="pref_quickactions_on">Uses classic quick actions context menu</string>
+	<string name="pref_quickactions_off">Do not quick actions</string>
 	
 	<string name="pref_show_dir_sizes">Show folder sizes</string>
 	<string name="pref_show_dir_sizes_on_desc">Folder sizes are rolled up</string>
@@ -149,6 +163,7 @@
 	
 	
 	<string name="pref_cat_geeky">Geeky Stuff</string>
+	<string name="pref_cat_geeky_summary">Zipping and other geeky functionality</string>
 	<string name="pref_zipenable">Enable Zip</string>
 	<string name="pref_zipenable_on">Files and folders have an option to compress into another file</string>
 	<string name="pref_zipenable_off">Files and folders can not be zipped</string>
@@ -164,8 +179,9 @@
 	<string name="pref_share_desc">Share this app with your friends</string>
 	
 	<string name="pref_terms">Terms &amp; Conditions</string>
+	<string name="pref_terms_desc">Read the terms &amp; conditions</string>
 	<string name="pref_website">Developer Website</string>
-	<string name="pref_website_desc">Visit my website</string>
+	<string name="pref_website_desc">Click to visit my website</string>
 	<string name="pref_feedback">Send feedback</string>
 	<string name="pref_feedback_desc">Drop me an email. Feedback is most welcome!</string>
 
@@ -192,7 +208,7 @@
 	<string-array name="goto_locations">
         <item>Root</item>
         <item>SD Card</item>
-        <item>Other...</item>
+        <item>Other&#8230;</item>
     </string-array>
     
 		

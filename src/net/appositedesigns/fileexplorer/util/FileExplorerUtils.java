@@ -303,7 +303,12 @@ public final class FileExplorerUtils {
 		}
 	}
 
-	public static boolean canShowActions(FileListEntry currentFile, FileExplorerMain mContext) {
+	public static boolean canShowQuickActions(FileListEntry currentFile, FileExplorerMain mContext) {
+		
+		if(!new PreferenceUtil(mContext).useQuickActions())
+		{
+			return false;
+		}
 		
 		File path = currentFile.getPath();
 		if(isProtected(path))
