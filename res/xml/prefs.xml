@@ -17,7 +17,7 @@
     
         <header
         android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$AboutPreferences"
-        android:title="@string/pref_cat_about"
-        android:summary="@string/pref_cat_about_summary" />
+        android:title="@string/pref_cat_misc"
+        android:summary="@string/pref_cat_misc_summary" />
 
 </preference-headers>

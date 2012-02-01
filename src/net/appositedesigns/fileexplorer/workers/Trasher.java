@@ -5,6 +5,7 @@ import java.io.File;
 import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
+import net.appositedesigns.fileexplorer.util.OperationCallback;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -18,10 +19,27 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 	private File fileToBeDeleted;
 	private FileExplorerMain caller;
 	private ProgressDialog waitDialog;
+
+	private OperationCallback<Void> callback;
 	
-	public Trasher(FileExplorerMain caller) {
+	public Trasher(FileExplorerMain caller, OperationCallback<Void> callback) {
 
 		this.caller = caller;
+		if(callback!=null)
+		{
+			this.callback = callback;
+		}
+		else
+		{
+			callback = new OperationCallback<Void>() {
+
+				@Override
+				public Void onSuccess() {return null;}
+
+				@Override
+				public void onFailure(Throwable e) {}
+			};
+		}
 	}
 	@Override
 	protected void onPostExecute(Boolean result) {
@@ -36,7 +54,9 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 				public void run() {
 					waitDialog.dismiss();
 					Toast.makeText(caller.getApplicationContext(), "Deleted", Toast.LENGTH_LONG);
+					callback.onSuccess();
 					caller.refresh();
+					
 				}
 			});
 		}
@@ -47,6 +67,8 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 				
 				@Override
 				public void run() {
+					
+					callback.onFailure(new Exception());
 					waitDialog.dismiss();
 					new Builder(caller)
 					.setIcon(android.R.drawable.ic_dialog_alert)

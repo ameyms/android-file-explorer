@@ -10,7 +10,6 @@ import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
-import net.appositedesigns.fileexplorer.workers.Trasher;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -57,30 +56,24 @@ public class FileExplorerMain extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		explorerListView = (ListView) getListView();
 		prepareActionBar();
 
-		if (savedInstanceState==null || savedInstanceState.getSerializable(CURRENT_DIR_DIR) == null) {
-			currentDir = prefs.getStartDir();
-		} else {
-			currentDir = new File(savedInstanceState
-					.getSerializable(CURRENT_DIR_DIR).toString());
-		}
-
-		// If app was restarted programmatically, find where the user last left
-		// it
-		String restartDirPath = getIntent().getStringExtra(
-				Constants.RESTART_DIR);
-		if (restartDirPath != null) {
-			File restartDir = new File(restartDirPath);
-			if (restartDir.exists() && restartDir.isDirectory()) {
-				currentDir = restartDir;
-			}
-		}
+		initRootDir(savedInstanceState);
 
 		listenToThemeChange();
 		files = new ArrayList<FileListEntry>();
 
+		initFileListView();
+
+		if (prefs.isEulaAccepted()) {
+			listContents(currentDir);
+		} else {
+			EulaPopupBuilder.create(this).show();
+		}
+
+	}
+
+	private void initFileListView() {
 		explorerListView = (ListView) getListView();
 		adapter = new FileListAdapter(this, files);
 		explorerListView.setAdapter(adapter);
@@ -98,14 +91,74 @@ public class FileExplorerMain extends ListActivity {
 
 		});
 
-		registerForContextMenu(explorerListView);
+		explorerListView
+		.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0,
+					final View view, int arg2, long arg3) {
 
-		if (prefs.isEulaAccepted()) {
-			listContents(currentDir);
-		} else {
-			EulaPopupBuilder.create(this).show();
+				final FileListEntry fileListEntry = (FileListEntry) adapter
+						.getItem(arg2);
+				if (mCurrentActionMode != null) {
+					return false;
+				}
+
+				if (FileExplorerUtils.isProtected(fileListEntry
+						.getPath())) {
+					return false;
+				}
+				explorerListView.setClickable(false);
+				explorerListView
+						.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+				QuickActionHelper.get(FileExplorerMain.this).setShowActions(false);
+				mCurrentActionMode = FileExplorerMain.this
+						.startActionMode(new FileActionsCallback(
+								FileExplorerMain.this, fileListEntry) {
+
+							@Override
+							public void onDestroyActionMode(
+									ActionMode mode) {
+								view.setSelected(false);
+								explorerListView
+										.setChoiceMode(ListView.CHOICE_MODE_NONE);
+								mCurrentActionMode = null;
+								QuickActionHelper.get(FileExplorerMain.this).setShowActions(true);
+								explorerListView.setClickable(true);
+							}
+
+						});
+
+				view.setSelected(true);
+				return true;
+			}
+
+		});
+		registerForContextMenu(explorerListView);		
+	}
+
+	private void initRootDir(Bundle savedInstanceState) {
+		// If app was restarted programmatically, find where the user last left
+		// it
+		String restartDirPath = getIntent().getStringExtra(
+				Constants.RESTART_DIR);
+		
+		if (restartDirPath != null) 
+		{
+			File restartDir = new File(restartDirPath);
+			if (restartDir.exists() && restartDir.isDirectory()) {
+				currentDir = restartDir;
+				getIntent().removeExtra(Constants.RESTART_DIR);
+			}
 		}
-
+		else if (savedInstanceState!=null && savedInstanceState.getSerializable(CURRENT_DIR_DIR) != null) {
+			
+			currentDir = new File(savedInstanceState
+					.getSerializable(CURRENT_DIR_DIR).toString());
+		} 
+		else 
+		{
+			currentDir = prefs.getStartDir();
+		}		
 	}
 
 	protected void onSaveInstanceState(Bundle outState) {
@@ -118,48 +171,7 @@ public class FileExplorerMain extends ListActivity {
 	private void prepareActionBar() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		explorerListView
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-					@Override
-					public boolean onItemLongClick(AdapterView<?> arg0,
-							final View view, int arg2, long arg3) {
-
-						final FileListEntry fileListEntry = (FileListEntry) adapter
-								.getItem(arg2);
-						if (mCurrentActionMode != null) {
-							return false;
-						}
-
-						if (FileExplorerUtils.isProtected(fileListEntry
-								.getPath())) {
-							return false;
-						}
-						explorerListView.setClickable(false);
-						explorerListView
-								.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-						QuickActionHelper.get(FileExplorerMain.this).setShowActions(false);
-						mCurrentActionMode = FileExplorerMain.this
-								.startActionMode(new FileActionsCallback(
-										FileExplorerMain.this, fileListEntry) {
-
-									@Override
-									public void onDestroyActionMode(
-											ActionMode mode) {
-										view.setSelected(false);
-										explorerListView
-												.setChoiceMode(ListView.CHOICE_MODE_NONE);
-										mCurrentActionMode = null;
-										QuickActionHelper.get(FileExplorerMain.this).setShowActions(true);
-										explorerListView.setClickable(true);
-									}
-
-								});
-
-						view.setSelected(true);
-						return true;
-					}
-
-				});
+	
 	}
 
 	private void listenToThemeChange() {
@@ -372,10 +384,6 @@ public class FileExplorerMain extends ListActivity {
 
 		alert.show();
 
-	}
-
-	void deletePath(File path) {
-		new Trasher(this).execute(path);
 	}
 
 	public void setCurrentDir(File dir) {

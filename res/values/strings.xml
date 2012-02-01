@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- Do not change this number unless you know what you are doing -->
+    <string name="app_version">2.1.1</string>
+    
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
 	
@@ -109,14 +113,16 @@
 	
 	<string name="generic_operation_failed">Could not complete operation</string>
 	
-	<string name="share_msg">I have been using FileExplorer for Android and thought you might like it too. \nHere is the download link - %2$s </string>
 	<string name="pref_cat_view">View Options</string>
 	
 	<string name="pref_cat_display">Display Options</string>
 	<string name="pref_cat_display_summary">Set theme, sort order and other view options</string>
 	
-		<string name="pref_cat_about">About FileExplorer</string>
-	<string name="pref_cat_about_summary">About the developer, terms and conditions</string>
+	<string name="pref_cat_misc">Miscellaneous</string>
+	<string name="pref_cat_about">About FileExplorer</string>
+	<string name="pref_cat_contact">Contact</string>
+	<string name="pref_cat_share">Share</string>
+	<string name="pref_cat_misc_summary">About the developer, contact info, terms and conditions</string>
 	
 		<string name="pref_cat_nav">Navigation Options</string>
 	<string name="pref_cat_nav_summary">Configure navigation features like back button and quick actions popups</string>
@@ -174,9 +180,15 @@
 	<string name="pref_show_sdcard_options_on">Enable advanced options like media rescan</string>
 	<string name="pref_show_sdcard_options_off">SD Card Options are hidden</string>
 	
-	<string name="pref_cat_misc">About</string>
 	<string name="pref_share">Tell your friends</string>
-	<string name="pref_share_desc">Share this app with your friends</string>
+	<string name="pref_share_desc">Love FileExplorer? Share it with your friends</string>
+	<string name="share_text">I have been using FileExplorer and thought you might like it too. Heres the download link: https://market.android.com/details?id=net.appositedesigns.fileexplorer</string>
+	
+	
+	<string name="pref_app_version">Version</string>
+	
+		<string name="pref_twitter">Follow us on Twitter</string>
+		<string name="pref_twitter_desc">FileExplorer</string>
 	
 	<string name="pref_terms">Terms &amp; Conditions</string>
 	<string name="pref_terms_desc">Read the terms &amp; conditions</string>

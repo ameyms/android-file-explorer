@@ -57,7 +57,7 @@ public class FileActionsHelper {
 		})
 		.show();
 	}
-	public static void deleteFile(final File file, final FileExplorerMain mContext)
+	public static void deleteFile(final File file, final FileExplorerMain mContext,final OperationCallback<Void> callback)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setCancelable(true);
@@ -66,7 +66,7 @@ public class FileActionsHelper {
 	       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int id) {
 
-	        	   new Trasher(mContext).execute(file);
+	        	   new Trasher(mContext, callback).execute(file);
 	           }
 	       })
 	       .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -119,7 +119,7 @@ public class FileActionsHelper {
 		}
 	}
 
-	public static void rename(final File file, final FileExplorerMain mContext)
+	public static void rename(final File file, final FileExplorerMain mContext, final OperationCallback<Void> callback)
 	{
 		final EditText input = new EditText(mContext);
 		input.setHint(mContext.getString(R.string.enter_new_name));
@@ -137,11 +137,19 @@ public class FileActionsHelper {
 				File parentFolder = file.getParentFile();
 				if(file.renameTo(new File(parentFolder, newName.toString())))
 				{
+					if(callback!=null)
+					{
+						callback.onSuccess();
+					}
 					Toast.makeText(mContext, mContext.getString(R.string.rename_toast, file.getName(), newName), Toast.LENGTH_LONG).show();
 					mContext.refresh();
 				}
 				else
 				{
+					if(callback!=null)
+					{
+						callback.onFailure(new Exception());
+					}
 					new Builder(mContext)
 					.setTitle(mContext.getString(R.string.error))
 					.setMessage(mContext.getString(R.string.rename_failed, file.getName()))
@@ -150,6 +158,11 @@ public class FileActionsHelper {
 				
 			}
 			catch (Exception e) {
+				if(callback!=null)
+				{
+					callback.onFailure(e);
+				}
+
 				Log.e(TAG, "Error occured while renaming path", e);
 				new Builder(mContext)
 				.setIcon(android.R.drawable.ic_dialog_alert)
@@ -214,7 +227,7 @@ public class FileActionsHelper {
 			});
 		}
 	}
-	public static void doOperation(FileListEntry entry,int action, FileExplorerMain mContext) {
+	public static void doOperation(FileListEntry entry,int action, FileExplorerMain mContext, OperationCallback<Void> callback) {
 		
 		File file = entry.getPath();
 		switch (action) {
@@ -227,7 +240,7 @@ public class FileActionsHelper {
 			break;
 			
 		case R.id.menu_delete:
-			deleteFile(file, mContext);
+			deleteFile(file, mContext, callback);
 			break;
 			
 		case R.id.menu_share:
@@ -235,7 +248,7 @@ public class FileActionsHelper {
 			break;
 			
 		case R.id.menu_rename:
-			rename(file, mContext);
+			rename(file, mContext, callback);
 			break;
 			
 		case R.id.menu_zip:

@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceScreen
-        android:summary="@string/pref_website_desc"
-        android:title="@string/pref_website" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="http://amey.sakhadeo.com" />
-    </PreferenceScreen>
-    <PreferenceScreen
-        android:summary="@string/pref_feedback_desc"
-        android:title="@string/pref_feedback" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="mailto:amey.sakhadeo@gmail.com?subject=About+File+Explorer" >
-        </intent>
-    </PreferenceScreen>
-    <!-- 
-    <PreferenceScreen
-        android:summary="@string/pref_share_desc"
-        android:title="@string/pref_share" >
-        <intent android:action="net.appositedesigns.fileexplorer.SHARE_APP">
-        </intent>
-    </PreferenceScreen>
-     -->
-    <PreferenceScreen
-        android:summary="@string/pref_terms_desc"
-        android:title="@string/pref_terms" >
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="http://fileexplorer.appositedesigns.net/eula" />
-    </PreferenceScreen>
+    <PreferenceCategory android:title="@string/pref_cat_contact" >
+        <PreferenceScreen
+            android:summary="@string/pref_website_desc"
+            android:title="@string/pref_website" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://amey.sakhadeo.com" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="@string/pref_feedback_desc"
+            android:title="@string/pref_feedback" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="mailto:amey.sakhadeo@gmail.com?subject=About+File+Explorer" >
+            </intent>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="@string/pref_twitter_desc"
+            android:title="@string/pref_twitter" >
+             <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://m.twitter.com/FileExplorer" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_share" >
+        <PreferenceScreen
+            android:id="@+id/pref_item_share"
+            android:key="pref_opt_share"
+            android:summary="@string/pref_share_desc"
+            android:title="@string/pref_share" >
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_about" >
+        <PreferenceScreen
+            android:summary="@string/app_version"
+            android:title="@string/pref_app_version" >
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="@string/pref_terms_desc"
+            android:title="@string/pref_terms" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://fileexplorer.appositedesigns.net/eula" />
+        </PreferenceScreen>
+    </PreferenceCategory>
 
 </PreferenceScreen>

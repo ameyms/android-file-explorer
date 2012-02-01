@@ -85,7 +85,7 @@ public final class QuickActionHelper {
 					public void onClick(final View v) {
 						
 						actions.dismiss();
-						FileActionsHelper.deleteFile(file, mContext);
+						FileActionsHelper.deleteFile(file, mContext, null);
 						
 					}
 				});

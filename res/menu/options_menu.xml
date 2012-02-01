@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+		
+		<item android:id="@+id/menu_paste" android:icon="@android:drawable/ic_menu_set_as"
+		android:title="@string/menu_paste" android:showAsAction="never|withText" />
+		
+	<item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_preferences"
+		android:title="@string/menu_preferences" android:showAsAction="never|withText" />
+	
+	
     	<item android:id="@+id/menu_goto" android:icon="@drawable/ic_menu_navigate"
 		android:showAsAction="always" android:title="@string/menu_navigate"/>
     	
@@ -10,11 +17,6 @@
 	
 	<item android:id="@+id/menu_newfolder" android:icon="@drawable/ic_menu_new_folder"
 		android:title="@string/menu_addfolder" android:showAsAction="ifRoom|withText" />
-		
-		<item android:id="@+id/menu_paste" android:icon="@android:drawable/ic_menu_set_as"
-		android:title="@string/menu_paste" android:showAsAction="never|withText" />
-		
-	<item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_preferences"
-		android:title="@string/menu_preferences" android:showAsAction="never|withText" />
+
 
 </menu>

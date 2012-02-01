@@ -1,6 +1,7 @@
 package net.appositedesigns.fileexplorer;
 
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
+import net.appositedesigns.fileexplorer.util.OperationCallback;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.ActionMode;
@@ -26,9 +27,21 @@ public abstract class FileActionsCallback implements Callback {
 	}
 
 	@Override
-	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+	public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
 		
-		FileActionsHelper.doOperation(file, item.getItemId(), activity);
+		FileActionsHelper.doOperation(file, item.getItemId(), activity, new OperationCallback<Void>() {
+			
+			@Override
+			public Void onSuccess() {
+				mode.finish();				
+				return null;
+			}
+			
+			@Override
+			public void onFailure(Throwable e) {
+				
+			}
+		});
 		return true;
 	}
 
