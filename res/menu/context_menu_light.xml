@@ -39,11 +39,9 @@
         android:title="@string/action_rename"/>
     <item
         android:id="@+id/menu_zip"
-        android:showAsAction="never|withText"
         android:title="@string/action_zip"/>
     <item
         android:id="@+id/menu_props"
-        android:showAsAction="ifRoom"
         android:title="@string/action_prop"/>
 
 </menu>

@@ -30,12 +30,14 @@ public class FileActionsHelper {
 	{
 		FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_COPY);
 		Toast.makeText(mContext.getApplicationContext(), mContext.getString(R.string.copied_toast, file.getName()), Toast.LENGTH_SHORT).show();
+		mContext.invalidateOptionsMenu();
 	}
 	
 	public static void cutFile(final File file, final FileExplorerMain mContext)
 	{
 		FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_MOVE);
 		Toast.makeText(mContext.getApplicationContext(),  mContext.getString(R.string.cut_toast, file.getName()), Toast.LENGTH_SHORT).show();
+		mContext.invalidateOptionsMenu();
 	}
 	
 	public static void showProperties(final FileListEntry file, final FileExplorerMain mContext)

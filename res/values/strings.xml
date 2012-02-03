@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Do not change this number unless you know what you are doing -->
-    <string name="app_version">2.2</string>
+    <string name="app_version">2.2.1</string>
     
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
@@ -36,7 +36,7 @@
 	<string name="empty_folder">This folder is empty</string>
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
-	<string name="menu_navigate">Navigate</string>
+	<string name="menu_navigate">Navigate to folder &#8230;</string>
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_refresh">Refresh</string>
 	

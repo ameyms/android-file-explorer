@@ -2,13 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 		
-	<item android:id="@+id/menu_paste"
-		android:title="@string/menu_paste" android:showAsAction="never|withText" android:icon="@drawable/ic_action_paste_light" />
-		
-	<item android:id="@+id/menu_settings"
-		android:title="@string/menu_preferences" android:showAsAction="never|withText" />
-	
-	
     	<item android:id="@+id/menu_goto" android:icon="@drawable/ic_action_navigate_light"
 		android:showAsAction="always" android:title="@string/menu_navigate"/>
     	
@@ -18,5 +11,10 @@
 	<item android:id="@+id/menu_newfolder" android:icon="@drawable/ic_action_add_light"
 		android:title="@string/menu_addfolder" android:showAsAction="ifRoom|withText" />
 
+		<item android:id="@+id/menu_paste"
+		android:title="@string/menu_paste" android:showAsAction="ifRoom" android:icon="@drawable/ic_action_paste_light" />
+		
+	<item android:id="@+id/menu_settings"
+		android:title="@string/menu_preferences" />
 
 </menu>

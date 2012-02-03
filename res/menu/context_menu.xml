@@ -17,13 +17,13 @@
         <item
         android:id="@+id/menu_copy"
         android:icon="@drawable/ic_action_copy"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/action_copy"/>
         
             <item
         android:id="@+id/menu_cut"
         android:icon="@drawable/ic_action_cut"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/action_cut"/>
             
     <item
@@ -40,11 +40,9 @@
         android:title="@string/action_rename"/>
     <item
         android:id="@+id/menu_zip"
-        android:showAsAction="never|withText"
         android:title="@string/action_zip"/>
     <item
         android:id="@+id/menu_props"
-        android:showAsAction="ifRoom"
         android:title="@string/action_prop"/>
 
 </menu>
