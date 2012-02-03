@@ -3,7 +3,6 @@ package net.appositedesigns.fileexplorer.util;
 import java.io.File;
 
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
-import android.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -32,7 +31,7 @@ public final class PreferenceUtil {
 	
 	public boolean useQuickActions()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_QUICKACTIONS, false);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_QUICKACTIONS, true);
 	}
 	
 	public SortField getSortField()
@@ -135,11 +134,11 @@ public final class PreferenceUtil {
 		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_THEME, Constants.THEME_WHITE);
 		if(Constants.THEME_BLACK.equalsIgnoreCase(theme))
 		{
-			return R.style.Theme_Holo;
+			return Constants.HOLO_BLACK;
 		}
 		else
 		{
-			return R.style.Theme_Holo_Light;
+			return Constants.HOLO_WHITE;
 		}
 	}
 }

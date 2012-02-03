@@ -1,7 +1,9 @@
 package net.appositedesigns.fileexplorer;
 
+import net.appositedesigns.fileexplorer.util.Constants;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import net.appositedesigns.fileexplorer.util.OperationCallback;
+import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.ActionMode;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.MimeTypeMap;
 import android.widget.ShareActionProvider;
+import android.widget.ShareActionProvider.OnShareTargetSelectedListener;
 
 public abstract class FileActionsCallback implements Callback {
 
@@ -33,7 +36,6 @@ public abstract class FileActionsCallback implements Callback {
 			
 			@Override
 			public Void onSuccess() {
-				mode.finish();				
 				return null;
 			}
 			
@@ -42,11 +44,12 @@ public abstract class FileActionsCallback implements Callback {
 				
 			}
 		});
+		mode.finish();
 		return true;
 	}
 
 	@Override
-	public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+	public boolean onCreateActionMode(final ActionMode actionMode, Menu menu) {
 
 		int[] validOptions = FileActionsHelper.getContextMenuOptions(file.getPath(), activity);
 		
@@ -59,7 +62,16 @@ public abstract class FileActionsCallback implements Callback {
 				file.getName()));
 
 		MenuInflater inflater = activity.getMenuInflater();
-		inflater.inflate(R.menu.context_menu, menu);
+		
+		PreferenceUtil prefs = new PreferenceUtil(activity);
+		if(prefs.getTheme() == Constants.HOLO_BLACK)
+		{
+			inflater.inflate(R.menu.context_menu, menu);
+		}
+		else
+		{
+			inflater.inflate(R.menu.context_menu_light, menu);
+		}
 		
 		for(int o :allOptions)
 		{
@@ -81,9 +93,16 @@ public abstract class FileActionsCallback implements Callback {
 				if(o == R.id.menu_share)
 				{
 					 MenuItem menuItem = menu.findItem(R.id.menu_share);
-				      // Get the provider and hold onto it to set/change the share intent.
 					 ShareActionProvider mShareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
-					 
+					 mShareActionProvider.setOnShareTargetSelectedListener(new OnShareTargetSelectedListener() {
+						
+						@Override
+						public boolean onShareTargetSelected(ShareActionProvider source,
+								Intent intent) {
+							actionMode.finish();
+							return false;
+						}
+					});
 					 final Intent intent = new Intent(Intent.ACTION_SEND);
 						
 						Uri uri = Uri.fromFile(file.getPath());
@@ -100,7 +119,7 @@ public abstract class FileActionsCallback implements Callback {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 		return false;

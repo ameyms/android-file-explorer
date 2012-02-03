@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 		
-		<item android:id="@+id/menu_paste" android:icon="@android:drawable/ic_menu_set_as"
-		android:title="@string/menu_paste" android:showAsAction="never|withText" />
+	<item android:id="@+id/menu_paste"
+		android:title="@string/menu_paste" android:showAsAction="never|withText" android:icon="@drawable/ic_action_paste" />
 		
 	<item android:id="@+id/menu_settings" android:icon="@android:drawable/ic_menu_preferences"
 		android:title="@string/menu_preferences" android:showAsAction="never|withText" />
 	
 	
-    	<item android:id="@+id/menu_goto" android:icon="@drawable/ic_menu_navigate"
+    	<item android:id="@+id/menu_goto" android:icon="@drawable/ic_action_navigate"
 		android:showAsAction="always" android:title="@string/menu_navigate"/>
     	
-	<item android:id="@+id/menu_refresh" android:title="@string/menu_refresh" android:icon="@drawable/ic_menu_refresh"
+	<item android:id="@+id/menu_refresh" android:title="@string/menu_refresh" android:icon="@drawable/ic_action_refresh"
 		android:showAsAction="ifRoom" />
 	
-	<item android:id="@+id/menu_newfolder" android:icon="@drawable/ic_menu_new_folder"
+	<item android:id="@+id/menu_newfolder" android:icon="@drawable/ic_action_add"
 		android:title="@string/menu_addfolder" android:showAsAction="ifRoom|withText" />
 
 

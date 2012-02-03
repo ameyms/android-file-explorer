@@ -10,30 +10,32 @@
      <item
         android:id="@+id/menu_share"
         android:actionProviderClass="android.widget.ShareActionProvider"
-        android:icon="@android:drawable/ic_menu_share"
-        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="always"
         android:title="@string/action_share"/>
      
         <item
         android:id="@+id/menu_copy"
+        android:icon="@drawable/ic_action_copy"
         android:showAsAction="ifRoom|withText"
         android:title="@string/action_copy"/>
         
             <item
         android:id="@+id/menu_cut"
+        android:icon="@drawable/ic_action_cut"
         android:showAsAction="ifRoom|withText"
         android:title="@string/action_cut"/>
             
     <item
         android:id="@+id/menu_delete"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_action_delete"
         android:showAsAction="ifRoom"
         android:title="@string/action_delete"/>
     
     
     <item
         android:id="@+id/menu_rename"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_action_rename"
         android:showAsAction="ifRoom|withText"
         android:title="@string/action_rename"/>
     <item

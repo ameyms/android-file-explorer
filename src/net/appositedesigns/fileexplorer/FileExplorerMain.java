@@ -97,6 +97,8 @@ public class FileExplorerMain extends ListActivity {
 			public boolean onItemLongClick(AdapterView<?> arg0,
 					final View view, int arg2, long arg3) {
 
+				 view.setSelected(true);
+
 				final FileListEntry fileListEntry = (FileListEntry) adapter
 						.getItem(arg2);
 				if (mCurrentActionMode != null) {
@@ -171,7 +173,7 @@ public class FileExplorerMain extends ListActivity {
 	private void prepareActionBar() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-	
+		
 	}
 
 	private void listenToThemeChange() {
@@ -223,7 +225,7 @@ public class FileExplorerMain extends ListActivity {
 	}
 
 	void select(File file) {
-		if (FileExplorerUtils.isProtected(file)) {
+		if (FileExplorerUtils.isProtected(file)){
 			new Builder(this)
 					.setTitle(getString(R.string.access_denied))
 					.setMessage(
@@ -269,7 +271,14 @@ public class FileExplorerMain extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.options_menu, menu);
+		if(prefs.getTheme() == Constants.HOLO_BLACK)
+		{
+			inflater.inflate(R.menu.options_menu, menu);
+		}
+		else
+		{
+			inflater.inflate(R.menu.options_menu_light, menu);
+		}
 		return true;
 	}
 
