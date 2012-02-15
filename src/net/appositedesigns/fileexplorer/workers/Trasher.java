@@ -2,10 +2,10 @@ package net.appositedesigns.fileexplorer.workers;
 
 import java.io.File;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
-import net.appositedesigns.fileexplorer.util.OperationCallback;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.callbacks.OperationCallback;
+import net.appositedesigns.fileexplorer.util.Util;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -17,12 +17,12 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 	private static final String TAG = Trasher.class.getName();
 	
 	private File fileToBeDeleted;
-	private FileExplorerMain caller;
+	private FileListActivity caller;
 	private ProgressDialog waitDialog;
 
 	private OperationCallback<Void> callback;
 	
-	public Trasher(FileExplorerMain caller, OperationCallback<Void> callback) {
+	public Trasher(FileListActivity caller, OperationCallback<Void> callback) {
 
 		this.caller = caller;
 		if(callback!=null)
@@ -62,7 +62,7 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 		}
 		else
 		{
-			FileExplorerUtils.setPasteSrcFile(fileToBeDeleted, FileExplorerUtils.getPasteMode());
+			Util.setPasteSrcFile(fileToBeDeleted, Util.getPasteMode());
 			caller.runOnUiThread(new Runnable() {
 				
 				@Override
@@ -103,12 +103,12 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 		try
 		{
 			Log.v(TAG, "Checking if file on clipboard is same as that being deleted");
-			if(FileExplorerUtils.getFileToPaste() != null && FileExplorerUtils.getFileToPaste().getCanonicalPath().equals(fileToBeDeleted.getCanonicalPath()))
+			if(Util.getFileToPaste() != null && Util.getFileToPaste().getCanonicalPath().equals(fileToBeDeleted.getCanonicalPath()))
 			{
 				Log.v(TAG, "File on clipboard is being deleted");
-				FileExplorerUtils.setPasteSrcFile(null, FileExplorerUtils.getPasteMode());
+				Util.setPasteSrcFile(null, Util.getPasteMode());
 			}
-			return FileExplorerUtils.delete(fileToBeDeleted);
+			return Util.delete(fileToBeDeleted);
 		}
 		catch (Exception e) {
 			Log.e(TAG, "Error occured while deleting file "+fileToBeDeleted.getAbsolutePath(),e);

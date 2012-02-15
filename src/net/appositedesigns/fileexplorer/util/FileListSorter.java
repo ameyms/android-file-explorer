@@ -2,19 +2,19 @@ package net.appositedesigns.fileexplorer.util;
 
 import java.util.Comparator;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
-import net.appositedesigns.fileexplorer.FileListEntry;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil.SortField;
 
 public class FileListSorter implements Comparator<FileListEntry> {
 
-	private FileExplorerMain mContext;
+	private FileListActivity mContext;
 	
 	private boolean dirsOnTop = false;
 	private SortField sortField;
 	private int dir;
 	
-	public FileListSorter(FileExplorerMain context){
+	public FileListSorter(FileListActivity context){
 		
 		mContext = context;
 		PreferenceUtil util = new PreferenceUtil(mContext);

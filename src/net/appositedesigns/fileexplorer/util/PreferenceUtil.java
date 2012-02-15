@@ -2,6 +2,7 @@ package net.appositedesigns.fileexplorer.util;
 
 import java.io.File;
 
+import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,40 +13,68 @@ public final class PreferenceUtil {
 	public enum SortField{NAME,MTIME,SIZE}
 	
 	private Context mContext;
+	public static final String EULA_ACCEPTED = "eula_accepted_v2.5";
+	public static final String EULA_MARKER = "eula_marker_file_v2.5";
+	
+	
+	public static final String PREF_HOME_DIR = "homeDir";
+	public static final String PREF_SDCARD_OPTIONS = "sdCardOptions";
+	public static final String PREF_SHOW_DIR_SIZES = "showDirSizes";
+	public static final String PREF_SHOW_DIRS_FIRST = "showDirsFirst";
+	public static final String PREF_SHOW_HIDDEN = "showHidden";
+	public static final String PREF_SHOW_SYSFILES = "showSysFiles";
+	public static final String PREF_SORT_DIR = "sort.dir";
+	public static final String PREF_SORT_FIELD = "sort.field";
+	public static final String PREF_THEME = "theme";
+	public static final String PREF_USE_BACK_BUTTON = "useBackButton";
+	public static final String PREF_USE_QUICKACTIONS = "useQuickActions";
+	public static final String PREF_ZIP_ENABLE = "zipEnable";
+	public static final String PREF_ZIP_LOCATION = "zipLocation";
+	public static final String KEY_RESTART_DIR = "net.appositedesigns.fileexplorer.RestartDirectory";
+	
+	
+	public static final String VALUE_SORT_DIR_ASC = "asc";
+	public static final String VALUE_SORT_DIR_DESC = "desc";
+	public static final String VALUE_SORT_FIELD_M_TIME = "mtime";
+	public static final String VALUE_SORT_FIELD_NAME = "name";
+	public static final String VALUE_SORT_FIELD_SIZE = "size";
+	public static final String VALUE_THEME_BLACK = "theme_black";
+	public static final String VALUE_THEME_WHITE = "theme_white";
+	public static final String VALUE_THEME_WHITE_BLACK = "theme_white_black";
 	public PreferenceUtil(Context context) 
 	{
 		mContext = context;
 	}
 	public boolean isShowDirsOnTop()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIRS_FIRST, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_SHOW_DIRS_FIRST, true);
 	}
 	public boolean isShowHidden()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_HIDDEN, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_SHOW_HIDDEN, true);
 	}
 	public boolean useBackNavigation()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_BACK_BUTTON, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_USE_BACK_BUTTON, true);
 	}
 	
 	public boolean useQuickActions()
 	{
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_USE_QUICKACTIONS, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_USE_QUICKACTIONS, true);
 	}
 	
 	public SortField getSortField()
 	{
-		String field= PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_SORT_FIELD, Constants.SORT_FIELD_NAME);
-		if(Constants.SORT_FIELD_NAME.equalsIgnoreCase(field))
+		String field= PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_SORT_FIELD, VALUE_SORT_FIELD_NAME);
+		if(VALUE_SORT_FIELD_NAME.equalsIgnoreCase(field))
 		{
 			return SortField.NAME;
 		}
-		else if(Constants.SORT_FIELD_M_TIME.equalsIgnoreCase(field))
+		else if(VALUE_SORT_FIELD_M_TIME.equalsIgnoreCase(field))
 		{
 			return SortField.MTIME;
 		}
-		else if(Constants.SORT_FIELD_SIZE.equalsIgnoreCase(field))
+		else if(VALUE_SORT_FIELD_SIZE.equalsIgnoreCase(field))
 		{
 			return SortField.SIZE;
 		}
@@ -57,8 +86,8 @@ public final class PreferenceUtil {
 	
 	public int getSortDir()
 	{
-		String field= PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_SORT_DIR, "asc");
-		if(Constants.SORT_DIR_ASC.equalsIgnoreCase(field))
+		String field= PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_SORT_DIR, "asc");
+		if(VALUE_SORT_DIR_ASC.equalsIgnoreCase(field))
 		{
 			return 1;
 		}
@@ -70,7 +99,7 @@ public final class PreferenceUtil {
 	
 	public File getStartDir()
 	{
-		String dirPath= PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_HOME_DIR, "/");
+		String dirPath= PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_HOME_DIR, "/");
 		File homeDir = new File(dirPath);
 		
 		if(homeDir.exists() && homeDir.isDirectory())
@@ -85,15 +114,15 @@ public final class PreferenceUtil {
 	public boolean isFindDirSizes() {
 		
 		return false;
-	//	return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_DIR_SIZES, false);
+	//	return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_SHOW_DIR_SIZES, false);
 	}
 	public boolean isShowSystemFiles() {
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SHOW_SYSFILES, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_SHOW_SYSFILES, true);
 	}
 	
 	public File getZipDestinationDir() throws LocationInvalidException
 	{
-		String dirPath= PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_ZIP_LOCATION, "/sdcard/zipped");
+		String dirPath= PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_ZIP_LOCATION, "/sdcard/zipped");
 		File dir = new File(dirPath);
 		
 		if(dir.exists() && dir.isDirectory())
@@ -112,33 +141,37 @@ public final class PreferenceUtil {
 	}
 	public boolean isEnableSdCardOptions() {
 
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_SDCARD_OPTIONS, true);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_SDCARD_OPTIONS, true);
 	}
 	public boolean isZipEnabled() {
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(Constants.PREF_ZIP_ENABLE, false);
+		return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_ZIP_ENABLE, false);
 	}
 	
 	public boolean isEulaAccepted()
 	{
-		return mContext.getSharedPreferences(Constants.EULA_MARKER, Context.MODE_PRIVATE).getBoolean(Constants.EULA_ACCEPTED, false);
+		return mContext.getSharedPreferences(EULA_MARKER, Context.MODE_PRIVATE).getBoolean(EULA_ACCEPTED, false);
 	}
 	
 	public void markEulaAccepted()
 	{
-		SharedPreferences.Editor editor = mContext.getSharedPreferences(Constants.EULA_MARKER, Context.MODE_WORLD_WRITEABLE).edit();
-		editor.putBoolean(Constants.EULA_ACCEPTED, true);
+		SharedPreferences.Editor editor = mContext.getSharedPreferences(EULA_MARKER, Context.MODE_WORLD_WRITEABLE).edit();
+		editor.putBoolean(EULA_ACCEPTED, true);
 		editor.commit();
 	}
 	public int getTheme() {
 		
-		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(Constants.PREF_THEME, Constants.THEME_WHITE);
-		if(Constants.THEME_BLACK.equalsIgnoreCase(theme))
+		String theme = PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_THEME, VALUE_THEME_WHITE);
+		if(VALUE_THEME_BLACK.equalsIgnoreCase(theme))
 		{
-			return Constants.HOLO_BLACK;
+			return FileExplorerApp.THEME_BLACK;
+		}
+		else if(VALUE_THEME_WHITE_BLACK.equalsIgnoreCase(theme))
+		{
+			return FileExplorerApp.THEME_WHITE_BLACK;
 		}
 		else
 		{
-			return Constants.HOLO_WHITE;
+			return FileExplorerApp.THEME_WHITE;
 		}
 	}
 }

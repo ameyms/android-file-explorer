@@ -2,8 +2,8 @@ package net.appositedesigns.fileexplorer.workers;
 
 import java.io.File;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
 import net.appositedesigns.fileexplorer.util.AbortionFlag;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
@@ -19,13 +19,13 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 
 	private static final String TAG = Zipper.class.getName();
 	private AbortionFlag flag;
-	private FileExplorerMain caller;
+	private FileListActivity caller;
 	private String zipName;
 	
 	private ProgressDialog zipProgress;
 	private boolean zippedAtleastOne;
 	
-	public Zipper(String zipName, FileExplorerMain mContext) {
+	public Zipper(String zipName, FileListActivity mContext) {
 
 		this.flag = new AbortionFlag();
 		this.caller = mContext;

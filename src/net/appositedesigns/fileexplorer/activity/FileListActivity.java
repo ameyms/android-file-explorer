@@ -1,16 +1,22 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.activity;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.FileExplorerApp;
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.adapters.FileListAdapter;
+import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
+import net.appositedesigns.fileexplorer.callbacks.FileActionsCallback;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
-import net.appositedesigns.fileexplorer.util.Constants;
-import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
+import net.appositedesigns.fileexplorer.util.Util;
 import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
 import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
@@ -30,11 +36,12 @@ import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FileExplorerMain extends ListActivity {
+public class FileListActivity extends ListActivity {
 
 	private static final String CURRENT_DIR_DIR = "current-dir";
 	private ListView explorerListView;
@@ -45,6 +52,8 @@ public class FileExplorerMain extends ListActivity {
 	private OnSharedPreferenceChangeListener listener;
 	protected boolean shouldRestartApp = false;
 	protected Object mCurrentActionMode;
+	private ArrayAdapter<CharSequence> mSpinnerAdapter;
+	private CharSequence[] gotoLocations;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -53,6 +62,15 @@ public class FileExplorerMain extends ListActivity {
 		prefs = new PreferenceUtil(this);
 
 		setTheme(prefs.getTheme());
+		
+		if(Util.getDcimFolder().exists() && Util.getDownloadsFolder().exists())
+		{
+			gotoLocations = getResources().getStringArray(R.array.goto_locations);
+		}
+		else
+		{
+			gotoLocations = getResources().getStringArray(R.array.goto_locations_without_special);
+		}
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
@@ -105,17 +123,17 @@ public class FileExplorerMain extends ListActivity {
 					return false;
 				}
 
-				if (FileExplorerUtils.isProtected(fileListEntry
+				if (Util.isProtected(fileListEntry
 						.getPath())) {
 					return false;
 				}
 				explorerListView.setClickable(false);
 				explorerListView
 						.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-				QuickActionHelper.get(FileExplorerMain.this).setShowActions(false);
-				mCurrentActionMode = FileExplorerMain.this
+				QuickActionHelper.get(FileListActivity.this).setShowActions(false);
+				mCurrentActionMode = FileListActivity.this
 						.startActionMode(new FileActionsCallback(
-								FileExplorerMain.this, fileListEntry) {
+								FileListActivity.this, fileListEntry) {
 
 							@Override
 							public void onDestroyActionMode(
@@ -124,7 +142,7 @@ public class FileExplorerMain extends ListActivity {
 								explorerListView
 										.setChoiceMode(ListView.CHOICE_MODE_NONE);
 								mCurrentActionMode = null;
-								QuickActionHelper.get(FileExplorerMain.this).setShowActions(true);
+								QuickActionHelper.get(FileListActivity.this).setShowActions(true);
 								explorerListView.setClickable(true);
 							}
 
@@ -142,14 +160,14 @@ public class FileExplorerMain extends ListActivity {
 		// If app was restarted programmatically, find where the user last left
 		// it
 		String restartDirPath = getIntent().getStringExtra(
-				Constants.RESTART_DIR);
+				PreferenceUtil.KEY_RESTART_DIR);
 		
 		if (restartDirPath != null) 
 		{
 			File restartDir = new File(restartDirPath);
 			if (restartDir.exists() && restartDir.isDirectory()) {
 				currentDir = restartDir;
-				getIntent().removeExtra(Constants.RESTART_DIR);
+				getIntent().removeExtra(PreferenceUtil.KEY_RESTART_DIR);
 			}
 		}
 		else if (savedInstanceState!=null && savedInstanceState.getSerializable(CURRENT_DIR_DIR) != null) {
@@ -171,8 +189,64 @@ public class FileExplorerMain extends ListActivity {
 	}
 
 	private void prepareActionBar() {
-		ActionBar actionBar = getActionBar();
+		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		
+		mSpinnerAdapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_dropdown_item, gotoLocations);
+		actionBar.setListNavigationCallbacks(mSpinnerAdapter, new OnNavigationListener() {
+			
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				
+				int selectedIndex = actionBar.getSelectedNavigationIndex();
+				
+				if(selectedIndex == 0)
+				{
+					return false;
+				}
+				switch (selectedIndex) {
+				case 1:
+					listContents(new File("/"));
+					break;
+					
+				case 2:
+					listContents(prefs.getStartDir());
+					break;
+					
+					
+				case 3:
+					listContents(new File("/sdcard"));
+					break;
+					
+				case 4:
+					listContents(Util.getDownloadsFolder());
+					break;
+					
+				case 5:
+					listContents(Util.getDcimFolder());
+					break;
+					
+				case 6:
+					Util.gotoPath(currentDir.getAbsolutePath(), FileListActivity.this, new CancellationCallback() {
+						
+						@Override
+						public void onCancel() {
+							 actionBar.setSelectedNavigationItem(0);
+							
+						}
+					});
+					break;
+
+				default:
+					break;
+				}
+				
+				
+				return true;
+			}
+		});
 		
 	}
 
@@ -183,12 +257,12 @@ public class FileExplorerMain extends ListActivity {
 			@Override
 			public void onSharedPreferenceChanged(
 					SharedPreferences sharedPreferences, String key) {
-				if (Constants.PREF_THEME.equals(key)) {
+				if (PreferenceUtil.PREF_THEME.equals(key)) {
 
 					shouldRestartApp = true;
 
 				}
-				if (Constants.PREF_USE_QUICKACTIONS.equals(key)) {
+				if (PreferenceUtil.PREF_USE_QUICKACTIONS.equals(key)) {
 
 					shouldRestartApp = true;
 
@@ -213,7 +287,7 @@ public class FileExplorerMain extends ListActivity {
 	public void onBackPressed() {
 
 		if (prefs.useBackNavigation()) {
-			if (FileExplorerUtils.isRoot(currentDir)) {
+			if (Util.isRoot(currentDir)) {
 				finish();
 			} else {
 				gotoParent();
@@ -225,7 +299,7 @@ public class FileExplorerMain extends ListActivity {
 	}
 
 	void select(File file) {
-		if (FileExplorerUtils.isProtected(file)){
+		if (Util.isProtected(file)){
 			new Builder(this)
 					.setTitle(getString(R.string.access_denied))
 					.setMessage(
@@ -239,7 +313,7 @@ public class FileExplorerMain extends ListActivity {
 	}
 
 	private void openFile(File file) {
-		if (FileExplorerUtils.isProtected(file) || file.isDirectory()) {
+		if (Util.isProtected(file) || file.isDirectory()) {
 			return;
 		}
 		Intent intent = new Intent();
@@ -253,7 +327,7 @@ public class FileExplorerMain extends ListActivity {
 	}
 
 	public void listContents(File dir) {
-		if (!dir.isDirectory() || FileExplorerUtils.isProtected(dir)) {
+		if (!dir.isDirectory() || Util.isProtected(dir)) {
 			return;
 		}
 		new Finder(this).execute(dir);
@@ -261,7 +335,7 @@ public class FileExplorerMain extends ListActivity {
 
 	private void gotoParent() {
 
-		if (FileExplorerUtils.isRoot(currentDir)) {
+		if (Util.isRoot(currentDir)) {
 			// Do nothing finish();
 		} else {
 			listContents(currentDir.getParentFile());
@@ -271,13 +345,13 @@ public class FileExplorerMain extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		if(prefs.getTheme() == Constants.HOLO_BLACK)
+		if(prefs.getTheme() == FileExplorerApp.THEME_WHITE)
 		{
-			inflater.inflate(R.menu.options_menu, menu);
+			inflater.inflate(R.menu.options_menu_light, menu);
 		}
 		else
 		{
-			inflater.inflate(R.menu.options_menu_light, menu);
+			inflater.inflate(R.menu.options_menu, menu);			
 		}
 		return true;
 	}
@@ -285,7 +359,7 @@ public class FileExplorerMain extends ListActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 
-		if (FileExplorerUtils.canPaste(currentDir)) {
+		if (Util.canPaste(currentDir)) {
 			menu.findItem(R.id.menu_paste).setVisible(true);
 		} else {
 			menu.findItem(R.id.menu_paste).setVisible(false);
@@ -304,7 +378,7 @@ public class FileExplorerMain extends ListActivity {
 			return true;
 
 		case R.id.menu_goto:
-			FileExplorerUtils.gotoPath(currentDir.getAbsolutePath(), this);
+			Util.gotoPath(currentDir.getAbsolutePath(), this);
 			return true;
 
 		case R.id.menu_paste:
@@ -319,7 +393,7 @@ public class FileExplorerMain extends ListActivity {
 			return true;
 
 		case R.id.menu_settings:
-			Intent prefsIntent = new Intent(FileExplorerMain.this,
+			Intent prefsIntent = new Intent(FileListActivity.this,
 					SettingsActivity.class);
 			startActivity(prefsIntent);
 			return true;
@@ -337,14 +411,14 @@ public class FileExplorerMain extends ListActivity {
 
 		alert.setTitle(getString(R.string.confirm));
 		alert.setMessage(getString(R.string.confirm_paste_text,
-				FileExplorerUtils.getFileToPaste().getName()));
+				Util.getFileToPaste().getName()));
 
 		alert.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 
 						dialog.dismiss();
-						new FileMover(FileExplorerMain.this, FileExplorerUtils
+						new FileMover(FileListActivity.this, Util
 								.getPasteMode()).execute(currentDir);
 					}
 				});
@@ -376,7 +450,7 @@ public class FileExplorerMain extends ListActivity {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						CharSequence newDir = input.getText();
-						if (FileExplorerUtils.mkDir(
+						if (Util.mkDir(
 								currentDir.getAbsolutePath(), newDir)) {
 							listContents(currentDir);
 						}
@@ -407,6 +481,19 @@ public class FileExplorerMain extends ListActivity {
 		files.clear();
 		files.addAll(children);
 		adapter.notifyDataSetChanged();
+		getActionBar().setSelectedNavigationItem(0);
+		
+		if(Util.isRoot(currentDir))
+		{
+			gotoLocations[0] = getString(R.string.filesystem);	
+		}
+		else
+		{
+			gotoLocations[0] = currentDir.getName();
+		}
+		mSpinnerAdapter.notifyDataSetChanged();
+		getActionBar().setSelectedNavigationItem(0);
+		
 	}
 
 	public void refresh() {
@@ -417,7 +504,7 @@ public class FileExplorerMain extends ListActivity {
 		Intent i = getBaseContext().getPackageManager()
 				.getLaunchIntentForPackage(getBaseContext().getPackageName());
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtra(Constants.RESTART_DIR, currentDir.getAbsolutePath());
+		i.putExtra(PreferenceUtil.KEY_RESTART_DIR, currentDir.getAbsolutePath());
 		startActivity(i);
 	}
 

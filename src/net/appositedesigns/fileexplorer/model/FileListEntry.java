@@ -1,4 +1,4 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.model;
 
 import java.io.File;
 import java.util.Date;

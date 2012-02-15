@@ -2,10 +2,10 @@ package net.appositedesigns.fileexplorer.workers;
 
 import java.io.File;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
 import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.util.AbortionFlag;
-import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
+import net.appositedesigns.fileexplorer.util.Util;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -19,10 +19,10 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 	
 	private int mode= 1;
 	private AbortionFlag flag;
-	private FileExplorerMain caller;
+	private FileListActivity caller;
 	private ProgressDialog moveProgressDialog;
 	
-	public FileMover(FileExplorerMain context, int mode) {
+	public FileMover(FileListActivity context, int mode) {
 		caller = context;
 		this.mode =mode;
 		flag = new AbortionFlag();
@@ -33,10 +33,10 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 		Log.v(TAG, "Inside post execute. Result of paste operation is - "+result);
 		if(result)
 		{
-			if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
+			if(mode==Util.PASTE_MODE_MOVE)
 			{
 				Log.v(TAG, "Paste mode was MOVE - set src file to null");
-				FileExplorerUtils.setPasteSrcFile(null, 0);
+				Util.setPasteSrcFile(null, 0);
 			}
 			caller.runOnUiThread(new Runnable() {
 				
@@ -46,7 +46,7 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 					{
 						moveProgressDialog.dismiss();
 					}
-					if(mode==FileExplorerUtils.PASTE_MODE_COPY)
+					if(mode==Util.PASTE_MODE_COPY)
 					{
 						Toast.makeText(caller.getApplicationContext(), caller.getString(R.string.copy_complete), Toast.LENGTH_LONG);
 					}
@@ -78,7 +78,7 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 		
 		Log.v(TAG, "Started doInBackground");
 		File destDir = params[0];
-		return FileExplorerUtils.paste(mode, destDir, flag);
+		return Util.paste(mode, destDir, flag);
 		
 	}
 	
@@ -89,11 +89,11 @@ public class FileMover extends AsyncTask<File, Integer, Boolean>
 			@Override
 			public void run() {
 				
-				String message = caller.getString(R.string.copying_path,FileExplorerUtils.getFileToPaste().getName());
-				if(mode==FileExplorerUtils.PASTE_MODE_MOVE)
+				String message = caller.getString(R.string.copying_path,Util.getFileToPaste().getName());
+				if(mode==Util.PASTE_MODE_MOVE)
 				{
 					message = 
-						caller.getString(R.string.moving_path,FileExplorerUtils.getFileToPaste().getName());
+						caller.getString(R.string.moving_path,Util.getFileToPaste().getName());
 				}
 				moveProgressDialog = new ProgressDialog(caller);
 				moveProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

@@ -2,9 +2,9 @@ package net.appositedesigns.fileexplorer.quickactions;
 
 import java.io.File;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
-import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,10 +16,10 @@ public final class QuickActionHelper {
 
 	private static QuickActionHelper instance;
 	
-	private FileExplorerMain mContext;
+	private FileListActivity mContext;
 	private boolean showActions = true;
 	
-	public static synchronized QuickActionHelper get(FileExplorerMain context)
+	public static synchronized QuickActionHelper get(FileListActivity context)
 	{
 		if(instance == null)
 		{
@@ -28,7 +28,7 @@ public final class QuickActionHelper {
 		return instance;
 	}
 	
-	private QuickActionHelper(FileExplorerMain mContext) {
+	private QuickActionHelper(FileListActivity mContext) {
 		super();
 		this.mContext = mContext;
 	}

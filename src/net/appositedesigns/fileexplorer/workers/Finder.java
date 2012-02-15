@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
-import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.util.FileExplorerUtils;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.util.Util;
 import net.appositedesigns.fileexplorer.util.FileListSorter;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.app.ProgressDialog;
@@ -22,13 +22,13 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 	
 	private static final String TAG = Finder.class.getName();
 	
-	private FileExplorerMain caller;
+	private FileListActivity caller;
 	private ProgressDialog waitDialog;
 	private PreferenceUtil prefs;
 	
 	private File currentDir;
 	
-	public Finder(FileExplorerMain caller) {
+	public Finder(FileListActivity caller) {
 		
 		this.caller = caller;
 		prefs = new PreferenceUtil(this.caller);
@@ -53,7 +53,7 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 				caller.setNewChildren(childFiles);
 				caller.getActionBar().setSubtitle(caller.getString(R.string.item_count_subtitle, childFiles.size()));
 				
-				if(FileExplorerUtils.isRoot(currentDir))
+				if(Util.isRoot(currentDir))
 		    	{
 					caller.getActionBar().setDisplayHomeAsUpEnabled(false);
 					caller.getActionBar().setTitle(caller.getString(R.string.filesystem));
@@ -119,7 +119,7 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		boolean showHidden = prefs.isShowHidden();
 		boolean showSystem = prefs.isShowSystemFiles();
 		
-		Map<String, Long> dirSizes = FileExplorerUtils.getDirSizes(currentDir);
+		Map<String, Long> dirSizes = Util.getDirSizes(currentDir);
 		
 		for(String fileName : children)
 		{
@@ -129,7 +129,7 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 			{
 				continue;
 			}
-			if(FileExplorerUtils.isProtected(f) && !showSystem)
+			if(Util.isProtected(f) && !showSystem)
 			{
 				continue;
 			}

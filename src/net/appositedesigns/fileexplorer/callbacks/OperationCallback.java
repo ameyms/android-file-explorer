@@ -1,4 +1,4 @@
-package net.appositedesigns.fileexplorer.util;
+package net.appositedesigns.fileexplorer.callbacks;
 
 public interface OperationCallback<T> {
 

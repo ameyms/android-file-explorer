@@ -1,7 +1,8 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.activity;
 
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.content.Intent;
 import android.os.Bundle;

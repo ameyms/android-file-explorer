@@ -1,5 +1,7 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.activity;
 
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.R.string;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,7 +13,7 @@ import android.widget.TextView;
 
 public class EulaPopupBuilder {
 
-	public static AlertDialog create(final FileExplorerMain context) {
+	public static AlertDialog create(final FileListActivity context) {
 		final TextView message = new TextView(context);
 		final SpannableString s = new SpannableString(
 				context.getText(R.string.eula_popup_text));

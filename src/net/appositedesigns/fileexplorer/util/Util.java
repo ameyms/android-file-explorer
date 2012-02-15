@@ -8,9 +8,10 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
-import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
 
 import org.apache.commons.io.FileUtils;
 
@@ -25,9 +26,9 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 
-public final class FileExplorerUtils {
+public final class Util {
 
-	private static final String TAG = FileExplorerUtils.class.getName();
+	private static final String TAG = Util.class.getName();
 	private static File COPIED_FILE = null;
 	private static int pasteMode = 1;
 	
@@ -36,7 +37,7 @@ public final class FileExplorerUtils {
 	public static final int PASTE_MODE_MOVE = 1;
 	
 	
-	private FileExplorerUtils(){}
+	private Util(){}
 	
 	 public static synchronized void setPasteSrcFile(File f, int mode) 
 	  {  
@@ -115,12 +116,12 @@ public final class FileExplorerUtils {
 		
 		if(!file.isFile()) //dir
 		{
-			if(FileExplorerUtils.isProtected(file))
+			if(Util.isProtected(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_sys_dir);
 					
 			}
-			else if(FileExplorerUtils.isSdCard(file))
+			else if(Util.isSdCard(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_sdcard);
 			}
@@ -132,7 +133,7 @@ public final class FileExplorerUtils {
 		else //file
 		{
 			String fileName = file.getName();
-			if(FileExplorerUtils.isProtected(file))
+			if(Util.isProtected(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_sys_file);
 					
@@ -145,15 +146,15 @@ public final class FileExplorerUtils {
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_zip);
 			}
-			else if(FileExplorerUtils.isMusic(file))
+			else if(Util.isMusic(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_music);
 			}
-			else if(FileExplorerUtils.isVideo(file))
+			else if(Util.isVideo(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_video);
 			}
-			else if(FileExplorerUtils.isPicture(file))
+			else if(Util.isPicture(file))
 			{
 				return mContext.getResources().getDrawable(R.drawable.filetype_image);
 			}
@@ -185,7 +186,7 @@ public final class FileExplorerUtils {
 		
 	}
 
-	public static String prepareMeta(FileListEntry file,FileExplorerMain context) {
+	public static String prepareMeta(FileListEntry file,FileListActivity context) {
 		
 		File f = file.getPath();
 		try
@@ -201,7 +202,7 @@ public final class FileExplorerUtils {
 			
 		}
 		catch (Exception e) {
-			Log.e(FileExplorerUtils.class.getName(), e.getMessage());
+			Log.e(Util.class.getName(), e.getMessage());
 		}
 		
 		return "";
@@ -303,7 +304,7 @@ public final class FileExplorerUtils {
 		}
 	}
 
-	public static boolean canShowQuickActions(FileListEntry currentFile, FileExplorerMain mContext) {
+	public static boolean canShowQuickActions(FileListEntry currentFile, FileListActivity mContext) {
 		
 		if(!new PreferenceUtil(mContext).useQuickActions())
 		{
@@ -325,16 +326,16 @@ public final class FileExplorerUtils {
 		}
 	}
 
-	public static CharSequence[] getFileProperties(FileListEntry file, FileExplorerMain context) {
+	public static CharSequence[] getFileProperties(FileListEntry file, FileListActivity context) {
 		
-		if(FileExplorerUtils.isSdCard(file.getPath()))
+		if(Util.isSdCard(file.getPath()))
 		{
 			StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
 			long sdAvailSize = (long)stat.getAvailableBlocks() *(long)stat.getBlockSize();
 			long totalSize = (long)stat.getBlockCount() *(long)stat.getBlockSize();
 			
-			return new CharSequence[]{context.getString(R.string.total_capacity, FileExplorerUtils.getSizeStr(totalSize)),
-					context.getString(R.string.free_space, FileExplorerUtils.getSizeStr(sdAvailSize))};
+			return new CharSequence[]{context.getString(R.string.total_capacity, Util.getSizeStr(totalSize)),
+					context.getString(R.string.free_space, Util.getSizeStr(sdAvailSize))};
 		}
 		else if(file.getPath().isFile())
 		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
@@ -397,7 +398,11 @@ public final class FileExplorerUtils {
 		
 	}
 
-	public static void gotoPath(final String currentPath, final FileExplorerMain mContext) {
+	public static void gotoPath(final String currentPath, final FileListActivity mContext) {
+	
+		gotoPath(currentPath, mContext, null);
+	}
+	public static void gotoPath(final String currentPath, final FileListActivity mContext,final CancellationCallback callback) {
 		
 		final EditText input = new EditText(mContext);
 		
@@ -435,9 +440,19 @@ public final class FileExplorerUtils {
 		  public void onClick(DialogInterface dialog, int whichButton) {
 		   
 			  dialog.dismiss();
+			  if(callback != null)
+			  callback.onCancel();
 		  }
 		})
 		.show();
 		input.setText(currentPath);
+	}
+
+	public static File getDownloadsFolder() {
+		return new File("/sdcard/"+Environment.DIRECTORY_DOWNLOADS);
+	}
+
+	public static File getDcimFolder() {
+		return new File("/sdcard/"+Environment.DIRECTORY_DCIM);
 	}
 }

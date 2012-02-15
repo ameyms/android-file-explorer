@@ -2,21 +2,21 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <header
-        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$ViewPreferences"
+        android:fragment="net.appositedesigns.fileexplorer.activity.SettingsActivity$ViewPreferences"
         android:summary="@string/pref_cat_display_summary"
         android:title="@string/pref_cat_display"	/>
     <header
-        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$NavigationPreferences"
+        android:fragment="net.appositedesigns.fileexplorer.activity.SettingsActivity$NavigationPreferences"
         android:summary="@string/pref_cat_nav_summary"
         android:title="@string/pref_cat_nav" />
     
     <header
-        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$GeekyPreferences"
+        android:fragment="net.appositedesigns.fileexplorer.activity.SettingsActivity$GeekyPreferences"
         android:title="@string/pref_cat_geeky"
         android:summary="@string/pref_cat_geeky_summary" />
     
         <header
-        android:fragment="net.appositedesigns.fileexplorer.SettingsActivity$AboutPreferences"
+        android:fragment="net.appositedesigns.fileexplorer.activity.SettingsActivity$AboutPreferences"
         android:title="@string/pref_cat_misc"
         android:summary="@string/pref_cat_misc_summary" />
 

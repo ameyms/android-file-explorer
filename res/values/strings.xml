@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Do not change this number unless you know what you are doing -->
-    <string name="app_version">2.2.1</string>
+    <string name="app_version">2.5-pre-alpha</string>
     
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
@@ -218,7 +218,20 @@
     </string-array>
     
 	<string-array name="goto_locations">
+        <item>Loading&#8230;</item>
         <item>Root</item>
+        <item>Home Folder</item>
+        <item>SD Card</item>
+        <item>Downloads</item>
+        <item>DCIM</item>
+        <item>Other&#8230;</item>
+    </string-array>
+    
+	
+	<string-array name="goto_locations_without_special">
+        <item>Loading&#8230;</item>
+        <item>Root</item>
+        <item>Home Folder</item>
         <item>SD Card</item>
         <item>Other&#8230;</item>
     </string-array>
@@ -244,11 +257,13 @@
     <string-array name="theme_entries">
         <item>Dark</item>
         <item>Light</item>
+        <item>Zebra</item>
     </string-array>
 
     <string-array name="theme_values">
         <item>theme_black</item>
         <item>theme_white</item>
+        <item>theme_white_black</item>
     </string-array>
     
     

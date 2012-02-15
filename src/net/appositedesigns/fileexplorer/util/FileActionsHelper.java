@@ -2,9 +2,10 @@ package net.appositedesigns.fileexplorer.util;
 
 import java.io.File;
 
-import net.appositedesigns.fileexplorer.FileExplorerMain;
-import net.appositedesigns.fileexplorer.FileListEntry;
 import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.callbacks.OperationCallback;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.workers.Trasher;
 import net.appositedesigns.fileexplorer.workers.Zipper;
 import android.app.AlertDialog;
@@ -26,25 +27,25 @@ public class FileActionsHelper {
 	protected static final String TAG = FileActionsHelper.class.getName();
 
 	
-	public static void copyFile(File file, FileExplorerMain mContext)
+	public static void copyFile(File file, FileListActivity mContext)
 	{
-		FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_COPY);
+		Util.setPasteSrcFile(file,Util.PASTE_MODE_COPY);
 		Toast.makeText(mContext.getApplicationContext(), mContext.getString(R.string.copied_toast, file.getName()), Toast.LENGTH_SHORT).show();
 		mContext.invalidateOptionsMenu();
 	}
 	
-	public static void cutFile(final File file, final FileExplorerMain mContext)
+	public static void cutFile(final File file, final FileListActivity mContext)
 	{
-		FileExplorerUtils.setPasteSrcFile(file,FileExplorerUtils.PASTE_MODE_MOVE);
+		Util.setPasteSrcFile(file,Util.PASTE_MODE_MOVE);
 		Toast.makeText(mContext.getApplicationContext(),  mContext.getString(R.string.cut_toast, file.getName()), Toast.LENGTH_SHORT).show();
 		mContext.invalidateOptionsMenu();
 	}
 	
-	public static void showProperties(final FileListEntry file, final FileExplorerMain mContext)
+	public static void showProperties(final FileListEntry file, final FileListActivity mContext)
 	{
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.properties_for, file.getName()))
-		.setItems(FileExplorerUtils.getFileProperties(file, mContext), new OnClickListener() {
+		.setItems(Util.getFileProperties(file, mContext), new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -59,7 +60,7 @@ public class FileActionsHelper {
 		})
 		.show();
 	}
-	public static void deleteFile(final File file, final FileExplorerMain mContext,final OperationCallback<Void> callback)
+	public static void deleteFile(final File file, final FileListActivity mContext,final OperationCallback<Void> callback)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setCancelable(true);
@@ -82,15 +83,15 @@ public class FileActionsHelper {
 		confirm.show();
 	}
 
-	public static int[] getContextMenuOptions(File file, FileExplorerMain caller) {
+	public static int[] getContextMenuOptions(File file, FileListActivity caller) {
 
 		PreferenceUtil prefs = new PreferenceUtil(caller);
 		
-		if(FileExplorerUtils.isProtected(file))
+		if(Util.isProtected(file))
 		{
 			return null;
 		}
-		if(FileExplorerUtils.isSdCard(file))
+		if(Util.isSdCard(file))
 		{
 			if(prefs.isEnableSdCardOptions())
 			{
@@ -121,7 +122,7 @@ public class FileActionsHelper {
 		}
 	}
 
-	public static void rename(final File file, final FileExplorerMain mContext, final OperationCallback<Void> callback)
+	public static void rename(final File file, final FileListActivity mContext, final OperationCallback<Void> callback)
 	{
 		final EditText input = new EditText(mContext);
 		input.setHint(mContext.getString(R.string.enter_new_name));
@@ -183,7 +184,7 @@ public class FileActionsHelper {
 		.show();
 	}
 	
-	public static void zip(final File file, final FileExplorerMain mContext)
+	public static void zip(final File file, final FileListActivity mContext)
 	{
 		try
 		{
@@ -229,7 +230,7 @@ public class FileActionsHelper {
 			});
 		}
 	}
-	public static void doOperation(FileListEntry entry,int action, FileExplorerMain mContext, OperationCallback<Void> callback) {
+	public static void doOperation(FileListEntry entry,int action, FileListActivity mContext, OperationCallback<Void> callback) {
 		
 		File file = entry.getPath();
 		switch (action) {
@@ -270,7 +271,7 @@ public class FileActionsHelper {
 		
 	}
 	
-	private static void rescanMedia(FileExplorerMain mContext) {
+	private static void rescanMedia(FileListActivity mContext) {
 
 		mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri
 				.parse("file://" + Environment.getExternalStorageDirectory()))); 

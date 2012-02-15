@@ -1,8 +1,10 @@
-package net.appositedesigns.fileexplorer;
+package net.appositedesigns.fileexplorer.callbacks;
 
-import net.appositedesigns.fileexplorer.util.Constants;
+import net.appositedesigns.fileexplorer.FileExplorerApp;
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
-import net.appositedesigns.fileexplorer.util.OperationCallback;
 import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,11 +19,11 @@ import android.widget.ShareActionProvider.OnShareTargetSelectedListener;
 
 public abstract class FileActionsCallback implements Callback {
 
-	private FileExplorerMain activity;
+	private FileListActivity activity;
 	private FileListEntry file;
 	static int[] allOptions = {R.id.menu_rescan, R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_props, R.id.menu_share, R.id.menu_rename, R.id.menu_zip};
 	
-	public FileActionsCallback(FileExplorerMain activity,
+	public FileActionsCallback(FileListActivity activity,
 			FileListEntry fileListEntry) {
 
 		this.activity = activity;
@@ -64,13 +66,13 @@ public abstract class FileActionsCallback implements Callback {
 		MenuInflater inflater = activity.getMenuInflater();
 		
 		PreferenceUtil prefs = new PreferenceUtil(activity);
-		if(prefs.getTheme() == Constants.HOLO_BLACK)
+		if(prefs.getTheme() == FileExplorerApp.THEME_WHITE)
 		{
-			inflater.inflate(R.menu.context_menu, menu);
+			inflater.inflate(R.menu.context_menu_light, menu);
 		}
 		else
 		{
-			inflater.inflate(R.menu.context_menu_light, menu);
+			inflater.inflate(R.menu.context_menu, menu);			
 		}
 		
 		for(int o :allOptions)
