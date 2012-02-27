@@ -17,6 +17,7 @@ import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ListActivity;
@@ -54,28 +55,24 @@ public class FileListActivity extends ListActivity {
 	protected Object mCurrentActionMode;
 	private ArrayAdapter<CharSequence> mSpinnerAdapter;
 	private CharSequence[] gotoLocations;
+	private boolean isPicker = false;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		prefs = new PreferenceUtil(this);
-
-		setTheme(prefs.getTheme());
 		
-		if(Util.getDcimFolder().exists() && Util.getDownloadsFolder().exists())
+		if(Intent.ACTION_CHOOSER.equals(getIntent().getAction()) || Intent.ACTION_GET_CONTENT.equals(getIntent().getAction()) || Intent.ACTION_PICK.equals(getIntent().getAction()))
 		{
-			gotoLocations = getResources().getStringArray(R.array.goto_locations);
+			isPicker  = true;
+			
 		}
-		else
-		{
-			gotoLocations = getResources().getStringArray(R.array.goto_locations_without_special);
-		}
+		initUi();
+		initGotoLocations();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-
 		prepareActionBar();
-
 		initRootDir(savedInstanceState);
 
 		listenToThemeChange();
@@ -89,6 +86,25 @@ public class FileListActivity extends ListActivity {
 			EulaPopupBuilder.create(this).show();
 		}
 
+	}
+
+	private void initUi() {
+		if(isPicker)
+		{
+			getWindow().setUiOptions(0);
+		}
+		setTheme(prefs.getTheme());
+	}
+
+	private void initGotoLocations() {
+		if(Util.getDcimFolder().exists() && Util.getDownloadsFolder().exists())
+		{
+			gotoLocations = getResources().getStringArray(R.array.goto_locations);
+		}
+		else
+		{
+			gotoLocations = getResources().getStringArray(R.array.goto_locations_without_special);
+		}
 	}
 
 	private void initFileListView() {
@@ -109,27 +125,36 @@ public class FileListActivity extends ListActivity {
 
 		});
 
-		explorerListView
-		.setOnItemLongClickListener(new OnItemLongClickListener() {
+		explorerListView.setOnItemLongClickListener(getLongPressListener());
+		registerForContextMenu(explorerListView);		
+	}
+
+	private OnItemLongClickListener getLongPressListener() {
+		return new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0,
 					final View view, int arg2, long arg3) {
 
+				if(!explorerListView.isLongClickable())
+					return true;
+				if(isPicker)
+				{
+					return false;
+				}
 				 view.setSelected(true);
 
 				final FileListEntry fileListEntry = (FileListEntry) adapter
 						.getItem(arg2);
+				
+				
 				if (mCurrentActionMode != null) {
 					return false;
 				}
-
 				if (Util.isProtected(fileListEntry
 						.getPath())) {
 					return false;
 				}
-				explorerListView.setClickable(false);
-				explorerListView
-						.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+				explorerListView.setEnabled(false);
 				QuickActionHelper.get(FileListActivity.this).setShowActions(false);
 				mCurrentActionMode = FileListActivity.this
 						.startActionMode(new FileActionsCallback(
@@ -139,21 +164,17 @@ public class FileListActivity extends ListActivity {
 							public void onDestroyActionMode(
 									ActionMode mode) {
 								view.setSelected(false);
-								explorerListView
-										.setChoiceMode(ListView.CHOICE_MODE_NONE);
 								mCurrentActionMode = null;
 								QuickActionHelper.get(FileListActivity.this).setShowActions(true);
-								explorerListView.setClickable(true);
+								explorerListView.setEnabled(true);
 							}
 
 						});
-
 				view.setSelected(true);
 				return true;
 			}
 
-		});
-		registerForContextMenu(explorerListView);		
+		};
 	}
 
 	private void initRootDir(Bundle savedInstanceState) {
@@ -195,7 +216,12 @@ public class FileListActivity extends ListActivity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		
 		mSpinnerAdapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_dropdown_item, gotoLocations);
-		actionBar.setListNavigationCallbacks(mSpinnerAdapter, new OnNavigationListener() {
+		actionBar.setListNavigationCallbacks(mSpinnerAdapter, getActionbarListener(actionBar));
+		
+	}
+
+	private OnNavigationListener getActionbarListener(final ActionBar actionBar) {
+		return new OnNavigationListener() {
 			
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -207,28 +233,25 @@ public class FileListActivity extends ListActivity {
 					return false;
 				}
 				switch (selectedIndex) {
-				case 1:
-					listContents(new File("/"));
-					break;
 					
-				case 2:
+				case 1:
 					listContents(prefs.getStartDir());
 					break;
 					
 					
-				case 3:
+				case 2:
 					listContents(new File("/sdcard"));
 					break;
 					
-				case 4:
+				case 3:
 					listContents(Util.getDownloadsFolder());
 					break;
 					
-				case 5:
+				case 4:
 					listContents(Util.getDcimFolder());
 					break;
 					
-				case 6:
+				case 5:
 					Util.gotoPath(currentDir.getAbsolutePath(), FileListActivity.this, new CancellationCallback() {
 						
 						@Override
@@ -246,10 +269,9 @@ public class FileListActivity extends ListActivity {
 				
 				return true;
 			}
-		});
-		
+		};
 	}
-
+	
 	private void listenToThemeChange() {
 
 		listener = new OnSharedPreferenceChangeListener() {
@@ -286,6 +308,11 @@ public class FileListActivity extends ListActivity {
 	@Override
 	public void onBackPressed() {
 
+		if(isPicker)
+		{
+			super.onBackPressed();
+			return;
+		}
 		if (prefs.useBackNavigation()) {
 			if (Util.isRoot(currentDir)) {
 				finish();
@@ -308,14 +335,28 @@ public class FileListActivity extends ListActivity {
 		} else if (file.isDirectory()) {
 			listContents(file);
 		} else {
+			doFileAction(file);
+		}
+	}
+
+	private void doFileAction(File file) {
+		if (Util.isProtected(file) || file.isDirectory()) {
+			return;
+		}
+		
+		if(isPicker)
+		{
+			pickFile(file);
+			return;
+		}
+		else
+		{
 			openFile(file);
+			return;
 		}
 	}
 
 	private void openFile(File file) {
-		if (Util.isProtected(file) || file.isDirectory()) {
-			return;
-		}
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		Uri uri = Uri.fromFile(file);
@@ -324,6 +365,14 @@ public class FileListActivity extends ListActivity {
 		intent.setDataAndType(uri, type == null ? "*/*" : type);
 		startActivity((Intent.createChooser(intent,
 				getString(R.string.open_using))));
+	}
+
+	private void pickFile(File file) {
+		Intent fileAttachIntent = getIntent();
+		fileAttachIntent.setData(Uri.fromFile(file));
+		setResult(Activity.RESULT_OK, fileAttachIntent);
+		finish();
+		return;
 	}
 
 	public void listContents(File dir) {
@@ -345,7 +394,12 @@ public class FileListActivity extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		if(prefs.getTheme() == FileExplorerApp.THEME_WHITE)
+		
+		if(isPicker)
+		{
+			inflater.inflate(R.menu.picker_options_menu, menu);
+		}
+		else if(prefs.getTheme() == FileExplorerApp.THEME_WHITE)
 		{
 			inflater.inflate(R.menu.options_menu_light, menu);
 		}
@@ -359,10 +413,13 @@ public class FileListActivity extends ListActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 
-		if (Util.canPaste(currentDir)) {
-			menu.findItem(R.id.menu_paste).setVisible(true);
-		} else {
-			menu.findItem(R.id.menu_paste).setVisible(false);
+		if(!isPicker)
+		{
+			if (Util.canPaste(currentDir)) {
+				menu.findItem(R.id.menu_paste).setVisible(true);
+			} else {
+				menu.findItem(R.id.menu_paste).setVisible(false);
+			}	
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -377,6 +434,11 @@ public class FileListActivity extends ListActivity {
 			gotoParent();
 			return true;
 
+		case R.id.menu_cancel:
+			setResult(RESULT_CANCELED);
+			finish();
+			return true;
+			
 		case R.id.menu_goto:
 			Util.gotoPath(currentDir.getAbsolutePath(), this);
 			return true;
@@ -388,6 +450,7 @@ public class FileListActivity extends ListActivity {
 		case R.id.menu_refresh:
 			refresh();
 			return true;
+			
 		case R.id.menu_newfolder:
 			confirmCreateFolder();
 			return true;
@@ -513,6 +576,16 @@ public class FileListActivity extends ListActivity {
 		super.onDestroy();
 		PreferenceManager.getDefaultSharedPreferences(this)
 				.unregisterOnSharedPreferenceChangeListener(listener);
+	}
+	
+	public PreferenceUtil getPreferenceHelper()
+	{
+		return prefs;
+	}
+	
+	public boolean isInPickMode()
+	{
+		return isPicker;
 	}
 
 }

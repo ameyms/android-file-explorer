@@ -8,8 +8,10 @@ import net.appositedesigns.fileexplorer.callbacks.OperationCallback;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.workers.Trasher;
 import net.appositedesigns.fileexplorer.workers.Zipper;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.Instrumentation.ActivityResult;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -234,6 +236,12 @@ public class FileActionsHelper {
 		
 		File file = entry.getPath();
 		switch (action) {
+		
+		case R.id.menu_cancel:
+			ActivityResult result = new ActivityResult(Activity.RESULT_CANCELED, null);
+			mContext.finish();
+			break;
+			
 		case R.id.menu_copy:
 			copyFile(file, mContext);
 			break;

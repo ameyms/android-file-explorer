@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Do not change this number unless you know what you are doing -->
-    <string name="app_version">2.5-pre-alpha</string>
+    <string name="app_version">2.3</string>
     
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
@@ -29,6 +29,7 @@
 	<string name="notifications">Notifications</string>
 	<string name="alarms">Alarms</string>
 
+	<string name="pick_file">Pick a file</string>
 	<string name="media_rescan_started">Media rescan started</string>
 	<string name="msg_delete_success">Path successfully deleted</string>
 	<string name="msg_delete_fail">Path could not be deleted</string>
@@ -219,7 +220,6 @@
     
 	<string-array name="goto_locations">
         <item>Loading&#8230;</item>
-        <item>Root</item>
         <item>Home Folder</item>
         <item>SD Card</item>
         <item>Downloads</item>
@@ -230,7 +230,6 @@
 	
 	<string-array name="goto_locations_without_special">
         <item>Loading&#8230;</item>
-        <item>Root</item>
         <item>Home Folder</item>
         <item>SD Card</item>
         <item>Other&#8230;</item>
@@ -257,13 +256,13 @@
     <string-array name="theme_entries">
         <item>Dark</item>
         <item>Light</item>
-        <item>Zebra</item>
+       <!-- <item>Zebra</item> -->
     </string-array>
 
     <string-array name="theme_values">
         <item>theme_black</item>
         <item>theme_white</item>
-        <item>theme_white_black</item>
+        <!-- <item>theme_white_black</item> -->
     </string-array>
     
     

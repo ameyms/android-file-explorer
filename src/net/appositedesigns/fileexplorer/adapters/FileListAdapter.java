@@ -1,11 +1,9 @@
 package net.appositedesigns.fileexplorer.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.R.id;
-import net.appositedesigns.fileexplorer.R.layout;
 import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
@@ -16,12 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FileListAdapter extends BaseAdapter implements Filterable {
+public class FileListAdapter extends BaseAdapter {
 
 	public static class ViewHolder 
 	{
@@ -41,7 +37,7 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
 		super();
 		mContext = context;
 		this.files = files;
-		mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = mContext.getLayoutInflater();
 		
 	}
 
@@ -85,7 +81,14 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
 		ViewHolder holder = null;
         if (convertView == null) 
         {
-            convertView = mInflater.inflate(R.layout.explorer_item, parent, false);
+        	if(FileExplorerApp.THEME_BLACK == mContext.getPreferenceHelper().getTheme())
+        	{
+        		convertView = mInflater.inflate(R.layout.explorer_item, parent, false);	
+        	}
+        	else
+        	{
+        		convertView = mInflater.inflate(R.layout.explorer_item_light, parent, false);
+        	}
             holder = new ViewHolder();
             holder.resName = (TextView)convertView.findViewById(R.id.explorer_resName);
             holder.resMeta = (TextView)convertView.findViewById(R.id.explorer_resMeta);
@@ -123,65 +126,5 @@ public class FileListAdapter extends BaseAdapter implements Filterable {
         
         return convertView;
 	}
-
-
-	@Override
-	public Filter getFilter() {
-		
-		return new Filter(){
-
-			@Override
-			protected FilterResults performFiltering(CharSequence prefix) {
-				
-                FilterResults results = new FilterResults();
-                String prefixString = prefix.toString().toLowerCase();
-
-                final List<FileListEntry> values = files;
-                final int count = values.size();
-
-                final ArrayList<FileListEntry> newValues = new ArrayList<FileListEntry>(count);
-
-                for (int i = 0; i < count; i++) {
-                    final FileListEntry value = values.get(i);
-                    final String valueText = value.getName()
-                            .toLowerCase();
-
-                    // First match against the whole, non-splitted value
-                    if (valueText.startsWith(prefixString)) {
-                        newValues.add(value);
-                    } else {
-                        final String[] words = valueText.split(" ");
-                        final int wordCount = words.length;
-
-                        for (int k = 0; k < wordCount; k++) {
-                            if (words[k].startsWith(prefixString)) {
-                                newValues.add(value);
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                results.values = newValues;
-                results.count = newValues.size();
-
-                return results;
-			}
-
-			@Override
-			protected void publishResults(CharSequence constraint,
-					FilterResults results) {
-				
-				 files = (List<FileListEntry>) results.values;
-                 if (results.count > 0) {
-                     notifyDataSetChanged();
-                 } else {
-                     notifyDataSetInvalidated();
-                 }
-			}
-			
-		};
-	}
-
 
 }

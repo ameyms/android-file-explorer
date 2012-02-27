@@ -306,7 +306,7 @@ public final class Util {
 
 	public static boolean canShowQuickActions(FileListEntry currentFile, FileListActivity mContext) {
 		
-		if(!new PreferenceUtil(mContext).useQuickActions())
+		if(!mContext.getPreferenceHelper().useQuickActions() || mContext.isInPickMode())
 		{
 			return false;
 		}

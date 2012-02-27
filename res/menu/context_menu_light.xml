@@ -13,12 +13,6 @@
         android:icon="@drawable/ic_action_share_light"
         android:showAsAction="ifRoom"
         android:title="@string/action_share"/>
-     
-    <item
-        android:id="@+id/menu_delete"
-        android:icon="@drawable/ic_action_delete_light"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_delete"/>
     
             <item
         android:id="@+id/menu_copy"
@@ -32,6 +26,13 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/action_cut"/>
             
+                 
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_action_delete_light"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_delete"/>
+    
     <item
         android:id="@+id/menu_rename"
         android:icon="@drawable/ic_action_rename_light"
