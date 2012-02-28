@@ -31,13 +31,13 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 		}
 		else
 		{
-			callback = new OperationCallback<Void>() {
+			this.callback = new OperationCallback<Void>() {
 
 				@Override
 				public Void onSuccess() {return null;}
 
 				@Override
-				public void onFailure(Throwable e) {}
+				public void onFailure(Throwable e) {Log.e(TAG, "Error occurred", e);}
 			};
 		}
 	}

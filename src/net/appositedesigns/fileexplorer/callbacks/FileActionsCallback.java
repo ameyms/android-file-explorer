@@ -21,7 +21,7 @@ public abstract class FileActionsCallback implements Callback {
 
 	private FileListActivity activity;
 	private FileListEntry file;
-	static int[] allOptions = {R.id.menu_rescan, R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_props, R.id.menu_share, R.id.menu_rename, R.id.menu_zip};
+	static int[] allOptions = {R.id.menu_rescan, R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_props, R.id.menu_share, R.id.menu_rename, R.id.menu_zip, R.id.menu_unzip};
 	
 	public FileActionsCallback(FileListActivity activity,
 			FileListEntry fileListEntry) {

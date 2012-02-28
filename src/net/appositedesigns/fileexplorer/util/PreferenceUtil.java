@@ -29,6 +29,7 @@ public final class PreferenceUtil {
 	public static final String PREF_USE_BACK_BUTTON = "useBackButton";
 	public static final String PREF_USE_QUICKACTIONS = "useQuickActions";
 	public static final String PREF_ZIP_ENABLE = "zipEnable";
+	public static final String PREF_ZIP_USE_ZIP_FOLDER = "useZipFolder";
 	public static final String PREF_ZIP_LOCATION = "zipLocation";
 	public static final String KEY_RESTART_DIR = "net.appositedesigns.fileexplorer.RestartDirectory";
 	
@@ -122,7 +123,13 @@ public final class PreferenceUtil {
 	
 	public File getZipDestinationDir() throws LocationInvalidException
 	{
-		String dirPath= PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_ZIP_LOCATION, "/sdcard/zipped");
+		String dirPath = PreferenceManager.getDefaultSharedPreferences(mContext).getString(PREF_ZIP_LOCATION, "/sdcard/zipped");
+		Boolean useZipFolder = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_ZIP_USE_ZIP_FOLDER, false);
+		
+		if(!useZipFolder)
+		{
+			return null;
+		}
 		File dir = new File(dirPath);
 		
 		if(dir.exists() && dir.isDirectory())

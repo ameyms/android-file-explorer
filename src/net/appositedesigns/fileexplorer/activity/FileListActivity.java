@@ -588,4 +588,8 @@ public class FileListActivity extends ListActivity {
 		return isPicker;
 	}
 
+	public File getCurrentDir() {
+		return currentDir;
+	}
+
 }

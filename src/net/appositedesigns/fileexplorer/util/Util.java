@@ -93,6 +93,11 @@ public final class Util {
 	{
 		return (!path.canRead() && !path.canWrite());
 	}
+	
+	public static boolean isUnzippable(File path)
+	{
+		return (path.isFile() && path.canRead() && path.getName().endsWith(".zip"));
+	}
 
 
 	public static boolean isRoot(File dir) {

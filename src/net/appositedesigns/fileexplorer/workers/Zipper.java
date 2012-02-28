@@ -6,7 +6,6 @@ import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
 import net.appositedesigns.fileexplorer.util.AbortionFlag;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.util.ZipUtil;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
@@ -24,9 +23,11 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 	
 	private ProgressDialog zipProgress;
 	private boolean zippedAtleastOne;
+	private File destination;
 	
-	public Zipper(String zipName, FileListActivity mContext) {
+	public Zipper(String zipName, File destination, FileListActivity mContext) {
 
+		this.destination = destination;
 		this.flag = new AbortionFlag();
 		this.caller = mContext;
 		this.zipName = zipName;
@@ -56,6 +57,7 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 				@Override
 				public void run() {
 	
+					caller.refresh();
 					new Builder(caller)
 					.setIcon(android.R.drawable.ic_dialog_info)
 					.setTitle(caller.getString(R.string.success))
@@ -79,7 +81,7 @@ public class Zipper extends AsyncTask<File, Integer, String> {
 		
 		try
 		{
-			File zipDest = new PreferenceUtil(caller).getZipDestinationDir();
+			File zipDest = destination;
 			File zipFile = new File(zipDest, zipName+".zip");
 			zippedAtleastOne = false;
 			for(File fileToBeZipped : params)

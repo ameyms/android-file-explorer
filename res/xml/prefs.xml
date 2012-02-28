@@ -4,7 +4,7 @@
     <header
         android:fragment="net.appositedesigns.fileexplorer.activity.SettingsActivity$ViewPreferences"
         android:summary="@string/pref_cat_display_summary"
-        android:title="@string/pref_cat_display"	/>
+        android:title="@string/pref_cat_display" />
     <header
         android:fragment="net.appositedesigns.fileexplorer.activity.SettingsActivity$NavigationPreferences"
         android:summary="@string/pref_cat_nav_summary"

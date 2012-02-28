@@ -1,12 +1,17 @@
 package net.appositedesigns.fileexplorer.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
 import net.appositedesigns.fileexplorer.callbacks.OperationCallback;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.workers.Trasher;
+import net.appositedesigns.fileexplorer.workers.Unzipper;
 import net.appositedesigns.fileexplorer.workers.Zipper;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -114,6 +119,15 @@ public class FileActionsHelper {
 			return new int[]{R.id.menu_copy, R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_props};
 			
 		}
+		else if(Util.isUnzippable(file))
+		{
+			if(prefs.isZipEnabled())
+			{
+				return new int[]{R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_zip, R.id.menu_unzip, R.id.menu_props};
+			}
+			return new int[]{R.id.menu_copy, R.id.menu_cut, R.id.menu_delete, R.id.menu_rename, R.id.menu_props};
+			
+		}
 		else
 		{
 			if(prefs.isZipEnabled())
@@ -190,24 +204,57 @@ public class FileActionsHelper {
 	{
 		try
 		{
-			File zipLoc = new PreferenceUtil(mContext).getZipDestinationDir();
-			final EditText input = new EditText(mContext);
-			input.setHint(mContext.getString(R.string.enter_zip_file_name));
-			input.setSingleLine();
-			new Builder(mContext)
-			.setTitle(mContext.getString(R.string.zip_dialog, zipLoc.getAbsolutePath()))
-			.setView(input).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			  
-				String zipName = input.getText().toString();
-				new Zipper(zipName,mContext).execute(file);
-			  }
-			}).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-			  public void onClick(DialogInterface dialog, int whichButton) {
-			   
-				  dialog.dismiss();
-			  }
-			}).show();
+			final File zipLoc = new PreferenceUtil(mContext).getZipDestinationDir();
+			
+			if(zipLoc == null)
+			{
+				final EditText zipDestinationInput = new EditText(mContext);
+				
+				zipDestinationInput.setSingleLine();
+				new Builder(mContext)
+				.setTitle(mContext.getString(R.string.unzip_destination))
+				.setView(zipDestinationInput)
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+				  
+					CharSequence destinationPath = zipDestinationInput.getText();
+					try
+					{
+						File destination = new File(destinationPath.toString());
+						if(destination.isFile() && destination.exists())
+						{
+							throw new FileNotFoundException();
+						}
+						else
+						{
+							promptZipFileName(file, mContext, destination);
+						}
+						
+					}
+					catch (Exception e) {
+						Log.e(TAG, "Error zipping to path"+destinationPath, e);
+						new Builder(mContext)
+						.setTitle(mContext.getString(R.string.error))
+						.setMessage(mContext.getString(R.string.zip_failed))
+						.show();
+					}
+				  }
+	
+				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+				  public void onClick(DialogInterface dialog, int whichButton) {
+				   
+					  dialog.dismiss();
+				  }
+				})
+				.show();
+				zipDestinationInput.setText(mContext.getCurrentDir().getAbsolutePath());
+			}
+			else
+			{
+				promptZipFileName(file, mContext, zipLoc);
+			}
+			
 		}
 		catch (Exception e) {
 			Log.e(TAG, "Zip destination was invalid", e);
@@ -232,6 +279,73 @@ public class FileActionsHelper {
 			});
 		}
 	}
+	
+	private static void promptZipFileName(final File file,
+			final FileListActivity mContext,final File zipLoc) {
+		final EditText input = new EditText(mContext);
+		input.setHint(mContext.getString(R.string.enter_zip_file_name));
+		input.setSingleLine();
+		new Builder(mContext)
+		.setTitle(mContext.getString(R.string.zip_dialog, zipLoc.getAbsolutePath()))
+		.setView(input).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  
+			String zipName = input.getText().toString();
+			new Zipper(zipName,zipLoc, mContext).execute(file);
+		  }
+		}).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		   
+			  dialog.dismiss();
+		  }
+		}).show();
+	}
+	public static void unzip(final FileListActivity mContext, final List<File> zipFiles, final CancellationCallback callback)
+	{
+		final EditText input = new EditText(mContext);
+		
+		input.setSingleLine();
+		new Builder(mContext)
+		.setTitle(mContext.getString(R.string.unzip_destination))
+		.setView(input)
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  
+			CharSequence destinationPath = input.getText();
+			try
+			{
+				File destination = new File(destinationPath.toString());
+				if(destination.isFile() && destination.exists())
+				{
+					throw new FileNotFoundException();
+				}
+				else
+				{
+					new Unzipper(mContext, destination).execute((File[])(new ArrayList<File>(zipFiles).toArray(new File[0])));
+				}
+				
+			}
+			catch (Exception e) {
+				Log.e(TAG, "Error unzipping to path"+destinationPath, e);
+				new Builder(mContext)
+				.setTitle(mContext.getString(R.string.error))
+				.setMessage(mContext.getString(R.string.unzip_failed_dest_file))
+				.show();
+			}
+		  }
+		})
+		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		   
+			  dialog.dismiss();
+			  if(callback != null)
+			  callback.onCancel();
+		  }
+		})
+		.show();
+		input.setText(mContext.getCurrentDir().getAbsolutePath());
+	}
+	
 	public static void doOperation(FileListEntry entry,int action, FileListActivity mContext, OperationCallback<Void> callback) {
 		
 		File file = entry.getPath();
@@ -264,6 +378,12 @@ public class FileActionsHelper {
 			
 		case R.id.menu_zip:
 			zip(file, mContext);
+			break;
+			
+		case R.id.menu_unzip:
+			List<File> zipFiles = new ArrayList<File>();
+			zipFiles.add(file);
+			unzip(mContext, zipFiles, null);
 			break;
 			
 		case R.id.menu_rescan:

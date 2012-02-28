@@ -8,7 +8,7 @@
 	<string name="settings">Preferences</string>
 	
 	<string name="eula_popup_title">Welcome to File Explorer</string>
-	<string name="eula_popup_text">Thank you for installing FileExplorer, the free, opern source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
+	<string name="eula_popup_text">Thank you for installing FileExplorer, the free, open source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
 
 
 	<string name="eula_accept">I accept</string>
@@ -24,6 +24,7 @@
 	<string name="action_format">Format</string>
 	<string name="action_share">Share</string>
 	<string name="action_zip">Zip</string>
+	<string name="action_unzip">Unzip</string>
 	
 	<string name="ringtones">Ringtones</string>
 	<string name="notifications">Notifications</string>
@@ -76,6 +77,15 @@
 	
 	<string name="copy_aborted">Copy was aborted.</string>
 	<string name="copy_abort_partial">Copy operation was aborted. However, one or more files were copied.</string>
+	
+	<string name="unzip_progress_param">Unzipping files &#8230; [%1$s]</string>
+	<string name="unzip_progress">Unzipping files &#8230;</string>
+	<string name="unzip_failed_dest_file">Unzip failed. Please choose a different destination folder and try again</string>
+	<string name="unzip_failed_generic">Could not unzip files</string>
+	<string name="unzip_success">Successfully unzipped %1$s paths</string>
+	<string name="unzip_abort_partial">Unzip operation was aborted. However, one or more files were unzipped to %1$s</string>
+	<string name="unzip_aborted">Unzip was aborted</string>
+	<string name="unzip_destination">Select destination</string>
 	
 	<string name="move_aborted">Move was aborted.</string>
 	<string name="move_abort_partial">Move operation was aborted. However, one or more files were moved.</string>
@@ -170,11 +180,18 @@
 	
 	
 	<string name="pref_cat_geeky">Geeky Stuff</string>
-	<string name="pref_cat_geeky_summary">Zipping and other geeky functionality</string>
-	<string name="pref_zipenable">Enable Zip</string>
-	<string name="pref_zipenable_on">Files and folders have an option to compress into another file</string>
-	<string name="pref_zipenable_off">Files and folders can not be zipped</string>
-	<string name="pref_zip_location">Zip Location</string>
+	<string name="pref_cat_zip">Compression</string>
+	<string name="pref_cat_sdcard">External Storage</string>
+	<string name="pref_cat_geeky_summary">Compression and other geeky functionality</string>
+	<string name="pref_zipenable">Zip &amp; Unzip</string>
+	<string name="pref_zipenable_on">Show options to zip &amp; unzip</string>
+	<string name="pref_zipenable_off">Zip &amp; unzip options are hidden</string>
+	
+	<string name="pref_usezipfolder">Use Common Zip folder</string>
+	<string name="pref_usezipfolder_on">Move .zip files created using FileExplorer to a common folder</string>
+	<string name="pref_usezipfolder_off">Prompt for destination folder each time files are zipped</string>
+	
+	<string name="pref_zip_location">Zip Folder Location</string>
 	<string name="pref_zip_location_desc">Zipped files and folders will be kept at this location</string>
 	
 	<string name="pref_show_sdcard_options">SD Card Options</string>

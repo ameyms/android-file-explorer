@@ -41,6 +41,11 @@
     <item
         android:id="@+id/menu_zip"
         android:title="@string/action_zip"/>
+    
+        <item
+        android:id="@+id/menu_unzip"
+        android:title="@string/action_unzip"/>
+        
     <item
         android:id="@+id/menu_props"
         android:title="@string/action_prop"/>
