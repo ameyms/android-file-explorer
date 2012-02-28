@@ -23,13 +23,29 @@
             android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
+            <intent-filter>
+                <action android:name="net.appositedesigns.fileexplorer.action.OPEN_FOLDER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
                 <data android:mimeType="*/*" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.OPENABLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:icon="@drawable/bookmark_icon"
+            android:name=".activity.BookmarkListActivity"
+            android:label="@string/bookmarks" >
+             <intent-filter>
+                <action android:name="net.appositedesigns.fileexplorer.action.OPEN_BOOKMARKS" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity

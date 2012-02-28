@@ -6,6 +6,7 @@
     
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
+		<string name="bookmarks">Bookmarks</string>
 	
 	<string name="eula_popup_title">Welcome to File Explorer</string>
 	<string name="eula_popup_text">Thank you for installing FileExplorer, the free, open source, fast, ad-free file manager for Android! Please accept terms and conditions mentioned at http://fileexplorer.appositedesigns.net/eula</string>
@@ -36,11 +37,15 @@
 	<string name="msg_delete_fail">Path could not be deleted</string>
 	
 	<string name="empty_folder">This folder is empty</string>
+	<string name="no_bookmarks">You have not added any bookmarks yet</string>
+	<string name="bookmarks_count">Total of %1$s bookmarks</string>
+	<string name="bookmarks_count_0">No bookmarks</string>
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
 	<string name="menu_navigate">Navigate to folder &#8230;</string>
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_refresh">Refresh</string>
+	<string name="menu_bookmark">Show in bookmarks</string>
 	
 	<string name="yes">Yes</string>
 	<string name="actions">Actions</string>
@@ -241,14 +246,16 @@
         <item>SD Card</item>
         <item>Downloads</item>
         <item>DCIM</item>
+        <item>Bookmarks&#8230;</item>
         <item>Other&#8230;</item>
     </string-array>
     
-	
-	<string-array name="goto_locations_without_special">
+		<string-array name="goto_locations_no_bookmark">
         <item>Loading&#8230;</item>
         <item>Home Folder</item>
         <item>SD Card</item>
+        <item>Downloads</item>
+        <item>DCIM</item>
         <item>Other&#8230;</item>
     </string-array>
     

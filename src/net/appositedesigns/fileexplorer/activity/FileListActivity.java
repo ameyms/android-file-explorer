@@ -20,14 +20,10 @@ import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,32 +38,31 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FileListActivity extends ListActivity {
+public class FileListActivity extends BaseFileListActivity {
 
 	private static final String CURRENT_DIR_DIR = "current-dir";
 	private ListView explorerListView;
 	private File currentDir;
-	private PreferenceUtil prefs;
 	private List<FileListEntry> files;
 	private FileListAdapter adapter;
-	private OnSharedPreferenceChangeListener listener;
-	protected boolean shouldRestartApp = false;
 	protected Object mCurrentActionMode;
 	private ArrayAdapter<CharSequence> mSpinnerAdapter;
 	private CharSequence[] gotoLocations;
 	private boolean isPicker = false;
+	private FileExplorerApp app;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-		prefs = new PreferenceUtil(this);
-		
-		if(Intent.ACTION_CHOOSER.equals(getIntent().getAction()) || Intent.ACTION_GET_CONTENT.equals(getIntent().getAction()) || Intent.ACTION_PICK.equals(getIntent().getAction()))
+		app = (FileExplorerApp)getApplication();
+		isPicker = getIntent().getBooleanExtra(FileExplorerApp.EXTRA_IS_PICKER, false);
+		if(Intent.ACTION_GET_CONTENT.equals(getIntent().getAction()))
 		{
 			isPicker  = true;
-			
+			app.setFileAttachIntent(getIntent());
 		}
+		
 		initUi();
 		initGotoLocations();
 		super.onCreate(savedInstanceState);
@@ -75,7 +70,6 @@ public class FileListActivity extends ListActivity {
 		prepareActionBar();
 		initRootDir(savedInstanceState);
 
-		listenToThemeChange();
 		files = new ArrayList<FileListEntry>();
 
 		initFileListView();
@@ -93,17 +87,17 @@ public class FileListActivity extends ListActivity {
 		{
 			getWindow().setUiOptions(0);
 		}
-		setTheme(prefs.getTheme());
+		
 	}
 
 	private void initGotoLocations() {
-		if(Util.getDcimFolder().exists() && Util.getDownloadsFolder().exists())
+		if(!isPicker)
 		{
 			gotoLocations = getResources().getStringArray(R.array.goto_locations);
 		}
 		else
 		{
-			gotoLocations = getResources().getStringArray(R.array.goto_locations_without_special);
+			gotoLocations = getResources().getStringArray(R.array.goto_locations_no_bookmark);
 		}
 	}
 
@@ -252,6 +246,12 @@ public class FileListActivity extends ListActivity {
 					break;
 					
 				case 5:
+					if(!isPicker)
+					{
+						openBookmarks(actionBar);
+						break;
+					}
+				case 6:
 					Util.gotoPath(currentDir.getAbsolutePath(), FileListActivity.this, new CancellationCallback() {
 						
 						@Override
@@ -269,31 +269,17 @@ public class FileListActivity extends ListActivity {
 				
 				return true;
 			}
+
 		};
 	}
-	
-	private void listenToThemeChange() {
-
-		listener = new OnSharedPreferenceChangeListener() {
-
-			@Override
-			public void onSharedPreferenceChanged(
-					SharedPreferences sharedPreferences, String key) {
-				if (PreferenceUtil.PREF_THEME.equals(key)) {
-
-					shouldRestartApp = true;
-
-				}
-				if (PreferenceUtil.PREF_USE_QUICKACTIONS.equals(key)) {
-
-					shouldRestartApp = true;
-
-				}
-			}
-		};
-
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.registerOnSharedPreferenceChangeListener(listener);
+	private void openBookmarks(final ActionBar actionBar) {
+		Intent intent = new Intent();
+		intent.setAction(FileExplorerApp.ACTION_OPEN_BOOKMARK);
+		intent.addCategory(Intent.CATEGORY_DEFAULT);
+		intent.putExtra(FileExplorerApp.EXTRA_IS_PICKER, isPicker);
+		intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+		actionBar.setSelectedNavigationItem(0);
+		startActivity(intent);
 	}
 
 	@Override
@@ -368,7 +354,7 @@ public class FileListActivity extends ListActivity {
 	}
 
 	private void pickFile(File file) {
-		Intent fileAttachIntent = getIntent();
+		Intent fileAttachIntent = app.getFileAttachIntent();
 		fileAttachIntent.setData(Uri.fromFile(file));
 		setResult(Activity.RESULT_OK, fileAttachIntent);
 		finish();
@@ -415,6 +401,7 @@ public class FileListActivity extends ListActivity {
 
 		if(!isPicker)
 		{
+			menu.findItem(R.id.menu_bookmark_toggle).setChecked(prefs.isBookmarked(currentDir.getAbsolutePath()));
 			if (Util.canPaste(currentDir)) {
 				menu.findItem(R.id.menu_paste).setVisible(true);
 			} else {
@@ -437,6 +424,19 @@ public class FileListActivity extends ListActivity {
 		case R.id.menu_cancel:
 			setResult(RESULT_CANCELED);
 			finish();
+			return true;
+			
+		case R.id.menu_bookmark_toggle:
+			boolean setBookmark = item.isChecked();
+			item.setChecked(!setBookmark);
+			if(!setBookmark)
+			{
+				prefs.addBookmark(currentDir.getAbsolutePath());
+			}
+			else
+			{
+				prefs.removeBookmark(currentDir.getAbsolutePath());
+			}
 			return true;
 			
 		case R.id.menu_goto:
@@ -569,18 +569,6 @@ public class FileListActivity extends ListActivity {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtra(PreferenceUtil.KEY_RESTART_DIR, currentDir.getAbsolutePath());
 		startActivity(i);
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		PreferenceManager.getDefaultSharedPreferences(this)
-				.unregisterOnSharedPreferenceChangeListener(listener);
-	}
-	
-	public PreferenceUtil getPreferenceHelper()
-	{
-		return prefs;
 	}
 	
 	public boolean isInPickMode()
