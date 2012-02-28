@@ -2,7 +2,7 @@ package net.appositedesigns.fileexplorer.activity;
 
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.R.string;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
+import net.appositedesigns.fileexplorer.util.PreferenceHelper;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -28,7 +28,7 @@ public class EulaPopupBuilder {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
-						new PreferenceUtil(context).markEulaAccepted();
+						new PreferenceHelper(context).markEulaAccepted();
 						dialog.dismiss();
 						context.refresh();
 						

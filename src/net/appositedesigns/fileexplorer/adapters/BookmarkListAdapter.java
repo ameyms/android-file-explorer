@@ -89,6 +89,10 @@ public class BookmarkListAdapter extends BaseAdapter {
         }
         final FileListEntry currentFile = files.get(position);
         holder.resName.setText(currentFile.getName());
+        if(Util.isRoot(currentFile.getPath()))
+        {
+        	holder.resName.setText(mContext.getString(R.string.filesystem_root));
+        }
         holder.resIcon.setImageDrawable(Util.getIcon(mContext, currentFile.getPath()));
         holder.resMeta.setText(currentFile.getPath().getAbsolutePath());
         

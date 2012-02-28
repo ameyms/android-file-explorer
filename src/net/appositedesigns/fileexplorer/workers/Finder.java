@@ -12,7 +12,7 @@ import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.util.Util;
 import net.appositedesigns.fileexplorer.util.FileListSorter;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
+import net.appositedesigns.fileexplorer.util.PreferenceHelper;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -24,14 +24,14 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 	
 	private FileListActivity caller;
 	private ProgressDialog waitDialog;
-	private PreferenceUtil prefs;
+	private PreferenceHelper prefs;
 	
 	private File currentDir;
 	
 	public Finder(FileListActivity caller) {
 		
 		this.caller = caller;
-		prefs = new PreferenceUtil(this.caller);
+		prefs = new PreferenceHelper(this.caller);
 	}
 
 	@Override

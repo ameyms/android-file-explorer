@@ -3,17 +3,12 @@ package net.appositedesigns.fileexplorer.workers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.activity.BookmarkListActivity;
-import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.util.Util;
 import net.appositedesigns.fileexplorer.util.FileListSorter;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -25,12 +20,10 @@ public class BookmarkLoader extends AsyncTask<File, Integer, List<FileListEntry>
 	
 	private BookmarkListActivity caller;
 	private ProgressDialog waitDialog;
-	private PreferenceUtil prefs;
 	
 	public BookmarkLoader(BookmarkListActivity caller) {
 		
 		this.caller = caller;
-		prefs = new PreferenceUtil(this.caller);
 	}
 
 	@Override
@@ -104,7 +97,7 @@ public class BookmarkLoader extends AsyncTask<File, Integer, List<FileListEntry>
 		caller.runOnUiThread(waitForASec);
 		
 		
-		List<FileListEntry> childFiles = new ArrayList<FileListEntry>(prefs.getBookmarks());
+		List<FileListEntry> childFiles = new ArrayList<FileListEntry>(caller.getBookmarker().getBookmarks());
 		
 		FileListSorter sorter = new FileListSorter(caller);
 		Collections.sort(childFiles, sorter);

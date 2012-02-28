@@ -11,7 +11,6 @@ import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
 import net.appositedesigns.fileexplorer.callbacks.FileActionsCallback;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.util.Util;
 import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
@@ -91,14 +90,8 @@ public class FileListActivity extends BaseFileListActivity {
 	}
 
 	private void initGotoLocations() {
-		if(!isPicker)
-		{
-			gotoLocations = getResources().getStringArray(R.array.goto_locations);
-		}
-		else
-		{
-			gotoLocations = getResources().getStringArray(R.array.goto_locations_no_bookmark);
-		}
+		
+		gotoLocations = getResources().getStringArray(R.array.goto_locations);
 	}
 
 	private void initFileListView() {
@@ -174,15 +167,14 @@ public class FileListActivity extends BaseFileListActivity {
 	private void initRootDir(Bundle savedInstanceState) {
 		// If app was restarted programmatically, find where the user last left
 		// it
-		String restartDirPath = getIntent().getStringExtra(
-				PreferenceUtil.KEY_RESTART_DIR);
+		String restartDirPath = getIntent().getStringExtra(FileExplorerApp.EXTRA_FOLDER);
 		
 		if (restartDirPath != null) 
 		{
 			File restartDir = new File(restartDirPath);
 			if (restartDir.exists() && restartDir.isDirectory()) {
 				currentDir = restartDir;
-				getIntent().removeExtra(PreferenceUtil.KEY_RESTART_DIR);
+				getIntent().removeExtra(FileExplorerApp.EXTRA_FOLDER);
 			}
 		}
 		else if (savedInstanceState!=null && savedInstanceState.getSerializable(CURRENT_DIR_DIR) != null) {
@@ -246,11 +238,8 @@ public class FileListActivity extends BaseFileListActivity {
 					break;
 					
 				case 5:
-					if(!isPicker)
-					{
-						openBookmarks(actionBar);
-						break;
-					}
+					openBookmarks(actionBar);
+					break;
 				case 6:
 					Util.gotoPath(currentDir.getAbsolutePath(), FileListActivity.this, new CancellationCallback() {
 						
@@ -277,11 +266,26 @@ public class FileListActivity extends BaseFileListActivity {
 		intent.setAction(FileExplorerApp.ACTION_OPEN_BOOKMARK);
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		intent.putExtra(FileExplorerApp.EXTRA_IS_PICKER, isPicker);
-		intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 		actionBar.setSelectedNavigationItem(0);
-		startActivity(intent);
+		startActivityForResult(intent, FileExplorerApp.REQ_PICK_BOOKMARK);
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		switch (requestCode) {
+		case FileExplorerApp.REQ_PICK_BOOKMARK:
+			if(resultCode == RESULT_OK)
+			{
+				String selectedBookmark = data.getStringExtra(FileExplorerApp.EXTRA_SELECTED_BOOKMARK);
+				listContents(new File(selectedBookmark));
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -401,7 +405,7 @@ public class FileListActivity extends BaseFileListActivity {
 
 		if(!isPicker)
 		{
-			menu.findItem(R.id.menu_bookmark_toggle).setChecked(prefs.isBookmarked(currentDir.getAbsolutePath()));
+			menu.findItem(R.id.menu_bookmark_toggle).setChecked(bookmarker.isBookmarked(currentDir.getAbsolutePath()));
 			if (Util.canPaste(currentDir)) {
 				menu.findItem(R.id.menu_paste).setVisible(true);
 			} else {
@@ -431,11 +435,11 @@ public class FileListActivity extends BaseFileListActivity {
 			item.setChecked(!setBookmark);
 			if(!setBookmark)
 			{
-				prefs.addBookmark(currentDir.getAbsolutePath());
+				bookmarker.addBookmark(currentDir.getAbsolutePath());
 			}
 			else
 			{
-				prefs.removeBookmark(currentDir.getAbsolutePath());
+				bookmarker.removeBookmark(currentDir.getAbsolutePath());
 			}
 			return true;
 			
@@ -567,7 +571,7 @@ public class FileListActivity extends BaseFileListActivity {
 		Intent i = getBaseContext().getPackageManager()
 				.getLaunchIntentForPackage(getBaseContext().getPackageName());
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtra(PreferenceUtil.KEY_RESTART_DIR, currentDir.getAbsolutePath());
+		i.putExtra(FileExplorerApp.EXTRA_FOLDER, currentDir.getAbsolutePath());
 		startActivity(i);
 	}
 	

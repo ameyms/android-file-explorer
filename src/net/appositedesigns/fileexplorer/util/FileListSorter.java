@@ -5,7 +5,7 @@ import java.util.Comparator;
 import net.appositedesigns.fileexplorer.activity.BaseFileListActivity;
 import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil.SortField;
+import net.appositedesigns.fileexplorer.util.PreferenceHelper.SortField;
 
 public class FileListSorter implements Comparator<FileListEntry> {
 
@@ -18,7 +18,7 @@ public class FileListSorter implements Comparator<FileListEntry> {
 	public FileListSorter(BaseFileListActivity context){
 		
 		mContext = context;
-		PreferenceUtil util = new PreferenceUtil(mContext);
+		PreferenceHelper util = new PreferenceHelper(mContext);
 		
 		dirsOnTop = util.isShowDirsOnTop();
 		sortField = util.getSortField();

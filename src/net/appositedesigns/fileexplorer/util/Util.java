@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.InputType;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -410,7 +411,7 @@ public final class Util {
 	public static void gotoPath(final String currentPath, final FileListActivity mContext,final CancellationCallback callback) {
 		
 		final EditText input = new EditText(mContext);
-		
+		input.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
 		input.setSingleLine();
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.goto_path))
@@ -436,7 +437,7 @@ public final class Util {
 				Log.e(TAG, "Error navigating to path"+toPath, e);
 				new Builder(mContext)
 				.setTitle(mContext.getString(R.string.error))
-				.setMessage(mContext.getString(R.string.goto_path_not_exist))
+				.setMessage(mContext.getString(R.string.path_not_exist))
 				.show();
 			}
 		  }

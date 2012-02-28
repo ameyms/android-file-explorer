@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Do not change this number unless you know what you are doing -->
-    <string name="app_version">2.3</string>
+    <string name="app_version">2.3.5</string>
     
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
@@ -42,6 +42,7 @@
 	<string name="bookmarks_count_0">No bookmarks</string>
 	<string name="menu_paste">Paste</string>
 	<string name="menu_addfolder">New Folder</string>
+	<string name="menu_add_bookmark">Add Bookmark</string>
 	<string name="menu_navigate">Navigate to folder &#8230;</string>
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_refresh">Refresh</string>
@@ -99,12 +100,16 @@
 	<string name="cant_open_dir">%1$s is a protected directory. You will require root access on your device to open and browse this directory</string>
 	
 	
+	<string name="add_bookmark_prompt">Add Bookmark</string>
+	<string name="add_bookmark_prompt_hint">Enter directory path eg. /sdcard/foo</string>
+	
 	<string name="goto_path_hint">Enter directory path eg. /sdcard/foo</string>
 	<string name="goto_path">Navigate to</string>
-	<string name="goto_path_not_exist">Sorry. The directory could not be found</string>
+	<string name="path_not_exist">Sorry. The directory could not be found</string>
 	
 	<string name="confirm_app_restart">Do you wish to restart app and apply new theme?</string>
 	<string name="confirm_delete">Are you sure you want to delete %1$s ?</string>
+	<string name="confirm_remove_bookmark">Are you sure you want to remove bookmark for %1$s ?</string>
 	
 	<string name="confirm_paste_text">Are you sure you want to paste %1$s ?</string>
 	<string name="delete_failed">%1$s could not be deleted</string>
@@ -229,9 +234,7 @@
 	
 	<string name="item_count_subtitle">Total of %1$s items</string>
 	<string name="filesystem">File System</string>
-	<string name="goto_root">File System</string>
-	<string name="goto_sdcard">File System</string>
-	<string name="goto_other">File System</string>
+	<string name="filesystem_root">File System Root</string>
 	
 	<string name="system_path">System</string>
 	<string-array name="sort_fields_entries">

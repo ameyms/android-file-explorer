@@ -3,7 +3,7 @@ package net.appositedesigns.fileexplorer.activity;
 import java.util.List;
 
 import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
+import net.appositedesigns.fileexplorer.util.PreferenceHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -16,7 +16,7 @@ public class SettingsActivity extends PreferenceActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		setTheme(new PreferenceUtil(this).getTheme());
+		setTheme(new PreferenceHelper(this).getTheme());
 		super.onCreate(savedInstanceState);
 		
 //		addPreferencesFromResource(R.xml.prefs);

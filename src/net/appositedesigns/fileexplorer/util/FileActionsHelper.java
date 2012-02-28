@@ -92,7 +92,7 @@ public class FileActionsHelper {
 
 	public static int[] getContextMenuOptions(File file, FileListActivity caller) {
 
-		PreferenceUtil prefs = new PreferenceUtil(caller);
+		PreferenceHelper prefs = new PreferenceHelper(caller);
 		
 		if(Util.isProtected(file))
 		{
@@ -204,7 +204,7 @@ public class FileActionsHelper {
 	{
 		try
 		{
-			final File zipLoc = new PreferenceUtil(mContext).getZipDestinationDir();
+			final File zipLoc = new PreferenceHelper(mContext).getZipDestinationDir();
 			
 			if(zipLoc == null)
 			{

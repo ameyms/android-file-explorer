@@ -1,19 +1,15 @@
 package net.appositedesigns.fileexplorer.util;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public final class PreferenceUtil {
+public final class PreferenceHelper {
 
 	public enum SortField {
 		NAME, MTIME, SIZE
@@ -22,9 +18,6 @@ public final class PreferenceUtil {
 	private Activity mContext;
 	public static final String EULA_ACCEPTED = "eula_accepted_v2.5";
 	public static final String EULA_MARKER = "eula_marker_file_v2.5";
-
-	public static final String BOOKMARKS_FILE = "bookmarks_v2.5";
-	public static final String BOOKMARKS = "bookmarks";
 
 	public static final String PREF_HOME_DIR = "homeDir";
 	public static final String PREF_SDCARD_OPTIONS = "sdCardOptions";
@@ -40,7 +33,6 @@ public final class PreferenceUtil {
 	public static final String PREF_ZIP_ENABLE = "zipEnable";
 	public static final String PREF_ZIP_USE_ZIP_FOLDER = "useZipFolder";
 	public static final String PREF_ZIP_LOCATION = "zipLocation";
-	public static final String KEY_RESTART_DIR = "net.appositedesigns.fileexplorer.RestartDirectory";
 
 	public static final String VALUE_SORT_DIR_ASC = "asc";
 	public static final String VALUE_SORT_DIR_DESC = "desc";
@@ -51,32 +43,8 @@ public final class PreferenceUtil {
 	public static final String VALUE_THEME_WHITE = "theme_white";
 	public static final String VALUE_THEME_WHITE_BLACK = "theme_white_black";
 
-	private static List<String> bookmarkedPaths = new ArrayList<String>();
-
-	public PreferenceUtil(Activity context) {
+	public PreferenceHelper(Activity context) {
 		mContext = context;
-
-		refreshBookmarkCache();
-	}
-
-	private void refreshBookmarkCache() {
-		String bookmarkCsv = mContext.getSharedPreferences(BOOKMARKS_FILE,
-				Context.MODE_PRIVATE).getString(BOOKMARKS, "");
-
-		StringTokenizer tokens = new StringTokenizer(bookmarkCsv, "\n");
-		bookmarkedPaths.clear();
-		while (tokens.hasMoreTokens()) {
-			String bookmark = tokens.nextToken();
-
-			File dir = new File(bookmark);
-			if (dir.exists() && dir.isDirectory()) {
-				synchronized (bookmarkedPaths) {
-				
-					bookmarkedPaths.add(bookmark);
-				}
-				
-			}
-		}
 
 	}
 
@@ -206,101 +174,5 @@ public final class PreferenceUtil {
 		} else {
 			return FileExplorerApp.THEME_WHITE;
 		}
-	}
-
-	public boolean isBookmarked(String path) {
-
-		return bookmarkedPaths.contains(path);
-	}
-
-	public void addBookmark(final String path) {
-
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				final String bookmarkCsv = mContext.getSharedPreferences(
-						BOOKMARKS_FILE, Context.MODE_PRIVATE).getString(
-						BOOKMARKS, "");
-
-				StringTokenizer tokens = new StringTokenizer(bookmarkCsv, "\n");
-				boolean found = false;
-				while (tokens.hasMoreTokens()) {
-					String bookmark = tokens.nextToken();
-
-					if (bookmark != null && bookmark.equalsIgnoreCase(path)) {
-						found = true;
-						break;
-					}
-				}
-
-				if (!found) {
-
-					SharedPreferences.Editor editor = mContext
-							.getSharedPreferences(BOOKMARKS_FILE,
-									Context.MODE_WORLD_WRITEABLE).edit();
-					editor.putString(BOOKMARKS, bookmarkCsv + "\n" + path);
-					editor.commit();
-
-					refreshBookmarkCache();
-				}
-
-			}
-		}).start();
-	}
-
-	public void removeBookmark(final String path) {
-
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				String bookmarkCsv = mContext.getSharedPreferences(
-						BOOKMARKS_FILE, Context.MODE_PRIVATE).getString(
-						BOOKMARKS, "");
-
-				StringTokenizer tokens = new StringTokenizer(bookmarkCsv, "\n");
-				final StringBuffer buffer = new StringBuffer();
-
-				while (tokens.hasMoreTokens()) {
-					String bookmark = tokens.nextToken();
-
-					if (bookmark != null && !bookmark.equals(path)) {
-						buffer.append("\n");
-						buffer.append(path);
-					}
-				}
-
-				SharedPreferences.Editor editor = mContext
-						.getSharedPreferences(BOOKMARKS_FILE,
-								Context.MODE_WORLD_WRITEABLE).edit();
-				editor.putString(BOOKMARKS, buffer.toString());
-				editor.commit();
-
-				refreshBookmarkCache();
-
-			}
-		}).start();
-	}
-
-	public List<FileListEntry> getBookmarks() {
-
-		String bookmarkCsv = mContext.getSharedPreferences(BOOKMARKS_FILE,
-				Context.MODE_PRIVATE).getString(BOOKMARKS, "");
-
-		StringTokenizer tokens = new StringTokenizer(bookmarkCsv, "\n");
-		List<FileListEntry> files = new ArrayList<FileListEntry>();
-
-		while (tokens.hasMoreTokens()) {
-			String bookmark = tokens.nextToken();
-
-			File dir = new File(bookmark);
-			if (dir.exists() && dir.isDirectory()) {
-				FileListEntry entry = new FileListEntry(bookmark);
-				files.add(entry);
-			}
-		}
-		return files;
-
 	}
 }

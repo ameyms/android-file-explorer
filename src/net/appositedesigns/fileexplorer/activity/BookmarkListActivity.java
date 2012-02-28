@@ -1,6 +1,7 @@
 package net.appositedesigns.fileexplorer.activity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +9,15 @@ import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.adapters.BookmarkListAdapter;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.util.PreferenceUtil;
 import net.appositedesigns.fileexplorer.workers.BookmarkLoader;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,11 +25,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class BookmarkListActivity extends BaseFileListActivity {
 
+	protected static final String TAG = BookmarkListActivity.class.getName();
 	private BookmarkListAdapter adapter;
 	private ArrayList<FileListEntry> bookmarks;
 	private ListView bookmarkListView;
@@ -37,7 +45,7 @@ public class BookmarkListActivity extends BaseFileListActivity {
 		isPicker = getIntent().getBooleanExtra(FileExplorerApp.EXTRA_IS_PICKER, false);
 		bookmarks = new ArrayList<FileListEntry>();
 		initBookmarksList();
-		new BookmarkLoader(this).execute();
+		refresh();
 		bookmarkListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
@@ -49,23 +57,46 @@ public class BookmarkListActivity extends BaseFileListActivity {
 			
 			
 		});
+		bookmarkListView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long id) {
+				
+				if(!isPicker)
+				{
+					FileListEntry bookmark = (FileListEntry)bookmarkListView.getAdapter().getItem(position);
+					removeBookmark(bookmark);
+					return true;
+				}
+				return false;
+			}
+			
+		});
 		registerForContextMenu(bookmarkListView);	
 
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if(shouldRestartApp)
-		{
-			Intent intent = new Intent();
-			intent.setAction(FileExplorerApp.ACTION_OPEN_BOOKMARK);
-			intent.addCategory(Intent.CATEGORY_DEFAULT);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(FileExplorerApp.EXTRA_IS_PICKER, isPicker);
-			startActivity(intent);
-		}
+	protected void removeBookmark(final FileListEntry bookmark) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(true);
+		builder.setMessage(getString(R.string.confirm_remove_bookmark, bookmark.getName()))
+	       .setCancelable(false)
+	       .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+
+	        	  bookmarker.removeBookmark(bookmark.getPath().getAbsolutePath());
+	           }
+	       })
+	       .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+	           public void onClick(DialogInterface dialog, int id) {
+	                dialog.cancel();
+	                
+	           }
+	       }).setTitle(R.string.confirm);
 		
+		AlertDialog confirm = builder.create();
+		confirm.show();		
 	}
 	
 	@Override
@@ -73,7 +104,14 @@ public class BookmarkListActivity extends BaseFileListActivity {
 		if(!isPicker)
 		{
 			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.bookmarks_options_menu, menu);
+			if(FileExplorerApp.THEME_BLACK == prefs.getTheme())
+			{
+				inflater.inflate(R.menu.bookmarks_options_menu, menu);
+			}
+			else
+			{
+				inflater.inflate(R.menu.bookmarks_options_menu_light, menu);
+			}
 			return true;
 		}
 		return false;
@@ -100,12 +138,10 @@ public class BookmarkListActivity extends BaseFileListActivity {
 	}
 	protected void select(File path) {
 		Intent intent = new Intent();
-		intent.setAction(FileExplorerApp.ACTION_OPEN_FOLDER);
-		intent.addCategory(Intent.CATEGORY_DEFAULT);
-		intent.putExtra(PreferenceUtil.KEY_RESTART_DIR, path.getAbsolutePath());
+		intent.putExtra(FileExplorerApp.EXTRA_SELECTED_BOOKMARK, path.getAbsolutePath());
 		intent.putExtra(FileExplorerApp.EXTRA_IS_PICKER, isPicker);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
+		setResult(Activity.RESULT_OK, intent);
+		finish();
 	}
 
 	@Override
@@ -117,8 +153,56 @@ public class BookmarkListActivity extends BaseFileListActivity {
 			startActivity(prefsIntent);
 			return true;
 		}
-		
+		else if(R.id.menu_add_bookmark == item.getItemId())
+		{
+			promptBookmarkPath();
+			return true;
+		}
 		return false;
+	}
+
+	private void promptBookmarkPath() {
+		final EditText input = new EditText(this);
+		
+		input.setSingleLine();
+		input.setHint(getString(R.string.add_bookmark_prompt_hint));
+		input.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+		new Builder(this)
+		.setTitle(getString(R.string.add_bookmark_prompt))
+		.setView(input)
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog, int whichButton) {
+		  
+			CharSequence bookmarkPath = input.getText();
+			try
+			{
+				File toDir = new File(bookmarkPath.toString());
+				if(toDir.isDirectory() && toDir.exists())
+				{
+					bookmarker.addBookmark(bookmarkPath.toString());
+				}
+				else
+				{
+					throw new FileNotFoundException();
+				}
+				
+			}
+			catch (Exception e) {
+				Log.e(TAG, "Error bookmarking path"+bookmarkPath, e);
+				new Builder(BookmarkListActivity.this)
+				.setTitle(getString(R.string.error))
+				.setMessage(getString(R.string.path_not_exist))
+				.show();
+			}
+		  }
+		})
+		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+		  public void onClick(DialogInterface dialog, int whichButton) {
+		   
+			  dialog.dismiss();
+		  }
+		})
+		.show();
 	}
 
 	public void setBookmarks(List<FileListEntry> childFiles) {
@@ -129,5 +213,9 @@ public class BookmarkListActivity extends BaseFileListActivity {
 		bookmarks.clear();
 		bookmarks.addAll(childFiles);
 		adapter.notifyDataSetChanged();		
+	}
+
+	public void refresh() {
+		new BookmarkLoader(this).execute();		
 	}
 }
