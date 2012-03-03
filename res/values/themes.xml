@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.FileExplorer.Light" parent="android:Theme.Holo.Light">
-  </style>
-    
+        <item name="action_icon_navigate">@drawable/ic_action_navigate_light</item>
+        <item name="action_icon_add">@drawable/ic_action_add_light</item>
+        <item name="action_icon_rename">@drawable/ic_action_rename_light</item>
+        <item name="action_icon_refresh">@drawable/ic_action_refresh_light</item>
+        <item name="action_icon_share">@drawable/ic_action_share_light</item>
+        <item name="action_icon_cut">@drawable/ic_action_cut_light</item>
+        <item name="action_icon_copy">@drawable/ic_action_copy_light</item>
+        <item name="action_icon_delete">@drawable/ic_action_delete_light</item>
+        <item name="action_icon_paste">@drawable/ic_action_paste_light</item>
+    </style>
+
+    <style name="Theme.FileExplorer" parent="android:Theme.Holo">
+         <item name="action_icon_navigate">@drawable/ic_action_navigate</item>
+        <item name="action_icon_add">@drawable/ic_action_add</item>
+        <item name="action_icon_rename">@drawable/ic_action_rename</item>
+        <item name="action_icon_refresh">@drawable/ic_action_refresh</item>
+        <item name="action_icon_share">@drawable/ic_action_share</item>
+        <item name="action_icon_cut">@drawable/ic_action_cut</item>
+        <item name="action_icon_copy">@drawable/ic_action_copy</item>
+        <item name="action_icon_delete">@drawable/ic_action_delete</item>
+        <item name="action_icon_paste">@drawable/ic_action_paste</item>
+    </style>
+
+        <style name="Theme.FileExplorer.Light.BrownActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
+         <item name="action_icon_navigate">@drawable/ic_action_navigate</item>
+        <item name="action_icon_add">@drawable/ic_action_add</item>
+        <item name="action_icon_rename">@drawable/ic_action_rename</item>
+        <item name="action_icon_refresh">@drawable/ic_action_refresh</item>
+        <item name="action_icon_share">@drawable/ic_action_share</item>
+        <item name="action_icon_cut">@drawable/ic_action_cut</item>
+        <item name="action_icon_copy">@drawable/ic_action_copy</item>
+        <item name="action_icon_delete">@drawable/ic_action_delete</item>
+        <item name="action_icon_paste">@drawable/ic_action_paste</item>
+    </style>
 </resources>

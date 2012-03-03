@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="action_icon_navigate" format="reference" />
+    <attr name="action_icon_add" format="reference" />
+    <attr name="action_icon_refresh" format="reference" />
+    <attr name="action_icon_share" format="reference" />
+    <attr name="action_icon_cut" format="reference" />
+    <attr name="action_icon_copy" format="reference" />
+    <attr name="action_icon_paste" format="reference" />
+    <attr name="action_icon_delete" format="reference" />
+    <attr name="action_icon_rename" format="reference" />
+</resources>

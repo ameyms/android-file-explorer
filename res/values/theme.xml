@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="FETheme.Dark" parent="android:style/Theme.Holo">
-</style>
-
-<style name="FETheme.Dark.ActionBar">
-</style>
-
-</resources>

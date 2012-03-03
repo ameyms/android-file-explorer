@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/menu_goto"
-        android:icon="@drawable/ic_action_navigate"
+        android:icon="?action_icon_navigate"
         android:showAsAction="always"
         android:title="@string/menu_navigate"/>
     <item
         android:id="@+id/menu_refresh"
-        android:icon="@drawable/ic_action_refresh"
+        android:icon="?action_icon_refresh"
         android:showAsAction="ifRoom"
         android:title="@string/menu_refresh"/>
     <item
         android:id="@+id/menu_newfolder"
-        android:icon="@drawable/ic_action_add"
+        android:icon="?action_icon_add"
         android:showAsAction="ifRoom"
         android:title="@string/menu_addfolder"/>
     <item
         android:id="@+id/menu_paste"
-        android:icon="@drawable/ic_action_paste"
+        android:icon="?action_icon_paste"
         android:showAsAction="ifRoom"
         android:title="@string/menu_paste"/>
     <item

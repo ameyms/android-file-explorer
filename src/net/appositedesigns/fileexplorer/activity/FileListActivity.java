@@ -389,15 +389,12 @@ public class FileListActivity extends BaseFileListActivity {
 		{
 			inflater.inflate(R.menu.picker_options_menu, menu);
 		}
-		else if(prefs.getTheme() == FileExplorerApp.THEME_WHITE)
+		else 
 		{
-			inflater.inflate(R.menu.options_menu_light, menu);
-		}
-		else
-		{
-			inflater.inflate(R.menu.options_menu, menu);			
+			inflater.inflate(R.menu.options_menu, menu);
 		}
 		return true;
+		
 	}
 
 	@Override

@@ -1,11 +1,9 @@
 package net.appositedesigns.fileexplorer.callbacks;
 
-import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.util.FileActionsHelper;
-import net.appositedesigns.fileexplorer.util.PreferenceHelper;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.ActionMode;
@@ -65,15 +63,7 @@ public abstract class FileActionsCallback implements Callback {
 
 		MenuInflater inflater = activity.getMenuInflater();
 		
-		PreferenceHelper prefs = new PreferenceHelper(activity);
-		if(prefs.getTheme() == FileExplorerApp.THEME_WHITE)
-		{
-			inflater.inflate(R.menu.context_menu_light, menu);
-		}
-		else
-		{
-			inflater.inflate(R.menu.context_menu, menu);			
-		}
+		inflater.inflate(R.menu.context_menu, menu);
 		
 		for(int o :allOptions)
 		{

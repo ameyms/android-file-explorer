@@ -35,7 +35,7 @@
             
             <intent-filter android:label="@string/pick_file">
                 <action android:name="android.intent.action.GET_CONTENT" />
-                <data android:mimeType="*/*" />
+                <data android:mimeType="*/*"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.OPENABLE" />
             </intent-filter>

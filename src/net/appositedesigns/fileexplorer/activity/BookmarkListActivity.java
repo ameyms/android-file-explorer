@@ -104,14 +104,7 @@ public class BookmarkListActivity extends BaseFileListActivity {
 		if(!isPicker)
 		{
 			MenuInflater inflater = getMenuInflater();
-			if(FileExplorerApp.THEME_BLACK == prefs.getTheme())
-			{
-				inflater.inflate(R.menu.bookmarks_options_menu, menu);
-			}
-			else
-			{
-				inflater.inflate(R.menu.bookmarks_options_menu_light, menu);
-			}
+			inflater.inflate(R.menu.bookmarks_options_menu, menu);
 			return true;
 		}
 		return false;
