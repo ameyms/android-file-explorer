@@ -8,7 +8,7 @@
             android:summaryOn="@string/pref_showhidden_on"
             android:title="@string/pref_showhidden" />
         <CheckBoxPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="showSysFiles"
             android:summaryOff="@string/pref_show_sysfiles_off"
             android:summaryOn="@string/pref_show_sysfiles_on"

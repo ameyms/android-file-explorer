@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Do not change this number unless you know what you are doing -->
-    <string name="app_version">2.3.6 dev build</string>
+    <string name="app_version">2.3.6</string>
     
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>

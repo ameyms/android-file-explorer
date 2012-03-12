@@ -49,6 +49,8 @@ public class FileListActivity extends BaseFileListActivity {
 	private CharSequence[] gotoLocations;
 	private boolean isPicker = false;
 	private FileExplorerApp app;
+	private File previousOpenDirChild;
+	private boolean focusOnParent;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -72,7 +74,7 @@ public class FileListActivity extends BaseFileListActivity {
 		files = new ArrayList<FileListEntry>();
 
 		initFileListView();
-
+		focusOnParent = prefs.focusOnParent();
 		if (prefs.isEulaAccepted()) {
 			listContents(currentDir);
 		} else {
@@ -323,7 +325,9 @@ public class FileListActivity extends BaseFileListActivity {
 							getString(R.string.cant_open_dir, file.getName()))
 					.show();
 		} else if (file.isDirectory()) {
+			
 			listContents(file);
+			
 		} else {
 			doFileAction(file);
 		}
@@ -365,9 +369,21 @@ public class FileListActivity extends BaseFileListActivity {
 		return;
 	}
 
-	public void listContents(File dir) {
+	public void listContents(File dir)
+	{
+		listContents(dir, null);
+	}
+	public void listContents(File dir, File previousOpenDirChild) {
 		if (!dir.isDirectory() || Util.isProtected(dir)) {
 			return;
+		}
+		if(previousOpenDirChild!=null)
+		{
+			this.previousOpenDirChild = new File(previousOpenDirChild.getAbsolutePath());
+		}
+		else
+		{
+			this.previousOpenDirChild = null;
 		}
 		new Finder(this).execute(dir);
 	}
@@ -377,7 +393,7 @@ public class FileListActivity extends BaseFileListActivity {
 		if (Util.isRoot(currentDir)) {
 			// Do nothing finish();
 		} else {
-			listContents(currentDir.getParentFile());
+			listContents(currentDir.getParentFile(), currentDir);
 		}
 	}
 
@@ -554,6 +570,17 @@ public class FileListActivity extends BaseFileListActivity {
 		else
 		{
 			gotoLocations[0] = currentDir.getName();
+		}
+		
+		if(previousOpenDirChild!=null && focusOnParent)
+		{
+			int position = files.indexOf(new FileListEntry(previousOpenDirChild.getAbsolutePath()));
+			if(position>=0)
+			explorerListView.setSelection(position);
+		}
+		else
+		{
+			explorerListView.setSelection(0);
 		}
 		mSpinnerAdapter.notifyDataSetChanged();
 		getActionBar().setSelectedNavigationItem(0);

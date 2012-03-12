@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+        <string name="app_name">Проводник</string>
+        <string name="settings">Настройки</string>
+                <string name="bookmarks">Закладки</string>
+        
+        <string name="eula_popup_title">Приветствие File Explorer</string>
+        <string name="eula_popup_text">Благодарим вас за установку File Explorer - бесплатного, с открытым исходным кодом, без рекламы, быстрого менеджера файлов для Андроид! Для использования программы, пожалуйста, примите условия лицензионного соглашения, расположенного по адресу http://fileexplorer.appositedesigns.net/eula</string>
+
+
+        <string name="eula_accept">Принять</string>
+        <string name="eula_decline">Отклонить</string>
+
+        <string name="action_rename">Переименовать</string>
+        <string name="action_rescan">Пересканировать</string>
+        <string name="action_delete">Удалить</string>
+        <string name="action_cut">Вырезать</string>
+        <string name="action_copy">Копировать</string>
+        <string name="action_prop">Свойства</string>
+        <string name="action_unmount">Размонтировать</string>
+        <string name="action_format">Форматировать</string>
+        <string name="action_share">Отправить</string>
+        <string name="action_zip">Упаковать</string>
+        <string name="action_unzip">Распаковать</string>
+        
+        <string name="ringtones">Мелодии</string>
+        <string name="notifications">Сообщения</string>
+        <string name="alarms">Оповещения</string>
+
+        <string name="pick_file">Pick a file</string>
+        <string name="media_rescan_started">Выполняется повторное сканирование носителя</string>
+        <string name="msg_delete_success">Объект успешно удалён</string>
+        <string name="msg_delete_fail">Объект не может быть удалён</string>
+        
+        <string name="empty_folder">Папка пуста</string>
+        <string name="no_bookmarks">Вы пока не добавили ни одной закладки</string>
+        <string name="bookmarks_count">Всего %1$s шт. закладок</string>
+        <string name="bookmarks_count_0">Нет закладок</string>
+        <string name="menu_paste">Вставить</string>
+        <string name="menu_addfolder">Новая папка</string>
+        <string name="menu_add_bookmark">Add Bookmark</string>
+        <string name="menu_navigate">Перейти в папку &#8230;</string>
+        <string name="menu_preferences">Настройки</string>
+        <string name="menu_refresh">Обновить</string>
+        <string name="menu_bookmark">Добавить в закладки</string>
+        
+        <string name="yes">Да</string>
+        <string name="actions">Действия</string>
+        <string name="no">Нет</string>
+        <string name="not_now">Позже</string>
+        <string name="confirm">Подтверждение</string>
+        <string name="error">Ошибка</string>
+        <string name="success">Выполнено</string>
+        <string name="abort">Отменено</string>
+        <string name="zip">Создать архив</string>
+        
+        <string name="selected_">Выбрано %1$s</string>
+        
+        <string name="cancel">Отмена</string>
+        <string name="cancelling">Прерывание&#8230;</string>
+        <string name="run_in_background">Выполнять в фоне</string>
+        <string name="share_via">Отправить</string>
+        <string name="open_using">Открыть с помощью:</string>
+        
+        <string name="copied_toast">%1$s - скопировано в буфер обмена</string>
+        <string name="cut_toast">%1$s - вырезано в буфер обмена</string>
+        <string name="rename_toast">%1$s - переименовано в %2$s</string>
+        
+        <string name="zip_success">Выбранные файлы были добавлены в архив %1$s</string>
+        <string name="zip_dir_empty">Архив не был создан. Выбранная папка не содержит файлов</string>
+        
+        <string name="zip_dest_invalid">Zip file destination was invalid. Please check the destination in Menu &gt; and try again</string>
+        <string name="zip_failed">Один или несколько выбранных файлов не могут быть добавлены в архив. Проверьте имена файлов и повторите попытку</string>
+        <string name="zip_in_progress">Выполняется архивация файлов. Подождите</string>
+        <string name="zip_aborted">Создание архива отменено</string>
+        <string name="zip_dialog">Создание архива Zip в %1$s</string>
+        <string name="enter_zip_file_name">Введите имя zip-архива</string>
+        <string name="zip_abort_partial">Создание архива отменено. Но один или несколько файлов были добавлены к архиву %1$s</string>
+        
+        <string name="copy_aborted">Копирование отменено</string>
+        <string name="copy_abort_partial">Копирование отменено. Но один или несколько файлов были скопированы</string>
+        
+        <string name="unzip_progress_param">Распаковка архива &#8230; [%1$s]</string>
+        <string name="unzip_progress">Распаковка архива &#8230;</string>
+        <string name="unzip_failed_dest_file">Распаковка архива не выполнена. Попробуйте выбрать другую папку для распаковки и повторите действие</string>
+        <string name="unzip_failed_generic">Невозможно выполнить распаковку архива</string>
+        <string name="unzip_success">Распаковка %1$s объектов успешно выполнена</string>
+        <string name="unzip_abort_partial">Распаковка отменена. Но один или несколько файлов были распакованы в %1$s</string>
+        <string name="unzip_aborted">Распаковка отменена</string>
+        <string name="unzip_destination">Укажите расположение</string>
+        
+        <string name="move_aborted">Перемещение отменено</string>
+        <string name="move_abort_partial">Перемещение отменено. Но один или несколько файлов были перемещены</string>
+        
+        <string name="access_denied">Доступ запрещён</string>
+        <string name="cant_open_dir">%1$s является защищённой папкой. Вам необходимы права root на вашем устройстве для её открытия и просмотра</string>
+        
+        
+        <string name="add_bookmark_prompt">Новая закладка</string>
+        <string name="add_bookmark_prompt_hint">Введите путь к папке, напр. /sdcard/foo</string>
+        
+        <string name="goto_path_hint">Введите путь к папке, напр. /sdcard/foo</string>
+        <string name="goto_path">Перейти к</string>
+        <string name="path_not_exist">К сожалению, папка не обнаружена</string>
+        
+        <string name="confirm_app_restart">Вы хотите перезапустить программу, чтобы применить новую тему?</string>
+        <string name="confirm_delete">Вы уверены, что хотите удалить %1$s ?</string>
+        <string name="confirm_remove_bookmark">Вы уверены, что хотите удалить закладку для %1$s ?</string>
+        
+        <string name="confirm_paste_text">Вы уверены, что хотите вставить %1$s ?</string>
+        <string name="delete_failed">Невозможно удалить %1$s</string>
+        
+        <string name="rename_failed">Невозможно переименовать %1$s</string>
+        <string name="enter_new_name">Введите новое имя</string>
+        <string name="rename_dialog_title">Переименование %1$s</string>
+        
+        <string name="properties_for">Свойства: %1$s</string>
+        
+        <string name="deleting_path">Удаление %1$s &#8230;</string>
+        <string name="copying_path">Копирование %1$s . Подождите&#8230;</string>
+        <string name="moving_path">Перемещение %1$s . Подождите&#8230;</string>
+
+        <string name="create_folder">Создание новой папки</string>
+        <string name="enter_folder_name">Введите имя папки</string>
+        
+        <string name="querying_filesys">Опрос файловой системы. Подождите</string>
+        
+        <string name="copy_complete">Копирование завершено</string>
+        <string name="move_complete">Объект успешно перемещён в новое расположение</string>
+        
+        <string name="generic_operation_failed">Завершение операции невозможно</string>
+        
+        <string name="pref_cat_view">Внешний вид программы</string>
+        
+        <string name="pref_cat_display">Внешний вид</string>
+        <string name="pref_cat_display_summary">Настройте тему, порядок сортировки и прочее</string>
+        
+        <string name="pref_cat_misc">Разное</string>
+        <string name="pref_cat_about">О программе</string>
+        <string name="pref_cat_contact">Связь</string>
+        <string name="pref_cat_share">Отправить</string>
+        <string name="pref_cat_misc_summary">Сведения о разработчике, контактная информация, условия использования</string>
+        
+                <string name="pref_cat_nav">Навигация</string>
+        <string name="pref_cat_nav_summary">Настройки возможностей навигации, таких как действие кнопки Назад и всплывающие меню действий</string>
+        
+        <string name="pref_home_folder">Папка запуска</string>
+        <string name="pref_home_folder_desc">При запуске программа перейдёт в указанную папку</string>
+
+        <string name="pref_showhidden">Скрытые объекты</string>
+        <string name="pref_showhidden_on">Скрытые файлы и папки отображаются</string>
+        <string name="pref_showhidden_off">Скрытые файлы и папки не отображаются</string>
+        
+                <string name="pref_use_back">Кнопка Назад</string>
+        <string name="pref_use_back_on">Использовать кнопку Назад для перехода в вышестоящую папку</string>
+        <string name="pref_use_back_off">Не использовать кнопку Назад для навигации</string>
+        
+        <string name="pref_quickactions">Всплывающие меню</string>
+        <string name="pref_quickactions_on">Использовать быстрые контекстные меню действий</string>
+        <string name="pref_quickactions_off">Не использовать быстрые меню</string>
+        
+        <string name="pref_show_dir_sizes">Размер папок</string>
+        <string name="pref_show_dir_sizes_on_desc">Размер папок отображается</string>
+        <string name="pref_show_dir_sizes_off_desc">Размер папок скрыт</string>
+        
+        <string name="pref_show_sysfiles">Защищённые папки</string>
+        <string name="pref_show_sysfiles_on">Защищённые папки отображаются</string>
+        <string name="pref_show_sysfiles_off">Защищённые папки  скрыты</string>
+        
+        
+        <string name="pref_cat_sorting">Сортировка</string>
+        
+        <string name="pref_dirsfirst">Папки вверху</string>
+        <string name="pref_dirsfirst_on_desc">Папки отображаются в начале списка</string>
+        <string name="pref_dirsfirst_off_desc">Сортировка будет выполняться без приоритета папок</string>
+        
+        
+        <string name="pref_sort_field">Признак</string>
+        <string name="pref_sort_field_desc">Атрибут, по которому выполняется сортировка</string>
+        
+        <string name="pref_sort_dir">Направление</string>
+        
+        <string name="pref_theme">Тема</string>
+        <string name="pref_theme_desc">Выберите тему оформления</string>
+        <string name="pref_theme_title">Выбор темы</string>
+        
+        
+        <string name="pref_cat_geeky">Для опытных пользователей</string>
+        <string name="pref_cat_zip">Сжатие</string>
+        <string name="pref_cat_sdcard">Внешний накопитель</string>
+        <string name="pref_cat_geeky_summary">Сжатие и прочие продвинутые функции</string>
+        <string name="pref_zipenable">Архивация</string>
+        <string name="pref_zipenable_on">Показывать действия связанные с архивацией</string>
+        <string name="pref_zipenable_off">Действия связанные с архивацией недоступны</string>
+        
+        <string name="pref_usezipfolder">Общая папка архивов</string>
+        <string name="pref_usezipfolder_on">Перемещать zip-архивы, создаваемые File Explorer в указанную папку</string>
+        <string name="pref_usezipfolder_off">Запрашивать расположение при добавлении файлов в архив</string>
+        
+        <string name="pref_zip_location">Папка для архивов</string>
+        <string name="pref_zip_location_desc">Создаваемые архивы будут помещены в указанную папку</string>
+        
+        <string name="pref_show_sdcard_options">Функции карты памяти</string>
+        <string name="pref_show_sdcard_options_on">Включить дополнительные функции - например, повторное сканирование карты памяти</string>
+        <string name="pref_show_sdcard_options_off">Дополнительные функции отключены</string>
+        
+        <string name="pref_share">Расскажите друзьям</string>
+        <string name="pref_share_desc">Нравится FileExplorer? Расскажите о нём своим друзьям и знакомым</string>
+        <string name="share_text">Я использую бесплатный менеджер файлов для системы Андроид - File Explorer. Попробуйте, может быть, вам он тоже понравится. Ссылка для скачивания: https://play.google.com/store/apps/details?id=net.appositedesigns.fileexplorer</string>
+        
+        
+        <string name="pref_app_version">Версия</string>
+        
+                <string name="pref_twitter">Следуйте за нами в Twitter</string>
+                <string name="pref_twitter_desc">File Explorer</string>
+        
+        <string name="pref_terms">Текст лицензии</string>
+        <string name="pref_terms_desc">Ознакомьтесь с условиями использования программы</string>
+        <string name="pref_website">Сайт разработчика</string>
+        <string name="pref_website_desc">Нажмите, чтобы посетить мой сайт</string>
+        <string name="pref_feedback">Отправить отзыв</string>
+        <string name="pref_feedback_desc">Свяжитесь со мной по электронной почте. Отзывы приветствуются!</string>
+
+        <string name="filepath_is">Путь: %1$s </string>
+        <string name="mtime_is">Изменёно %1$s</string>
+        <string name="size_is">Размер: %1$s</string>
+        <string name="total_capacity">Полный объём: %1$s</string>
+        <string name="free_space">Свободно: %1$s</string>
+
+        
+        <string name="item_count_subtitle">Всего %1$s объектов</string>
+        <string name="filesystem">Файловая система</string>
+        <string name="filesystem_root">Корневая файловая система</string>
+        
+        <string name="system_path">Система</string>
+        <string-array name="sort_fields_entries">
+        <item>Имя</item>
+        <item>Размер</item>
+        <item>Изменено</item>
+    </string-array>
+    
+        <string-array name="goto_locations">
+        <item>Загрузка&#8230;</item>
+        <item>Домашняя папка</item>
+        <item>Карта памяти</item>
+        <item>Загрузки</item>
+        <item>Снимки камеры</item>
+        <item>Закладки&#8230;</item>
+        <item>Прочее&#8230;</item>
+    </string-array>
+    
+                <string-array name="goto_locations_no_bookmark">
+        <item>Загрузка&#8230;</item>
+        <item>Домашняя папка</item>
+        <item>Карта памяти</item>
+        <item>Загрузки</item>
+        <item>Снимки камеры</item>
+        <item>Прочее&#8230;</item>
+    </string-array>
+    
+                
+    <string-array name="sort_fields_values">
+        <item>name</item>
+        <item>size</item>
+        <item>mtime</item>
+    </string-array>
+    
+    <string-array name="sort_dir_entries">
+        <item>По возрастанию</item>
+        <item>По убыванию</item>
+    </string-array>
+
+    <string-array name="sort_dir_values">
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
+    
+    
+    <string-array name="theme_entries">
+        <item>Тёмная</item>
+        <item>Светлая</item>
+       <!-- <item>Zebra</item> -->
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>theme_black</item>
+        <item>theme_white</item>
+        <!-- <item>theme_white_black</item> -->
+    </string-array>
+    
+    
+        
+</resources>

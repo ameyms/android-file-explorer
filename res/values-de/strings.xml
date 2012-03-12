@@ -6,7 +6,7 @@
 		<string name="bookmarks">Lesezeichen</string>
 	
 	<string name="eula_popup_title">Wilkommen zu File Explorer</string>
-	<string name="eula_popup_text">Danke, dass sie File Explorer, den gratis, open source, schnellen und werbefreien Dateimanager for Android installiert haben! Bitte akzeptieren sie die folgenden Bedingungen &amp; Konditionen http://fileexplorer.appositedesigns.net/eula</string>
+	<string name="eula_popup_text">Danke, dass sie File Explorer, den gratis, open source, schnellen und werbefreien Dateimanager für Android installiert haben! Bitte akzeptieren sie die folgenden Bedingungen &amp; Konditionen http://fileexplorer.appositedesigns.net/eula</string>
 
 
 	<string name="eula_accept">Akzeptieren</string>
@@ -14,33 +14,33 @@
 
 	<string name="action_rename">Umbenennen</string>
 	<string name="action_rescan">Medien erneut scannen</string>
-	<string name="action_delete">L�schen</string>
+	<string name="action_delete">Löschen</string>
 	<string name="action_cut">Ausschneiden</string>
 	<string name="action_copy">Kopieren</string>
 	<string name="action_prop">Eigenschaften</string>
 	<string name="action_unmount">Unmounten</string>
 	<string name="action_format">Formatieren</string>
 	<string name="action_share">Teilen</string>
-	<string name="action_zip">Zippen</string>
-	<string name="action_unzip">Entzippen</string>
+	<string name="action_zip">Packen</string>
+	<string name="action_unzip">Entpacken</string>
 	
-	<string name="ringtones">Klingelt�ne</string>
+	<string name="ringtones">Klingeltöne</string>
 	<string name="notifications">Benachrichtigungen</string>
 	<string name="alarms">Alarme</string>
 
-	<string name="pick_file">W�hlen sie eine Datei</string>
-	<string name="media_rescan_started">Medienscan ngestartet</string>
-	<string name="msg_delete_success">Erfolgreich gel�scht</string>
-	<string name="msg_delete_fail">Konnte nicht gel�scht werden</string>
+	<string name="pick_file">Wählen sie eine Datei</string>
+	<string name="media_rescan_started">Medienscan gestartet</string>
+	<string name="msg_delete_success">Erfolgreich gelöscht</string>
+	<string name="msg_delete_fail">Konnte nicht gelöscht werden</string>
 	
 	<string name="empty_folder">Der Ordner ist leer</string>
-	<string name="no_bookmarks">Sie haben keine Lesezeichen hinzugef�gt</string>
+	<string name="no_bookmarks">Sie haben keine Lesezeichen hinzugefügt</string>
 	<string name="bookmarks_count">%1$s Lesezeichen gesamt</string>
 	<string name="bookmarks_count_0">Keine Lesezeichen</string>
-	<string name="menu_paste">Einf�gen</string>
+	<string name="menu_paste">Einfügen</string>
 	<string name="menu_addfolder">Neuer Ordner</string>
-	<string name="menu_add_bookmark">Lesezeichen hinzuf�gen</string>
-	<string name="menu_navigate">Zum Ordner &#8230; wechseln</string>
+	<string name="menu_add_bookmark">Lesezeichen hinzufügen</string>
+	<string name="menu_navigate">Zum Ordner wechseln …</string>
 	<string name="menu_Einstellungen">Einstellungen</string>
 	<string name="menu_refresh">Aktualisieren</string>
 	<string name="menu_bookmark">Zeige in Lesezeichen</string>
@@ -49,55 +49,55 @@
 	<string name="actions">Aktionen</string>
 	<string name="no">Nein</string>
 	<string name="not_now">Nicht jetzt</string>
-	<string name="confirm">Best�tigen</string>
+	<string name="confirm">Bestätigen</string>
 	<string name="error">Fehler</string>
 	<string name="success">Erfolgreich</string>
 	<string name="abort">Abgebrochen</string>
-	<string name="zip">Zippen</string>
+	<string name="zip">Packen</string>
 	
-	<string name="selected_">Gew�hlt %1$s</string>
+	<string name="selected_">%1$s ausgewählt</string>
 	
 	<string name="cancel">Abbrechen</string>
-	<string name="cancelling">Breche &#8230; ab</string>
+	<string name="cancelling">Breche ab…</string>
 	<string name="run_in_background">Im Hintergrund</string>
-	<string name="share_via">Teilen �ber</string>
-	<string name="open_using">�ffne mit</string>
+	<string name="share_via">Teilen über</string>
+	<string name="open_using">Öffne mit</string>
 	
 	<string name="copied_toast">%1$s kopiert</string>
 	<string name="cut_toast">%1$s ausgeschnitten</string>
 	<string name="rename_toast">%1$s umbenannt in %2$s</string>
 	
-	<string name="zip_success">Gew�hlte Datei(en) wurden in 1$s gezippt.</string>
-	<string name="zip_dir_empty">Zippen fehlgeschlagen. Angegebener Ordner ist leer.</string>
+	<string name="zip_success">Gewählte Datei(en) wurden in %1$s gepackt.</string>
+	<string name="zip_dir_empty">Packen fehlgeschlagen. Angegebener Ordner ist leer.</string>
 	
-	<string name="zip_dest_invalid">Zip Datei Ziel ung�ltig. Bitte �berpr�fen sie das Ziel im Menu &gt; und versuchen sie es erneut.</string>
-	<string name="zip_failed">Eine oder mehrere der gew�hlten Datei(en) konnten nicht gezippt werden. Bitte �berpr�fen sie den zip Dateinamen und versuchen sie es erneut.</string>
-	<string name="zip_in_progress">Dateien werden gezippt. Bitte warten.</string>
-	<string name="zip_aborted">Zippen wurde abgebrochen.</string>
+	<string name="zip_dest_invalid">Zip Datei Ziel ungültig. Bitte überprüfen sie das Ziel im Menu &gt; und versuchen sie es erneut.</string>
+	<string name="zip_failed">Eine oder mehrere der gewählten Datei(en) konnten nicht gepackt werden. Bitte überprüfen sie den zip Dateinamen und versuchen sie es erneut.</string>
+	<string name="zip_in_progress">Dateien werden gepackt. Bitte warten.</string>
+	<string name="zip_aborted">Packen wurde abgebrochen.</string>
 	<string name="zip_dialog">Erstelle Zip in %1$s</string>
 	<string name="enter_zip_file_name">Zip Dateinamen eingeben</string>
-	<string name="zip_abort_partial">Zipvorgang wurde abgebrochen. Es wurde(n) jedoch eine oder mehrere Datei(en) nach %1$s kopiert.</string>
+	<string name="zip_abort_partial">Packvorgang wurde abgebrochen. Es wurde(n) jedoch eine oder mehrere Datei(en) in %1$s gepackt.</string>
 	
 	<string name="copy_aborted">Kopieren abgebrochen</string>
 	<string name="copy_abort_partial">Kopiervorgang abgebrochen. Es wurde(n) jedoch eine oder mehrere Dateien(en) kopiert.</string>
 	
 	<string name="unzip_progress_param">Entpacke Dateien &#8230; [%1$s]</string>
 	<string name="unzip_progress">Entpacke Dateien &#8230;</string>
-	<string name="unzip_failed_dest_file">Entpacken fehlgeschlagen. Bitte w�hlen sie einen anderen Zielordner und versuchen sie es erneut.</string>
+	<string name="unzip_failed_dest_file">Entpacken fehlgeschlagen. Bitte wählen sie einen anderen Zielordner und versuchen sie es erneut.</string>
 	<string name="unzip_failed_generic">Konnte die Dateien nicht entpacken</string>
 	<string name="unzip_success">%1$s Pfade efolgreich entpackt</string>
 	<string name="unzip_abort_partial">Entpackvorgang wurde abgebrochen. Es wurden jedoch eine oder mehrere Dateien in %1$s kopiert.</string>
 	<string name="unzip_aborted">Entpacken abgebrochen</string>
-	<string name="unzip_destination">Ziel w�hlen</string>
+	<string name="unzip_destination">Ziel wählen</string>
 	
 	<string name="move_aborted">Verschieben abgebrochen.</string>
 	<string name="move_abort_partial">Verschiebevorgang wurde abgebrochen. Es wurde(n) jedoch eine oder mehrere Dateien(en) verschoben.</string>
 	
 	<string name="access_denied">Zugriff verweigert</string>
-	<string name="cant_open_dir">%1$s ist ein gesch�tztes Verzeichnis. Sie ben�tigen Root Zugriff auf ihrem Ger�t um diese Verzeichnis zu �ffnen.</string>
+	<string name="cant_open_dir">%1$s ist ein geschütztes Verzeichnis. Sie benötigen Root Zugriff auf ihrem Gerät um diese Verzeichnis zu öffnen.</string>
 	
 	
-	<string name="add_bookmark_prompt">Lesezeichen hinzuf�gen</string>
+	<string name="add_bookmark_prompt">Lesezeichen hinzufügen</string>
 	<string name="add_bookmark_prompt_hint">Verzeichnispfad eingeben, z.B. /sdcard/foo</string>
 	
 	<string name="goto_path_hint">Verzeichnispfad eingeben, z.B. /sdcard/foo</string>
@@ -105,11 +105,11 @@
 	<string name="path_not_exist">Das Verzeichnis wurde nicht gefunden</string>
 	
 	<string name="confirm_app_restart">Wollen sie die Anwendung neu starten um das Thema anzuwenden?</string>
-	<string name="confirm_delete">Wollen sie %1$s l�schen?</string>
-	<string name="confirm_remove_bookmark">Wollen sie das Lesezeichen %1$s l�schen?</string>
+	<string name="confirm_delete">Wollen sie %1$s löschen?</string>
+	<string name="confirm_remove_bookmark">Wollen sie das Lesezeichen %1$s löschen?</string>
 	
-	<string name="confirm_paste_text">Wollen sie %1$s einf�gen?</string>
-	<string name="delete_failed">%1$s konnte nicht gel�scht werden</string>
+	<string name="confirm_paste_text">Wollen sie %1$s einfügen?</string>
+	<string name="delete_failed">%1$s konnte nicht gelöscht werden</string>
 	
 	<string name="rename_failed">%1$s konnte nicht umbenannt werden</string>
 	<string name="enter_new_name">Neuer Name</string>
@@ -117,7 +117,7 @@
 	
 	<string name="properties_for">Eigenschaften von %1$s</string>
 	
-	<string name="deleting_path">L�sche Pfad %1$s &#8230;</string>
+	<string name="deleting_path">Lösche Pfad %1$s …</string>
 	<string name="copying_path">Kopiere %1$s. Bitte warten &#8230;</string>
 	<string name="moving_path">Verschiebe %1$s. Bitte warten &#8230;</string>
 
@@ -134,46 +134,46 @@
 	<string name="pref_cat_view">Optionen</string>
 	
 	<string name="pref_cat_display">Anzeigeoptionen</string>
-	<string name="pref_cat_display_summary">Thema w�hlen, Sortierreihenfolge �ndern und andere Anzeigeoptionen</string>
+	<string name="pref_cat_display_summary">Thema wählen, Sortierreihenfolge ändern und andere Anzeigeoptionen</string>
 	
 	<string name="pref_cat_misc">Verschiedenes</string>
-	<string name="pref_cat_about">�ber File Explorer</string>
+	<string name="pref_cat_about">Über File Explorer</string>
 	<string name="pref_cat_contact">Kontakt</string>
 	<string name="pref_cat_share">Teilen</string>
-	<string name="pref_cat_misc_summary">�ber den Entwickler, Kontaktinfo, Bedingungen &amp; Konditionen</string>
+	<string name="pref_cat_misc_summary">Über den Entwickler, Kontaktinfo, Bedingungen &amp; Konditionen</string>
 	
 	<string name="pref_cat_nav">Navigationsoptionen</string>
-	<string name="pref_cat_nav_summary">Konfigurieren sie Navigationseinstellungen wie die Zur�ck Taste sowie Quickaction Popups</string>
+	<string name="pref_cat_nav_summary">Konfigurieren sie Navigationseinstellungen wie die Zurück Taste sowie Quickaction Popups</string>
 	
 	<string name="pref_home_folder">Startordner</string>
-	<string name="pref_home_folder_desc">File Explorer �ffnet folgenden Ordner beim starten</string>
+	<string name="pref_home_folder_desc">File Explorer öffnet folgenden Ordner beim starten</string>
 
-	<string name="pref_showhidden">Versteckte Ordner anzeigen</string>
-	<string name="pref_showhidden_on">Versteckte Dateien und Ordner werden angezeit</string>
+	<string name="pref_showhidden">Versteckte Objekte</string>
+	<string name="pref_showhidden_on">Versteckte Dateien und Ordner werden angezeigt</string>
 	<string name="pref_showhidden_off">Versteckte Dateien und Ordner werden ausgeblendet</string>
 	
-	<string name="pref_use_back">Zur�ck Taste Navigation</string>
-	<string name="pref_use_back_on">Verwende Zur�ck Taste um zum �bergeordneten Ordner zu gelangen</string>
-	<string name="pref_use_back_off">Zur�ck Taste nicht zum Navigieren innerhalb der Anwendung verwenden</string>
+	<string name="pref_use_back">Zurück Taste Navigation</string>
+	<string name="pref_use_back_on">Verwende Zurück Taste um zum übergeordneten Ordner zu gelangen</string>
+	<string name="pref_use_back_off">Zurück Taste nicht zum Navigieren innerhalb der Anwendung verwenden</string>
 	
 	<string name="pref_quickactions">Quickactions</string>
-	<string name="pref_quickactions_on">Klassisches Quickaction Popup aktiviert</string>
+	<string name="pref_quickactions_on">Quickaction Popup aktiviert</string>
 	<string name="pref_quickactions_off">Quickaction Popup deaktiviert</string>
 	
-	<string name="pref_show_dir_sizes">Ordnergr��e</string>
-	<string name="pref_show_dir_sizes_on_desc">Ordnergr��e wird angezeigt</string>
-	<string name="pref_show_dir_sizes_off_desc">Ordnergr��e wird nicht angezeigt</string>
+	<string name="pref_show_dir_sizes">Ordnergröße</string>
+	<string name="pref_show_dir_sizes_on_desc">Ordnergröße wird angezeigt</string>
+	<string name="pref_show_dir_sizes_off_desc">Ordnergröße wird nicht angezeigt</string>
 	
-	<string name="pref_show_sysfiles">Gesch�tze Ordner anzeigen</string>
-	<string name="pref_show_sysfiles_on">Gesch�tze Ordner werden angezeigt</string>
-	<string name="pref_show_sysfiles_off">Gesch�tze Ordner sind versteckt</string>
+	<string name="pref_show_sysfiles">Geschütze Ordner</string>
+	<string name="pref_show_sysfiles_on">Geschütze Ordner werden angezeigt</string>
+	<string name="pref_show_sysfiles_off">Geschütze Ordner sind versteckt</string>
 	
 	
 	<string name="pref_cat_sorting">Sortierung</string>
 	
 	<string name="pref_dirsfirst">Zeige Ordner zuerst</string>
 	<string name="pref_dirsfirst_on_desc">Ordner werden beim sortieren oberhalb Dateien angezeigt</string>
-	<string name="pref_dirsfirst_off_desc">Ordner werden beim sortieren nicht gesodert gelistet</string>
+	<string name="pref_dirsfirst_off_desc">Ordner werden beim sortieren nicht gesondert gelistet</string>
 	
 	
 	<string name="pref_sort_field">Sortierfeld</string>
@@ -182,32 +182,32 @@
 	<string name="pref_sort_dir">Sortierrichtung</string>
 	
 	<string name="pref_theme">Thema</string>
-	<string name="pref_theme_desc">Anwendungsthema w�hlen</string>
-	<string name="pref_theme_title">W�hle Thema</string>
+	<string name="pref_theme_desc">Anwendungsthema wählen</string>
+	<string name="pref_theme_title">Wähle Thema</string>
 	
 	
 	<string name="pref_cat_geeky">Geeky Stuff</string>
-	<string name="pref_cat_zip">Kompression</string>
+	<string name="pref_cat_zip">Packen / Entpacken</string>
 	<string name="pref_cat_sdcard">Externer Speicher</string>
-	<string name="pref_cat_geeky_summary">Kompression und andere geeky Funktionen</string>
-	<string name="pref_zipenable">Zippen &amp; entzippen</string>
-	<string name="pref_zipenable_on">Zeige Optionen zum zippen &amp; entzippen</string>
-	<string name="pref_zipenable_off">Zip &amp; Entzipoptionen werden nicht angezeigt</string>
+	<string name="pref_cat_geeky_summary">Packen / Entpacken und andere Funktionen</string>
+	<string name="pref_zipenable">Zip</string>
+	<string name="pref_zipenable_on">Pack &amp; Entpack Optionen werden angezeigt</string>
+	<string name="pref_zipenable_off">Pack &amp; Entpack Optionen werden nicht angezeigt</string>
 	
-	<string name="pref_usezipfolder">Verwende vordefinierten Zip Ordner</string>
+	<string name="pref_usezipfolder">Vordefinierter Ordner</string>
 	<string name="pref_usezipfolder_on">Verschiebe .zip Dateien welche mit File Explorer erstellt wurden in den vordefinierten Ordner</string>
-	<string name="pref_usezipfolder_off">Nach jedem Zipvorgang nach dem Zielordner fragen</string>
+	<string name="pref_usezipfolder_off">Nach jedem Packvorgang nach dem Zielordner fragen</string>
 	
 	<string name="pref_zip_location">Zip Ordner</string>
-	<string name="pref_zip_location_desc">Gezippte Dateien und Ordner werden hier gespeichert</string>
+	<string name="pref_zip_location_desc">Gepackte Dateien und Ordner werden hier gespeichert</string>
 	
 	<string name="pref_show_sdcard_options">SD Karten Optionen</string>
 	<string name="pref_show_sdcard_options_on">Aktiviere erweiterte Optionen wie Medienscan</string>
-	<string name="pref_show_sdcard_options_off">Erweiterte Sd Karten Optionen werden nicht angezeigt</string>
+	<string name="pref_show_sdcard_options_off">Erweiterte SD Karten Optionen werden nicht angezeigt</string>
 	
 	<string name="pref_share">Freunden mitteilen</string>
 	<string name="pref_share_desc">Sie lieben File Explorer? Teilen sie die Anwendung mit Freunden</string>
-	<string name="share_text">Ich verwende File Explorer und dachte du findest die Anwendung auch toll. Hier ist der download link: https://market.android.com/details?id=net.appositedesigns.fileexplorer</string>
+	<string name="share_text">Ich verwende File Explorer und dachte du findest die Anwendung auch super. Hier ist der download link: https://market.android.com/details?id=net.appositedesigns.fileexplorer</string>
 	
 	
 	<string name="pref_app_version">Version</string>
@@ -219,13 +219,13 @@
 	<string name="pref_terms_desc">Lesen sie die Bedingungen &amp; Konditionen</string>
 	<string name="pref_website">Entwickler Webseite</string>
 	<string name="pref_website_desc">Klicken um zu meiner Webseite zu gelangen</string>
-	<string name="pref_feedback">Feedback schicken</string>
-	<string name="pref_feedback_desc">Schicken sie mir eine email. Feedback ist immer erw�nscht!</string>
+	<string name="pref_feedback">Feedback senden</string>
+	<string name="pref_feedback_desc">Schicken sie mir eine email. Feedback ist immer erwünscht!</string>
 
 	<string name="filepath_is">Pfad: %1$s </string>
-	<string name="mtime_is">Zuletzt ge�ndert: %1$s</string>
-	<string name="size_is">Gr��e: %1$s</string>
-	<string name="total_capacity">Gesamtkapazit�t: %1$s</string>
+	<string name="mtime_is">Zuletzt geändert: %1$s</string>
+	<string name="size_is">Größe: %1$s</string>
+	<string name="total_capacity">Gesamtkapazität: %1$s</string>
 	<string name="free_space">Freier Speicher: %1$s</string>
 
 	
@@ -236,8 +236,8 @@
 	<string name="system_path">System</string>
 	<string-array name="sort_fields_entries">
         <item>Name</item>
-        <item>Gr��e</item>
-        <item>Zuletzt ge�ndert</item>
+        <item>Größe</item>
+        <item>Zuletzt geändert</item>
     </string-array>
     
 	<string-array name="goto_locations">

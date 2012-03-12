@@ -29,6 +29,7 @@ public final class PreferenceHelper {
 	public static final String PREF_SORT_FIELD = "sort.field";
 	public static final String PREF_THEME = "theme";
 	public static final String PREF_USE_BACK_BUTTON = "useBackButton";
+	private static final String PREF_NAVIGATE_FOCUS_ON_PARENT = "focusOnParent";
 	public static final String PREF_USE_QUICKACTIONS = "useQuickActions";
 	public static final String PREF_ZIP_ENABLE = "zipEnable";
 	public static final String PREF_ZIP_USE_ZIP_FOLDER = "useZipFolder";
@@ -42,6 +43,7 @@ public final class PreferenceHelper {
 	public static final String VALUE_THEME_BLACK = "theme_black";
 	public static final String VALUE_THEME_WHITE = "theme_white";
 	public static final String VALUE_THEME_WHITE_BLACK = "theme_white_black";
+	
 
 	public PreferenceHelper(Activity context) {
 		mContext = context;
@@ -55,12 +57,12 @@ public final class PreferenceHelper {
 
 	public boolean isShowHidden() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext)
-				.getBoolean(PREF_SHOW_HIDDEN, true);
+				.getBoolean(PREF_SHOW_HIDDEN, false);
 	}
 
 	public boolean useBackNavigation() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext)
-				.getBoolean(PREF_USE_BACK_BUTTON, true);
+				.getBoolean(PREF_USE_BACK_BUTTON, false);
 	}
 
 	public boolean useQuickActions() {
@@ -146,6 +148,11 @@ public final class PreferenceHelper {
 				.getBoolean(PREF_SDCARD_OPTIONS, true);
 	}
 
+	public boolean focusOnParent() {
+		
+		return PreferenceManager.getDefaultSharedPreferences(mContext)
+		.getBoolean(PREF_NAVIGATE_FOCUS_ON_PARENT, false);
+	}
 	public boolean isZipEnabled() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext)
 				.getBoolean(PREF_ZIP_ENABLE, false);
