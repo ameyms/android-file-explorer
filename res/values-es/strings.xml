@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">File Explorer</string>
+	<string name="settings">Preferencias</string>
+		<string name="bookmarks">Marcadores</string>
+	
+	<string name="eula_popup_title">Bienvenido a File Explorer</string>
+	<string name="eula_popup_text">Gracias por instalar FileExplorer, el gestor de ficheros gratuito, rápido, sin anuncios y de código abierto para Android. Por favor, acepta los términos y condiciones mencionados en \"http://fileexplorer.appositedesigns.net/eula\".</string>
+
+	<string name="eula_accept">Acepto</string>
+	<string name="eula_decline">No acepto</string>
+
+	<string name="action_rename">Renombrar</string>
+	<string name="action_rescan">Reescanear medios</string>
+	<string name="action_delete">Borrar</string>
+	<string name="action_cut">Cortar</string>
+	<string name="action_copy">Copiar</string>
+	<string name="action_prop">Propiedades</string>
+	<string name="action_unmount">Desmontar</string>
+	<string name="action_format">Formatear</string>
+	<string name="action_share">Compartir</string>
+	<string name="action_zip">Comprimir</string>
+	<string name="action_unzip">Descomprimir</string>
+	
+	<string name="ringtones">Tonos</string>
+	<string name="notifications">Notificaciones</string>
+	<string name="alarms">Alarmas</string>
+
+	<string name="pick_file">Escoge un fichero</string>
+	<string name="media_rescan_started">Reescaneo de medios iniciado</string>
+	<string name="msg_delete_success">Ruta eliminada correctamente</string>
+	<string name="msg_delete_fail">No se pudo eliminar la ruta</string>
+	
+	<string name="empty_folder">Esta carpeta está vacía</string>
+	<string name="no_bookmarks">Aún no has añadido marcadores</string>
+	<string name="bookmarks_count">%1$s marcadores en total</string>
+	<string name="bookmarks_count_0">No hay marcadores</string>
+	<string name="menu_paste">Pegar</string>
+	<string name="menu_addfolder">Nueva carpeta</string>
+	<string name="menu_add_bookmark">Añadir marcador</string>
+	<string name="menu_navigate">Navegar a la carpeta &#8230;</string>
+	<string name="menu_preferences">Preferencias</string>
+	<string name="menu_refresh">Refrescar</string>
+	<string name="menu_bookmark">Mostrar en los marcadores</string>
+	
+	<string name="yes">Sí</string>
+	<string name="actions">Acciones</string>
+	<string name="no">No</string>
+	<string name="not_now">Ahora no</string>
+	<string name="confirm">Confirmar</string>
+	<string name="error">Error</string>
+	
+	<string name="success">Operación realizada con éxito</string>
+	<string name="abort">Operación abortada</string>
+	
+	<string name="zip">Zip</string>
+	
+	<string name="selected_">%1$s Seleccionado/s</string>
+	
+	<string name="cancel">Cancelar</string>
+	<string name="cancelling">Cancelando&#8230;</string>
+	<string name="run_in_background">Correr en segundo plano</string>
+	<string name="share_via">Compartir mediante...</string>
+	<string name="open_using">Abrir con...</string>
+	
+	<string name="copied_toast">%1$s copiado</string>
+	<string name="cut_toast">%1$s cortado</string>
+	<string name="rename_toast">%1$s renombrado como %2$s</string>
+	
+	<string name="zip_success">Los ficheros seleccionados se han comprimido en %1$s</string>
+	<string name="zip_dir_empty">Ha ocurrido un error al comprimir. La carpeta especificada está vacía</string>
+	
+	<string name="zip_dest_invalid">El destino del fichero Zip no es válido. Por favor, comprueba el destino en el menú e inténtalo de nuevo.</string>
+	<string name="zip_failed">No se ha podido comprimir uno o más de los ficheros seleccionados. Por favor, verifica el nombre del fichero e inténtalo de nuevo.</string>
+	<string name="zip_in_progress">Se están comprimiendo los ficheros. Por favor, espera.</string>
+	<string name="zip_aborted">Se ha abortado el proceso de compresión</string>
+	<string name="zip_dialog">Crear zip en %1$s</string>
+	<string name="enter_zip_file_name">Introduce el nombre del fichero zip</string>
+	<string name="zip_abort_partial">Se ha abortado la operación de compresión. Aún así, se han copiado algunos ficheros en %1$s</string>
+	
+	<string name="copy_aborted">Se ha abortado la operación de cópia</string>
+	<string name="copy_abort_partial">Se ha abortado la operación de cópia. Aún así, se han podido copiar algunos ficheros.</string>
+	
+	<string name="unzip_progress_param">Descomprimiendo ficheros &#8230; [%1$s]</string>
+	<string name="unzip_progress">Descomprimiendo ficheros &#8230;</string>
+	<string name="unzip_failed_dest_file">Ha ocurrido un error al descomprimir. Por favor, selecciona una ruta de destino distinta y inténtalo de nuevo.</string>
+	<string name="unzip_failed_generic">No se pudieron descomprimir los ficheros</string>
+	<string name="unzip_success">%1$s ruta/s descomprimida/s satisfactoriamente</string>
+	<string name="unzip_abort_partial">Se ha abortado la operación de descompresión. Aún así, se han descomprimido uno o más ficheros en %1$s</string>
+	<string name="unzip_aborted">Se abortó la operación de descompresión</string>
+	<string name="unzip_destination">Selecciona el destino</string>
+	
+	<string name="move_aborted">La operación mover ha sido abortada</string>
+	<string name="move_abort_partial">La operación mover ha sido abortada. Aún así, se han movido uno o más ficheros.</string>
+	
+	<string name="access_denied">Acceso denegado</string>
+	<string name="cant_open_dir">%1$s es una carpeta protegida. Debes tener acceso como root en tu dispositivo para navegar visualizar el contenido y navegar por ella.</string>
+	
+	
+	<string name="add_bookmark_prompt">Añadir marcador</string>
+	<string name="add_bookmark_prompt_hint">Entra la ruta a la carpeta p.ej. \"/sdcard/foo\"</string>
+	
+	<string name="goto_path_hint">Entra la ruta a la carpeta p.ej. \"/sdcard/foo\"</string>
+	<string name="goto_path">Navegar a ...</string>
+	<string name="path_not_exist">Lo siento. No se ha podido encontrar la carpeta</string>
+	
+	<string name="confirm_app_restart">¿Deseas reiniciar la aplicación aplicando el nuevo tema?</string>
+	<string name="confirm_delete">¿Estás seguro de que quieres eliminar permanentemente %1$s ?</string>
+	<string name="confirm_remove_bookmark">¿Estás seguro de que quieres eliminar permanentemente el marcador para %1$s ?</string>
+	
+	<string name="confirm_paste_text">¿Estás seguro de que quieres copiar %1$s ?</string>
+	<string name="delete_failed">No se ha podido borrar %1$s</string>
+	
+	<string name="rename_failed">No se ha podido renombrar %1$s</string>
+	<string name="enter_new_name">Introduce el nuevo nombre</string>
+	<string name="rename_dialog_title">Renombrar %1$s</string>
+	
+	<string name="properties_for">Propiedades: %1$s</string>
+	
+	<string name="deleting_path">Borrando la ruta %1$s &#8230;</string>
+	<string name="copying_path">Copiando %1$s . Por favor, espera &#8230;</string>
+	<string name="moving_path">Moviendo %1$s . Por favor, espera &#8230;</string>
+
+	<string name="create_folder">Crear carpeta</string>
+	<string name="enter_folder_name">Introduce el nombre de la carpeta</string>
+	
+	<string name="querying_filesys">Consultando el sistema de ficheros. Por favor, espera.</string>
+	
+	<string name="copy_complete">Cópia completa</string>
+	<string name="move_complete">Se ha movido el recurso satisfactoriamente al nuevo destino</string>
+	
+	<string name="generic_operation_failed">No se pudo completar la operación</string>
+	
+	<string name="pref_cat_view">Opciones de la vista</string>
+	
+	<string name="pref_cat_display">Opciones de pantalla</string>
+	<string name="pref_cat_display_summary">Configurar tema, ordenación y otras opciones de pantalla</string>
+	
+	<string name="pref_cat_misc">Miscelánea</string>
+	<string name="pref_cat_about">Acerca de FileExplorer</string>
+	<string name="pref_cat_contact">Contacto</string>
+	<string name="pref_cat_share">Compartir</string>
+	<string name="pref_cat_misc_summary">Acerca del desarrollador, información de contacto, Términos y Condiciones</string>
+	
+		<string name="pref_cat_nav">Opciones de navegación</string>
+	<string name="pref_cat_nav_summary">Configura las opciones de navegación como el botón \"Atrás\" y el menú contextual</string>
+	
+	<string name="pref_home_folder">Carpeta de inicio</string>
+	<string name="pref_home_folder_desc">File explorer abrirá esta carpeta al iniciarse</string>
+
+	<string name="pref_showhidden">Mostrar rutas ocultas</string>
+	<string name="pref_showhidden_on">Se mostrarán los ficheros y carpetas ocultos</string>
+	<string name="pref_showhidden_off">Se omitirán los ficheros y carpetas ocultos</string>
+	
+		<string name="pref_use_back">Botón \"Atrás\" de navegación</string>
+	<string name="pref_use_back_on">Usar el botón atrás para navegar hacia la carpeta superior</string>
+	<string name="pref_use_back_off">No usar el botón \"Atrás\" para la navegación en la app</string>
+	
+	<string name="pref_quickactions">Utilizar acciones rápidas</string>
+	<string name="pref_quickactions_on">Usar el menú contextual clásico de acciones rápidas</string>
+	<string name="pref_quickactions_off">No mostrar acciones rápidas</string>
+	
+	<string name="pref_show_dir_sizes">Mostrar tamaño de carpeta</string>
+	<string name="pref_show_dir_sizes_on_desc">Se mostrarán los tamaños de las carpetas</string>
+	<string name="pref_show_dir_sizes_off_desc">No se mostrarán los tamaños de las carpetas</string>
+	
+	<string name="pref_show_sysfiles">Mostrar carpetas protegidas</string>
+	<string name="pref_show_sysfiles_on">Se mostrarán las carpetas protegidas del sistema</string>
+	<string name="pref_show_sysfiles_off">Las carpetas protegidas del sistema permanecerán ocultas</string>
+	
+	
+	<string name="pref_cat_sorting">Ordenar</string>
+	
+	<string name="pref_dirsfirst">Mostrar carpetas primero</string>
+	<string name="pref_dirsfirst_on_desc">Las carpetas se mostrarán primero</string>
+	<string name="pref_dirsfirst_off_desc">No se dará preferencia a las carpetas al ordenar</string>
+	
+	
+	<string name="pref_sort_field">Ordenar campo</string>
+	<string name="pref_sort_field_desc">Atributo según el que se ordenará la ruta</string>
+	
+	<string name="pref_sort_dir">Dirección al ordenar</string>
+	
+	<string name="pref_theme">Tema visual</string>
+	<string name="pref_theme_desc">Selecciona el tema visual para la aplicación</string>
+	<string name="pref_theme_title">Selección de tema</string>
+	
+	
+	<string name="pref_cat_geeky">Opciones avanzadas</string>
+	<string name="pref_cat_zip">Compresión</string>
+	<string name="pref_cat_sdcard">Almacenamiento externo</string>
+	<string name="pref_cat_geeky_summary">Compresión y funcionalidades avanzadas</string>
+	<string name="pref_zipenable">Comprimir / Descomprimir</string>
+	<string name="pref_zipenable_on">Mostrar las opciones de compresión y descompresión</string>
+	<string name="pref_zipenable_off">Las opciones de compresión están ocultas</string>
+	
+	<string name="pref_usezipfolder">Usar carpeta común para ficheros comprimidos</string>
+	<string name="pref_usezipfolder_on">Mover ficheros .zip creados con FileExplorer a una carpeta común</string>
+	<string name="pref_usezipfolder_off">Solicitar carpeta de destino cada vez que se compriman ficheros</string>
+	
+	<string name="pref_zip_location">Ubicación para ficheros comprimidos</string>
+	<string name="pref_zip_location_desc">Los archivos comprimidos y carpetas se almacenarán en esta ubicación</string>
+	
+	<string name="pref_show_sdcard_options">Opciones de tarjeta SD</string>
+	<string name="pref_show_sdcard_options_on">Habilitar opciones avanzadas como el reescaneo de medios</string>
+	<string name="pref_show_sdcard_options_off">Las opciones de la SD Card no se mostrarán</string>
+	
+	<string name="pref_share">Comparte con tus amigos</string>
+	<string name="pref_share_desc">Te gusta FileExplorer? Compártelo con tus amigos</string>
+	<string name="share_text">He estado usando FileExplorer y he pensado que te puede gustar a ti también. Éste es el enlace de descarga: https://play.google.com/store/apps/details?id=net.appositedesigns.fileexplorer</string>
+	
+	
+	<string name="pref_app_version">Versión</string>
+	
+		<string name="pref_twitter">Síguenos en Twitter</string>
+		<string name="pref_twitter_desc">FileExplorer</string>
+	
+	<string name="pref_terms">Términos y Condiciones</string>
+	<string name="pref_terms_desc">Lee los Términos y Condiciones</string>
+	<string name="pref_website">Sitio web del desarrollador</string>
+	<string name="pref_website_desc">Clic para visitar mi sitio web</string>
+	<string name="pref_feedback">Enviar comentario</string>
+	<string name="pref_feedback_desc">Envíame un correo electrónico. ¡Los comentarios son bienvenidos!</string>
+
+	<string name="filepath_is">Ruta: %1$s </string>
+	<string name="mtime_is">Última modificación el %1$s</string>
+	<string name="size_is">Tamaño: %1$s</string>
+	<string name="total_capacity">Capacidad Total: %1$s</string>
+	<string name="free_space">Espacio Disponible: %1$s</string>
+
+	
+	<string name="item_count_subtitle">%1$s items en total</string>
+	<string name="filesystem">Sistema de ficheros</string>
+	<string name="filesystem_root">Raíz del sistema de ficheros</string>
+	
+	<string name="system_path">Sistema</string>
+	<string-array name="sort_fields_entries">
+        <item>Nombre</item>
+        <item>Tamaño</item>
+        <item>Última modificación</item>
+    </string-array>
+    
+	<string-array name="goto_locations">
+        <item>Cargando&#8230;</item>
+        <item>Carpeta Home</item>
+        <item>SD Card</item>
+        <item>Descargas</item>
+        <item>DCIM</item>
+        <item>Marcadores&#8230;</item>
+        <item>Otro&#8230;</item>
+    </string-array>
+    
+		<string-array name="goto_locations_no_bookmark">
+        <item>Cargando&#8230;</item>
+        <item>Home Folder</item>
+        <item>SD Card</item>
+        <item>Descargas</item>
+        <item>DCIM</item>
+        <item>Otro&#8230;</item>
+    </string-array>
+    
+		
+    <string-array name="sort_fields_values">
+        <item>nombre</item>
+        <item>tamaño</item>
+        <item>modificado</item>
+    </string-array>
+    
+    <string-array name="sort_dir_entries">
+        <item>Ascendente</item>
+        <item>Descendente</item>
+    </string-array>
+
+    <string-array name="sort_dir_values">
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
+    
+    
+    <string-array name="theme_entries">
+        <item>Dark</item>
+        <item>Light</item>
+       <!-- <item>Zebra</item> -->
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>theme_black</item>
+        <item>theme_white</item>
+        <!-- <item>theme_white_black</item> -->
+    </string-array>
+    
+    
+        
+</resources>
+

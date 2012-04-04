@@ -26,6 +26,11 @@
         android:checkable="true"
         android:title="@string/menu_bookmark"/>
     
+        <item
+        android:id="@+id/menu_media_exclusion"
+        android:checkable="true"
+        android:title="@string/menu_exclude_from_media"/>
+    
     
     <item
         android:id="@+id/menu_settings"

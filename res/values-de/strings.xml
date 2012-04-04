@@ -41,7 +41,7 @@
 	<string name="menu_addfolder">Neuer Ordner</string>
 	<string name="menu_add_bookmark">Lesezeichen hinzufügen</string>
 	<string name="menu_navigate">Zum Ordner wechseln …</string>
-	<string name="menu_Einstellungen">Einstellungen</string>
+	<string name="menu_preferences">Einstellungen</string>
 	<string name="menu_refresh">Aktualisieren</string>
 	<string name="menu_bookmark">Zeige in Lesezeichen</string>
 	
@@ -207,7 +207,7 @@
 	
 	<string name="pref_share">Freunden mitteilen</string>
 	<string name="pref_share_desc">Sie lieben File Explorer? Teilen sie die Anwendung mit Freunden</string>
-	<string name="share_text">Ich verwende File Explorer und dachte du findest die Anwendung auch super. Hier ist der download link: https://market.android.com/details?id=net.appositedesigns.fileexplorer</string>
+	<string name="share_text">Ich verwende File Explorer und dachte du findest die Anwendung auch super. Hier ist der download link: https://play.google.com/store/apps/details?id=net.appositedesigns.fileexplorer</string>
 	
 	
 	<string name="pref_app_version">Version</string>

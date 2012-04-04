@@ -9,7 +9,7 @@ public class FileListEntry {
 	private String name;
 	private long size;
 	private Date lastModified;
-	
+
 	public FileListEntry(String fqpath) {
 		
 		path = new File(fqpath);

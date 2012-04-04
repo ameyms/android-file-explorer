@@ -8,7 +8,6 @@ import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
 import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
 import net.appositedesigns.fileexplorer.util.Util;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <!-- Do not change this number unless you know what you are doing -->
-    <string name="app_version">2.3.6</string>
-    
 	<string name="app_name">File Explorer</string>
 	<string name="settings">Preferences</string>
 		<string name="bookmarks">Bookmarks</string>
@@ -47,6 +44,7 @@
 	<string name="menu_preferences">Preferences</string>
 	<string name="menu_refresh">Refresh</string>
 	<string name="menu_bookmark">Show in bookmarks</string>
+	<string name="menu_exclude_from_media">Exclude folder from media scan</string>
 	
 	<string name="yes">Yes</string>
 	<string name="actions">Actions</string>
@@ -160,7 +158,7 @@
 	<string name="pref_use_back_off">Do not use phone back button to navigate within app</string>
 	
 	<string name="pref_quickactions">Use Quick Actions</string>
-	<string name="pref_quickactions_on">Uses classic quick actions context menu</string>
+	<string name="pref_quickactions_on">Enable legacy quick actions context menu</string>
 	<string name="pref_quickactions_off">Do not quick actions</string>
 	
 	<string name="pref_show_dir_sizes">Show folder sizes</string>
@@ -207,10 +205,16 @@
 	<string name="pref_show_sdcard_options">SD Card Options</string>
 	<string name="pref_show_sdcard_options_on">Enable advanced options like media rescan</string>
 	<string name="pref_show_sdcard_options_off">SD Card Options are hidden</string>
+
+	<string name="pref_media_scan_exclusion">Enable Media Scan Exclusions</string>
+	<string name="pref_media_scan_exclusion_desc">Provide an option to exclude certain folders from galleries and audio libraries and other local media listings</string>
 	
+	<string name="pref_rate">Rate FileExplorer</string>
+	<string name="pref_rate_desc">Rate and write a review on the Google Play Store</string>
+		
 	<string name="pref_share">Tell your friends</string>
 	<string name="pref_share_desc">Love FileExplorer? Share it with your friends</string>
-	<string name="share_text">I have been using FileExplorer and thought you might like it too. Heres the download link: https://market.android.com/details?id=net.appositedesigns.fileexplorer</string>
+	<string name="share_text">I have been using FileExplorer and thought you might like it too. Heres the download link: https://play.google.com/store/apps/details?id=net.appositedesigns.fileexplorer</string>
 	
 	
 	<string name="pref_app_version">Version</string>

@@ -4,13 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
 import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.adapters.FileListAdapter;
 import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
 import net.appositedesigns.fileexplorer.callbacks.FileActionsCallback;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.model.FileListing;
 import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
+import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import net.appositedesigns.fileexplorer.util.Util;
 import net.appositedesigns.fileexplorer.workers.FileMover;
 import net.appositedesigns.fileexplorer.workers.Finder;
@@ -23,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +45,10 @@ import android.widget.TextView;
 
 public class FileListActivity extends BaseFileListActivity {
 
+	private static final String TAG = FileListActivity.class.getName();
+	
 	private static final String CURRENT_DIR_DIR = "current-dir";
+	
 	private ListView explorerListView;
 	private File currentDir;
 	private List<FileListEntry> files;
@@ -51,6 +60,7 @@ public class FileListActivity extends BaseFileListActivity {
 	private FileExplorerApp app;
 	private File previousOpenDirChild;
 	private boolean focusOnParent;
+	private boolean excludeFromMedia  = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -74,8 +84,8 @@ public class FileListActivity extends BaseFileListActivity {
 		files = new ArrayList<FileListEntry>();
 
 		initFileListView();
-		focusOnParent = prefs.focusOnParent();
-		if (prefs.isEulaAccepted()) {
+		focusOnParent = getPreferenceHelper().focusOnParent();
+		if (getPreferenceHelper().isEulaAccepted()) {
 			listContents(currentDir);
 		} else {
 			EulaPopupBuilder.create(this).show();
@@ -186,7 +196,7 @@ public class FileListActivity extends BaseFileListActivity {
 		} 
 		else 
 		{
-			currentDir = prefs.getStartDir();
+			currentDir = getPreferenceHelper().getStartDir();
 		}		
 	}
 
@@ -223,7 +233,7 @@ public class FileListActivity extends BaseFileListActivity {
 				switch (selectedIndex) {
 					
 				case 1:
-					listContents(prefs.getStartDir());
+					listContents(getPreferenceHelper().getStartDir());
 					break;
 					
 					
@@ -305,7 +315,7 @@ public class FileListActivity extends BaseFileListActivity {
 			super.onBackPressed();
 			return;
 		}
-		if (prefs.useBackNavigation()) {
+		if (getPreferenceHelper().useBackNavigation()) {
 			if (Util.isRoot(currentDir)) {
 				finish();
 			} else {
@@ -418,6 +428,15 @@ public class FileListActivity extends BaseFileListActivity {
 
 		if(!isPicker)
 		{
+			if(getPreferenceHelper().isMediaExclusionEnabled())
+			{
+				menu.findItem(R.id.menu_media_exclusion).setVisible(true);
+				menu.findItem(R.id.menu_media_exclusion).setChecked(excludeFromMedia);
+			}
+			else
+			{
+				menu.findItem(R.id.menu_media_exclusion).setVisible(false);
+			}
 			menu.findItem(R.id.menu_bookmark_toggle).setChecked(bookmarker.isBookmarked(currentDir.getAbsolutePath()));
 			if (Util.canPaste(currentDir)) {
 				menu.findItem(R.id.menu_paste).setVisible(true);
@@ -456,6 +475,11 @@ public class FileListActivity extends BaseFileListActivity {
 			}
 			return true;
 			
+		case R.id.menu_media_exclusion:
+			item.setChecked(!excludeFromMedia);
+			setMediaExclusionForFolder();
+			return true;
+			
 		case R.id.menu_goto:
 			Util.gotoPath(currentDir.getAbsolutePath(), this);
 			return true;
@@ -483,6 +507,28 @@ public class FileListActivity extends BaseFileListActivity {
 		}
 
 		return true;
+	}
+
+	private void setMediaExclusionForFolder() {
+
+		if(excludeFromMedia)
+		{
+			//Now include folder in media
+			FileUtils.deleteQuietly(new File(currentDir, ".nomedia"));
+		}
+		else
+		{
+			try
+			{
+				FileUtils.touch(new File(currentDir, ".nomedia"));
+			}
+			catch(Exception e)
+			{
+				Log.e(TAG, "Error occurred while creating .nomedia file", e);
+			}
+		}
+		FileActionsHelper.rescanMedia(this);
+		refresh();
 	}
 
 	private void confirmPaste() {
@@ -549,11 +595,11 @@ public class FileListActivity extends BaseFileListActivity {
 
 	}
 
-	public void setCurrentDir(File dir) {
+	public synchronized void setCurrentDirAndChilren(File dir, FileListing folderListing) {
 		currentDir = dir;
-	}
 
-	public void setNewChildren(List<FileListEntry> children) {
+		List<FileListEntry> children = folderListing.getChildren();
+		excludeFromMedia   = folderListing.isExcludeFromMedia();
 		TextView emptyText = (TextView) findViewById(android.R.id.empty);
 		if (emptyText != null) {
 			emptyText.setText(R.string.empty_folder);
@@ -583,8 +629,21 @@ public class FileListActivity extends BaseFileListActivity {
 			explorerListView.setSelection(0);
 		}
 		mSpinnerAdapter.notifyDataSetChanged();
-		getActionBar().setSelectedNavigationItem(0);
 		
+		ActionBar ab = getActionBar();
+		ab.setSelectedNavigationItem(0);
+		
+		ab.setSubtitle(getString(R.string.item_count_subtitle, children.size()));				
+		if(Util.isRoot(currentDir) || currentDir.getParentFile()==null)
+    	{
+			ab.setDisplayHomeAsUpEnabled(false);
+			ab.setTitle(getString(R.string.filesystem));
+    	}
+    	else
+    	{
+    		ab.setTitle(currentDir.getName());
+    		ab.setDisplayHomeAsUpEnabled(true);
+    	}
 	}
 
 	public void refresh() {

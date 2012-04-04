@@ -10,65 +10,44 @@ import java.util.Map;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.activity.FileListActivity;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.util.Util;
+import net.appositedesigns.fileexplorer.model.FileListing;
 import net.appositedesigns.fileexplorer.util.FileListSorter;
-import net.appositedesigns.fileexplorer.util.PreferenceHelper;
+import net.appositedesigns.fileexplorer.util.Util;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
+public class Finder extends AsyncTask<File, Integer, FileListing>
 {
 	
 	private static final String TAG = Finder.class.getName();
 	
 	private FileListActivity caller;
 	private ProgressDialog waitDialog;
-	private PreferenceHelper prefs;
 	
 	private File currentDir;
 	
 	public Finder(FileListActivity caller) {
 		
 		this.caller = caller;
-		prefs = new PreferenceHelper(this.caller);
 	}
 
 	@Override
-	protected void onPostExecute(List<FileListEntry> result) {
+	protected void onPostExecute(FileListing result) {
 
-		final List<FileListEntry> childFiles = result;
+		FileListing childFilesList = result;
 		Log.v(TAG, "Children for "+currentDir.getAbsolutePath()+" received");
-		caller.runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				
-				if(waitDialog!=null && waitDialog.isShowing())
-				{
-					waitDialog.dismiss();
-				}
-				Log.v(TAG, "Children for "+currentDir.getAbsolutePath()+" passed to caller");
-				caller.setCurrentDir(currentDir);
-				caller.setNewChildren(childFiles);
-				caller.getActionBar().setSubtitle(caller.getString(R.string.item_count_subtitle, childFiles.size()));
-				
-				if(Util.isRoot(currentDir))
-		    	{
-					caller.getActionBar().setDisplayHomeAsUpEnabled(false);
-					caller.getActionBar().setTitle(caller.getString(R.string.filesystem));
-		    	}
-		    	else
-		    	{
-		    		caller.getActionBar().setTitle(currentDir.getName());
-		    		caller.getActionBar().setDisplayHomeAsUpEnabled(true);
-		    	}
-			}
-		});
+		
+		if(waitDialog!=null && waitDialog.isShowing())
+		{
+			waitDialog.dismiss();
+		}
+		Log.v(TAG, "Children for "+currentDir.getAbsolutePath()+" passed to caller");
+		caller.setCurrentDirAndChilren(currentDir,childFilesList);
 	
 	}
 	@Override
-	protected List<FileListEntry> doInBackground(File... params) {
+	protected FileListing doInBackground(File... params) {
 		
 		Thread waitForASec = new Thread() {
 			
@@ -114,15 +93,20 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 		Log.v(TAG, "Received directory to list paths - "+currentDir.getAbsolutePath());
 		
 		String[] children = currentDir.list();
-		List<FileListEntry> childFiles = new ArrayList<FileListEntry>();
+		FileListing listing = new FileListing(new ArrayList<FileListEntry>());
+		List<FileListEntry> childFiles = listing.getChildren();
 		
-		boolean showHidden = prefs.isShowHidden();
-		boolean showSystem = prefs.isShowSystemFiles();
-		
+		boolean showHidden = caller.getPreferenceHelper().isShowHidden();
+		boolean showSystem = caller.getPreferenceHelper().isShowSystemFiles();
 		Map<String, Long> dirSizes = Util.getDirSizes(currentDir);
 		
+
 		for(String fileName : children)
 		{
+			if(".nomedia".equals(fileName))
+			{
+				listing.setExcludeFromMedia(true);
+			}
 			File f = new File(currentDir.getAbsolutePath()+File.separator+fileName);
 			
 			if(!f.exists())
@@ -179,6 +163,6 @@ public class Finder extends AsyncTask<File, Integer, List<FileListEntry>>
 				Log.e(TAG, "Error while interrupting thread",e);
 			}
 		}
-		return childFiles;
+		return listing;
 	}
 }

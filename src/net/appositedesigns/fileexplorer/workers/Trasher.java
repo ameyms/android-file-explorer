@@ -54,7 +54,10 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 				public void run() {
 					waitDialog.dismiss();
 					Toast.makeText(caller.getApplicationContext(), "Deleted", Toast.LENGTH_LONG);
-					callback.onSuccess();
+					if(callback!=null)
+					{
+						callback.onSuccess();
+					}
 					caller.refresh();
 					
 				}
@@ -68,7 +71,10 @@ public class Trasher extends AsyncTask<File, Integer, Boolean>
 				@Override
 				public void run() {
 					
-					callback.onFailure(new Exception());
+					if(callback!=null)
+					{
+						callback.onFailure(new Exception());
+					}
 					waitDialog.dismiss();
 					new Builder(caller)
 					.setIcon(android.R.drawable.ic_dialog_alert)

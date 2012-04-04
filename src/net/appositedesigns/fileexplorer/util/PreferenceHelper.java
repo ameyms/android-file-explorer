@@ -34,6 +34,7 @@ public final class PreferenceHelper {
 	public static final String PREF_ZIP_ENABLE = "zipEnable";
 	public static final String PREF_ZIP_USE_ZIP_FOLDER = "useZipFolder";
 	public static final String PREF_ZIP_LOCATION = "zipLocation";
+	public static final String PREF_MEDIA_EXCLUSIONS = "media_exclusions";
 
 	public static final String VALUE_SORT_DIR_ASC = "asc";
 	public static final String VALUE_SORT_DIR_DESC = "desc";
@@ -156,6 +157,11 @@ public final class PreferenceHelper {
 	public boolean isZipEnabled() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext)
 				.getBoolean(PREF_ZIP_ENABLE, false);
+	}
+	
+	public boolean isMediaExclusionEnabled() {
+		return PreferenceManager.getDefaultSharedPreferences(mContext)
+				.getBoolean(PREF_MEDIA_EXCLUSIONS, false);
 	}
 
 	public boolean isEulaAccepted() {

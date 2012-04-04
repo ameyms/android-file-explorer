@@ -48,7 +48,7 @@ public abstract class BaseFileListActivity extends ListActivity {
 		PreferenceManager.getDefaultSharedPreferences(this)
 				.registerOnSharedPreferenceChangeListener(listener);
 	}
-	public PreferenceHelper getPreferenceHelper()
+	public synchronized PreferenceHelper getPreferenceHelper()
 	{
 		return prefs;
 	}

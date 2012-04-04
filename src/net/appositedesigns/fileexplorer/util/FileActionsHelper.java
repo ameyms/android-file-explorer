@@ -50,6 +50,7 @@ public class FileActionsHelper {
 	
 	public static void showProperties(final FileListEntry file, final FileListActivity mContext)
 	{
+		if(mContext!=null)
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.properties_for, file.getName()))
 		.setItems(Util.getFileProperties(file, mContext), new OnClickListener() {
@@ -87,7 +88,10 @@ public class FileActionsHelper {
 	       }).setTitle(R.string.confirm);
 		
 		AlertDialog confirm = builder.create();
-		confirm.show();
+		if(mContext!=null)
+		{
+			confirm.show();
+		}
 	}
 
 	public static int[] getContextMenuOptions(File file, FileListActivity caller) {
@@ -96,7 +100,7 @@ public class FileActionsHelper {
 		
 		if(Util.isProtected(file))
 		{
-			return null;
+			return new int[]{};
 		}
 		if(Util.isSdCard(file))
 		{
@@ -144,6 +148,7 @@ public class FileActionsHelper {
 		input.setHint(mContext.getString(R.string.enter_new_name));
 		input.setSingleLine();
 		
+		if(mContext!=null)
 		new Builder(mContext)
 		.setTitle(mContext.getString(R.string.rename_dialog_title, file.getName()))
 		.setView(input)
@@ -169,6 +174,7 @@ public class FileActionsHelper {
 					{
 						callback.onFailure(new Exception());
 					}
+					if(mContext!=null)
 					new Builder(mContext)
 					.setTitle(mContext.getString(R.string.error))
 					.setMessage(mContext.getString(R.string.rename_failed, file.getName()))
@@ -183,6 +189,8 @@ public class FileActionsHelper {
 				}
 
 				Log.e(TAG, "Error occured while renaming path", e);
+				
+				if(mContext!=null)
 				new Builder(mContext)
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setTitle(mContext.getString(R.string.error))
@@ -399,7 +407,7 @@ public class FileActionsHelper {
 		
 	}
 	
-	private static void rescanMedia(FileListActivity mContext) {
+	public static void rescanMedia(FileListActivity mContext) {
 
 		mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri
 				.parse("file://" + Environment.getExternalStorageDirectory()))); 
