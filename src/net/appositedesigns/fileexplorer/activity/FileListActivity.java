@@ -515,12 +515,14 @@ public class FileListActivity extends BaseFileListActivity {
 		{
 			//Now include folder in media
 			FileUtils.deleteQuietly(new File(currentDir, ".nomedia"));
+			excludeFromMedia = false;
 		}
 		else
 		{
 			try
 			{
 				FileUtils.touch(new File(currentDir, ".nomedia"));
+				excludeFromMedia = true;
 			}
 			catch(Exception e)
 			{

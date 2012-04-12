@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.view.MenuItem;
 
 public class SettingsActivity extends PreferenceActivity {
 
@@ -18,11 +19,23 @@ public class SettingsActivity extends PreferenceActivity {
 
 		setTheme(new PreferenceHelper(this).getTheme());
 		super.onCreate(savedInstanceState);
-		
-//		addPreferencesFromResource(R.xml.prefs);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if(item.getItemId()== android.R.id.home)
+		{
+			onBackPressed();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
     /**
      * Populate the activity with the top-level headers.
      */

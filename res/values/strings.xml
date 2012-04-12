@@ -207,7 +207,7 @@
 	<string name="pref_show_sdcard_options_off">SD Card Options are hidden</string>
 
 	<string name="pref_media_scan_exclusion">Enable Media Scan Exclusions</string>
-	<string name="pref_media_scan_exclusion_desc">Provide an option to exclude certain folders from galleries and audio libraries and other local media listings</string>
+	<string name="pref_media_scan_exclusion_desc">Provide an option to exclude certain folders from galleries, audio libraries and other local media listings</string>
 	
 	<string name="pref_rate">Rate FileExplorer</string>
 	<string name="pref_rate_desc">Rate and write a review on the Google Play Store</string>

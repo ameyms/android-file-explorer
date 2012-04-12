@@ -152,7 +152,7 @@ public final class PreferenceHelper {
 	public boolean focusOnParent() {
 		
 		return PreferenceManager.getDefaultSharedPreferences(mContext)
-		.getBoolean(PREF_NAVIGATE_FOCUS_ON_PARENT, false);
+		.getBoolean(PREF_NAVIGATE_FOCUS_ON_PARENT, true);
 	}
 	public boolean isZipEnabled() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext)

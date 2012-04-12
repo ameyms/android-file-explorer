@@ -9,6 +9,7 @@ import net.appositedesigns.fileexplorer.FileExplorerApp;
 import net.appositedesigns.fileexplorer.R;
 import net.appositedesigns.fileexplorer.adapters.BookmarkListAdapter;
 import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.util.PreferenceHelper;
 import net.appositedesigns.fileexplorer.workers.BookmarkLoader;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,7 +41,9 @@ public class BookmarkListActivity extends BaseFileListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
+		setTheme(new PreferenceHelper(this).getTheme());
 		super.onCreate(savedInstanceState);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.main);
 		isPicker = getIntent().getBooleanExtra(FileExplorerApp.EXTRA_IS_PICKER, false);
 		bookmarks = new ArrayList<FileListEntry>();
@@ -129,6 +132,8 @@ public class BookmarkListActivity extends BaseFileListActivity {
 		});
 
 	}
+	
+	
 	protected void select(File path) {
 		Intent intent = new Intent();
 		intent.putExtra(FileExplorerApp.EXTRA_SELECTED_BOOKMARK, path.getAbsolutePath());
@@ -139,7 +144,13 @@ public class BookmarkListActivity extends BaseFileListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if(R.id.menu_settings == item.getItemId())
+
+		if(item.getItemId()== android.R.id.home)
+		{
+			onBackPressed();
+			return true;
+		}
+		else if(R.id.menu_settings == item.getItemId())
 		{
 			Intent prefsIntent = new Intent(this,
 					SettingsActivity.class);

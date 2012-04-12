@@ -12,13 +12,6 @@
             </intent>
         </PreferenceScreen>
         
-		<PreferenceScreen
-            android:summary="@string/pref_rate_desc"
-            android:title="@string/pref_rate" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="market://details?id=net.appositedesigns.fileexplorer" />
-        </PreferenceScreen>
         <PreferenceScreen
             android:summary="@string/pref_twitter_desc"
             android:title="@string/pref_twitter" >
@@ -40,6 +33,13 @@
             android:key="pref_opt_share"
             android:summary="@string/pref_share_desc"
             android:title="@string/pref_share" >
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="@string/pref_rate_desc"
+            android:title="@string/pref_rate" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="market://details?id=net.appositedesigns.fileexplorer" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_about" >

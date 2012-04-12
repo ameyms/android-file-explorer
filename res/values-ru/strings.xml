@@ -37,7 +37,7 @@
     <string name="menu_preferences">Настройки</string>
     <string name="menu_refresh">Обновить</string>
     <string name="menu_bookmark">Добавить в закладки</string>
-    <string name="menu_exclude_from_media">Исключить</string>
+    <string name="menu_exclude_from_media">Исключить из сканирования СМИ</string>
     
     <string name="yes">Да</string>
     <string name="actions">Действия</string>
