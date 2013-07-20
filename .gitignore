@@ -1,5 +1,7 @@
 gen
 gen/**
 .idea/**
+.idea
+.DS_Store
 android-file-explorer.iml
 out

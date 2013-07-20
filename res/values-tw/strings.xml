@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+        <string name="app_name">檔案總管</string>
+        <string name="settings">偏好設定</string>
+                <string name="bookmarks">書籤</string>
+        
+        <string name="eula_popup_title">歡迎使用檔案總管</string>
+        <string name="eula_popup_text">感謝您在 Android 安裝免費、開放源碼、快速且無廣告的檔案總管（FileExplorer）！請同意在 http://fileexplorer.appositedesigns.net/eula 提到的服務條款</string>
+
+
+        <string name="eula_accept">同意</string>
+        <string name="eula_decline">拒絕</string>
+
+        <string name="action_rename">重新命名</string>
+        <string name="action_rescan">重新掃描媒體</string>
+        <string name="action_delete">刪除</string>
+        <string name="action_cut">剪下</string>
+        <string name="action_copy">複製</string>
+        <string name="action_prop">內容</string>
+        <string name="action_unmount">退出裝置</string>
+        <string name="action_format">格式化</string>
+        <string name="action_share">共享</string>
+        <string name="action_zip">壓縮</string>
+        <string name="action_unzip">解壓縮</string>
+        
+        <string name="ringtones">鈴聲</string>
+        <string name="notifications">通知</string>
+        <string name="alarms">鬧鐘</string>
+
+        <string name="pick_file">選取一個檔案</string>
+        <string name="media_rescan_started">已開始重新掃描媒體</string>
+        <string name="msg_delete_success">資料夾成功刪除</string>
+        <string name="msg_delete_fail">資料夾無法刪除</string>
+        
+        <string name="empty_folder">這個資料夾是空的</string>
+        <string name="no_bookmarks">您尚未加入任何書籤</string>
+        <string name="bookmarks_count">共有 %1$s 個書籤</string>
+        <string name="bookmarks_count_0">無書籤</string>
+        <string name="menu_paste">貼上</string>
+        <string name="menu_addfolder">新增資料夾</string>
+        <string name="menu_add_bookmark">加入書籤</string>
+        <string name="menu_navigate">移至資料夾&#8230;</string>
+        <string name="menu_preferences">偏好設定</string>
+        <string name="menu_refresh">重新整理</string>
+        <string name="menu_bookmark">加入書籤</string>
+        <string name="menu_exclude_from_media">掃描媒體時排除此資料夾</string>
+        
+        <string name="yes">是</string>
+        <string name="actions">動作</string>
+        <string name="no">否</string>
+        <string name="not_now">不是現在</string>
+        <string name="confirm">確定</string>
+        <string name="error">錯誤</string>
+        <string name="success">成功</string>
+        <string name="abort">中斷</string>
+        <string name="zip">壓縮</string>
+        
+        <string name="selected_">已選取：%1$s</string>
+        
+        <string name="cancel">取消</string>
+        <string name="cancelling">正在取消&#8230;</string>
+        <string name="run_in_background">在背景執行</string>
+        <string name="share_via">共享檔案…</string>
+        <string name="open_using">開啟檔案…</string>
+        
+        <string name="copied_toast">複製「%1$s」</string>
+        <string name="cut_toast">剪下「%1$s」</string>
+        <string name="rename_toast">「%1$s」重新命名成「%2$s」</string>
+        
+        <string name="zip_success">選取的檔案已壓縮至「%1$s」</string>
+        <string name="zip_dir_empty">壓縮失敗，指定的資料夾是空的。</string>
+        
+        <string name="zip_dest_invalid">壓縮檔的位置無效，請檢查選單中的位置「&gt;」並重試。</string>
+        <string name="zip_failed">選取的檔案無法被壓縮，請確定各壓縮檔的名稱並重試。</string>
+        <string name="zip_in_progress">正在壓縮檔案，請稍等…</string>
+        <string name="zip_aborted">壓縮中斷</string>
+        <string name="zip_dialog">在「%1$s」新增壓縮檔</string>
+        <string name="enter_zip_file_name">輸入壓縮檔名稱</string>
+        <string name="zip_abort_partial">壓縮中斷，但部分檔案已複製至「%1$s」。</string>
+        
+        <string name="copy_aborted">複製中斷</string>
+        <string name="copy_abort_partial">複製中斷，但仍然複製了部分檔案。</string>
+        
+        <string name="unzip_progress_param">正在解壓縮&#8230; [%1$s]</string>
+        <string name="unzip_progress">正在解壓縮&#8230;</string>
+        <string name="unzip_failed_dest_file">解壓縮失敗，請選擇其他位置並重試。</string>
+        <string name="unzip_failed_generic">無法解壓縮檔案</string>
+        <string name="unzip_success">成功解壓縮 %1$s 個檔案</string>
+        <string name="unzip_abort_partial">解壓縮中斷，但部分檔案已解壓縮至「%1$s」。</string>
+        <string name="unzip_aborted">解壓縮中斷</string>
+        <string name="unzip_destination">選擇位置</string>
+        
+        <string name="move_aborted">移動中斷</string>
+        <string name="move_abort_partial">移動中斷，但仍然移動了部分檔案。</string>
+        
+        <string name="access_denied">禁止開啟</string>
+        <string name="cant_open_dir">「%1$s」是一個受保護的資料夾，您必須要有此裝置的使用權限才可以開啟並瀏覽它。</string>
+        
+        
+        <string name="add_bookmark_prompt">加入書籤…</string>
+        <string name="add_bookmark_prompt_hint">輸入資料夾位置，如 /sdcard/foo。</string>
+        
+        <string name="goto_path_hint">輸入資料夾位置，如 /sdcard/foo。</string>
+        <string name="goto_path">移至…</string>
+        <string name="path_not_exist">很抱歉，找不到此資料夾。</string>
+        
+        <string name="confirm_app_restart">您想要重新開啟應用程式並使用新的主題嗎？</string>
+        <string name="confirm_delete">您確定要刪除「%1$s」？</string>
+        <string name="confirm_remove_bookmark">您確定要在書籤刪除「%1$s」？</string>
+        
+        <string name="confirm_paste_text">您確定要貼上「%1$s」？</string>
+        <string name="delete_failed">無法刪除「%1$s」</string>
+        
+        <string name="rename_failed">無法重新命名「%1$s」</string>
+        <string name="enter_new_name">輸入新名稱</string>
+        <string name="rename_dialog_title">重新命名「%1$s」</string>
+        
+        <string name="properties_for">內容：%1$s</string>
+        
+        <string name="deleting_path">正在刪除「%1$s」&#8230;</string>
+        <string name="copying_path">正在複製「%1$s」，請稍等&#8230;</string>
+        <string name="moving_path">正在移動「%1$s」，請稍等&#8230;</string>
+
+        <string name="create_folder">新增資料夾</string>
+        <string name="enter_folder_name">輸入資料夾名稱</string>
+        
+        <string name="querying_filesys">正在查詢系統檔案，請稍等…</string>
+        
+        <string name="copy_complete">複製完成</string>
+        <string name="move_complete">檔案成功移至新的位置</string>
+        
+        <string name="generic_operation_failed">無法完成操作</string>
+        
+        <string name="pref_cat_view">檢視</string>
+        
+        <string name="pref_cat_display">顯示方式</string>
+        <string name="pref_cat_display_summary">設定主題、排序方式及其他檢視選項。</string>
+        
+        <string name="pref_cat_misc">雜項</string>
+        <string name="pref_cat_about">關於 FileExplorer</string>
+        <string name="pref_cat_contact">聯絡我們</string>
+        <string name="pref_cat_share">分享資訊</string>
+        <string name="pref_cat_misc_summary">關於開發者、聯絡方式、服務條款等。</string>
+        
+                <string name="pref_cat_nav">操作選項</string>
+        <string name="pref_cat_nav_summary">設定操作方式，如返回按鈕和彈出選單。</string>
+        
+        <string name="pref_home_folder">設定首頁資料夾</string>
+        <string name="pref_home_folder_desc">檔案總管開啟時將會顯示這個資料夾</string>
+
+        <string name="pref_showhidden">顯示隱藏檔案</string>
+        <string name="pref_showhidden_on">隱藏的檔案和資料夾已顯示</string>
+        <string name="pref_showhidden_off">不顯示隱藏的檔案和資料夾</string>
+        
+                <string name="pref_use_back">返回按鈕退回上一層目錄</string>
+        <string name="pref_use_back_on">使用電話的返回按鈕退回上一層目錄</string>
+        <string name="pref_use_back_off">使用電話的返回按鈕退出應用程式</string>
+        
+        <string name="pref_quickactions">顯示操作捷徑</string>
+        <string name="pref_quickactions_on">顯示操作捷徑並使用其選單</string>
+        <string name="pref_quickactions_off">操作捷徑已隱藏</string>
+        
+        <string name="pref_show_dir_sizes">顯示資料夾大小</string>
+        <string name="pref_show_dir_sizes_on_desc">資料夾大小已顯示</string>
+        <string name="pref_show_dir_sizes_off_desc">資料夾大小已隱藏</string>
+        
+        <string name="pref_show_sysfiles">顯示被保護的資料夾</string>
+        <string name="pref_show_sysfiles_on">被保護的資料夾已顯示</string>
+        <string name="pref_show_sysfiles_off">被保護的資料夾已隱藏</string>
+        
+        
+        <string name="pref_cat_sorting">排序</string>
+        
+        <string name="pref_dirsfirst">資料夾顯示在上方</string>
+        <string name="pref_dirsfirst_on_desc">資料夾已顯示在上方</string>
+        <string name="pref_dirsfirst_off_desc">資料夾依排序方式顯示</string>
+        
+        
+        <string name="pref_sort_field">排序類型</string>
+        <string name="pref_sort_field_desc">選擇排序的類型</string>
+        
+        <string name="pref_sort_dir">排序方向</string>
+        
+        <string name="pref_theme">主題</string>
+        <string name="pref_theme_desc">選擇應用程式主題</string>
+        <string name="pref_theme_title">選擇主題</string>
+        
+        
+        <string name="pref_cat_geeky">檔案選項</string>
+        <string name="pref_cat_zip">壓縮檔</string>
+        <string name="pref_cat_sdcard">SD Card</string>
+        <string name="pref_cat_geeky_summary">壓縮檔和其他功能</string>
+        <string name="pref_zipenable">壓縮與解壓縮</string>
+        <string name="pref_zipenable_on">顯示壓縮與解壓縮選項</string>
+        <string name="pref_zipenable_off">隱藏壓縮與解壓縮選項</string>
+        
+        <string name="pref_usezipfolder">使用壓縮檔資料夾</string>
+        <string name="pref_usezipfolder_on">移動新增的壓縮檔到固定資料夾</string>
+        <string name="pref_usezipfolder_off">提示壓縮檔被放在哪個資料夾</string>
+        
+        <string name="pref_zip_location">壓縮檔資料夾</string>
+        <string name="pref_zip_location_desc">壓縮的檔案會被放在這個資料夾</string>
+        
+        <string name="pref_show_sdcard_options">SD Card 選項</string>
+        <string name="pref_show_sdcard_options_on">啟用進階選項，如重新掃描媒體。</string>
+        <string name="pref_show_sdcard_options_off">SD Card 選項已隱藏</string>
+
+        <string name="pref_media_scan_exclusion">媒體掃描時排除的資料夾</string>
+        <string name="pref_media_scan_exclusion_desc">設定媒體掃描時排除的資料夾</string>
+        
+        <string name="pref_rate">給 FileExplorer 評分</string>
+        <string name="pref_rate_desc">在 Google Play 上評分與評論</string>
+                
+        <string name="pref_share">告訴你的朋友</string>
+        <string name="pref_share_desc">喜歡 FileExplorer 嗎？和朋友分享它吧～</string>
+        <string name="share_text">FileExplorer 超好用的！你一定會喜歡，這是下載連結，快去下載吧！：https://play.google.com/store/apps/details?id=net.appositedesigns.fileexplorer</string>
+        
+        
+        <string name="pref_app_version">版本</string>
+        
+                <string name="pref_twitter">在 Twitter 關注我們</string>
+                <string name="pref_twitter_desc">FileExplorer</string>
+        
+        <string name="pref_terms">服務條款</string>
+        <string name="pref_terms_desc">閱讀服務條款</string>
+        <string name="pref_website">開發者網站</string>
+        <string name="pref_website_desc">拜訪我的網站</string>
+        <string name="pref_feedback">意見反饋</string>
+        <string name="pref_feedback_desc">傳送郵件給我，我很樂意接收您的意見！</string>
+
+        <string name="filepath_is">位置：%1$s </string>
+        <string name="mtime_is">修改日期：%1$s</string>
+        <string name="size_is">大小：%1$s</string>
+        <string name="total_capacity">大小總計：%1$s</string>
+        <string name="free_space">可用空間：%1$s</string>
+
+        
+        <string name="item_count_subtitle">共 %1$s 個項目</string>
+        <string name="filesystem">檔案系統</string>
+        <string name="filesystem_root">Root 檔案系統</string>
+        
+        <string name="system_path">System</string>
+        <string-array name="sort_fields_entries">
+        <item>名稱</item>
+        <item>大小</item>
+        <item>修改日期</item>
+    </string-array>
+    
+        <string-array name="goto_locations">
+        <item>正在讀取&#8230;</item>
+        <item>首頁</item>
+        <item>SD Card</item>
+        <item>Downloads</item>
+        <item>DCIM</item>
+        <item>書籤&#8230;</item>
+        <item>其他&#8230;</item>
+    </string-array>
+    
+                <string-array name="goto_locations_no_bookmark">
+        <item>正在讀取&#8230;</item>
+        <item>首頁</item>
+        <item>SD Card</item>
+        <item>Downloads</item>
+        <item>DCIM</item>
+        <item>其他&#8230;</item>
+    </string-array>
+    
+                
+    <string-array name="sort_fields_values">
+        <item>name</item>
+        <item>size</item>
+        <item>mtime</item>
+    </string-array>
+    
+    <string-array name="sort_dir_entries">
+        <item>遞增</item>
+        <item>遞減</item>
+    </string-array>
+
+    <string-array name="sort_dir_values">
+        <item>asc</item>
+        <item>desc</item>
+    </string-array>
+    
+    
+    <string-array name="theme_entries">
+        <item>黑</item>
+        <item>白</item>
+       <!-- <item>Zebra</item> -->
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>theme_black</item>
+        <item>theme_white</item>
+        <!-- <item>theme_white_black</item> -->
+    </string-array>
+    
+    
+        
+</resources>
