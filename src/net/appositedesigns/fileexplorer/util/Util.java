@@ -1,20 +1,5 @@
 package net.appositedesigns.fileexplorer.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.activity.FileListActivity;
-import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
-
-import org.apache.commons.io.FileUtils;
-
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,9 +8,25 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.InputType;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Util {
 
@@ -345,13 +346,13 @@ public final class Util {
 		}
 		else if(file.getPath().isFile())
 		return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
-				context.getString(R.string.mtime_is, file.getLastModified().toLocaleString()),
+				context.getString(R.string.mtime_is, DateFormat.getDateFormat(context).format(file.getLastModified())),
 				context.getString(R.string.size_is, FileUtils.byteCountToDisplaySize(file.getSize()))};
 		
 		else
 		{
 			return new CharSequence[]{context.getString(R.string.filepath_is, file.getPath().getAbsolutePath()),
-					context.getString(R.string.mtime_is, file.getLastModified().toLocaleString())};
+					context.getString(R.string.mtime_is, DateFormat.getDateFormat(context).format(file.getLastModified()))};
 		}
 	}
 	

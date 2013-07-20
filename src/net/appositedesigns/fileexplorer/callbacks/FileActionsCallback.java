@@ -1,9 +1,5 @@
 package net.appositedesigns.fileexplorer.callbacks;
 
-import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.activity.FileListActivity;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.util.FileActionsHelper;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.ActionMode;
@@ -15,11 +11,16 @@ import android.webkit.MimeTypeMap;
 import android.widget.ShareActionProvider;
 import android.widget.ShareActionProvider.OnShareTargetSelectedListener;
 
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.util.FileActionsHelper;
+
 public abstract class FileActionsCallback implements Callback {
 
 	private FileListActivity activity;
 	private FileListEntry file;
-	static int[] allOptions = {R.id.menu_rescan, R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_props, R.id.menu_share, R.id.menu_rename, R.id.menu_zip, R.id.menu_unzip};
+	static int[] allOptions = {R.id.menu_copy,R.id.menu_cut, R.id.menu_delete, R.id.menu_props, R.id.menu_share, R.id.menu_rename, R.id.menu_zip, R.id.menu_unzip};
 	
 	public FileActionsCallback(FileListActivity activity,
 			FileListEntry fileListEntry) {

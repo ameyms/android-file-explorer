@@ -1,9 +1,5 @@
 package net.appositedesigns.fileexplorer.activity;
 
-import java.util.List;
-
-import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.util.PreferenceHelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -11,6 +7,12 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
+
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.util.FileActionsHelper;
+import net.appositedesigns.fileexplorer.util.PreferenceHelper;
+
+import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
 
@@ -58,6 +60,14 @@ public class SettingsActivity extends PreferenceActivity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			 addPreferencesFromResource(R.xml.geeky_prefs);
+             Preference rescan = findPreference("pref_opt_rescan");
+             rescan.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                 @Override
+                 public boolean onPreferenceClick(Preference preference) {
+                     FileActionsHelper.rescanMedia(GeekyPreferences.this.getActivity());
+                     return true;
+                 }
+             });
 		}
 	}
 	

@@ -1,13 +1,14 @@
 package net.appositedesigns.fileexplorer.util;
 
-import java.io.File;
-
-import net.appositedesigns.fileexplorer.FileExplorerApp;
-import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import net.appositedesigns.fileexplorer.FileExplorerApp;
+import net.appositedesigns.fileexplorer.exception.LocationInvalidException;
+
+import java.io.File;
 
 public final class PreferenceHelper {
 
@@ -108,13 +109,6 @@ public final class PreferenceHelper {
 		}
 	}
 
-	public boolean isFindDirSizes() {
-
-		return false;
-		// return
-		// PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(PREF_SHOW_DIR_SIZES,
-		// false);
-	}
 
 	public boolean isShowSystemFiles() {
 		return PreferenceManager.getDefaultSharedPreferences(mContext)
@@ -171,13 +165,15 @@ public final class PreferenceHelper {
 
 	public void markEulaAccepted() {
 		SharedPreferences.Editor editor = mContext.getSharedPreferences(
-				EULA_MARKER, Context.MODE_WORLD_WRITEABLE).edit();
+				EULA_MARKER, Context.MODE_PRIVATE).edit();
 		editor.putBoolean(EULA_ACCEPTED, true);
 		editor.commit();
 	}
 
 	public int getTheme() {
 
+        return FileExplorerApp.THEME_WHITE;
+        /*
 		String theme = PreferenceManager.getDefaultSharedPreferences(mContext)
 				.getString(PREF_THEME, VALUE_THEME_WHITE);
 		if (VALUE_THEME_BLACK.equalsIgnoreCase(theme)) {
@@ -187,5 +183,6 @@ public final class PreferenceHelper {
 		} else {
 			return FileExplorerApp.THEME_WHITE;
 		}
+		*/
 	}
 }

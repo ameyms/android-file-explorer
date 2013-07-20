@@ -26,12 +26,12 @@
 
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/pref_cat_sdcard" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="sdCardOptions"
-            android:summaryOff="@string/pref_show_sdcard_options_off"
-            android:summaryOn="@string/pref_show_sdcard_options_on"
-            android:title="@string/pref_show_sdcard_options" />
+        <PreferenceScreen
+                    android:summary="@string/pref_media_rescan_desc"
+                    android:title="@string/pref_media_rescan"
+                    android:id="@+id/pref_item_rescan_media"
+                    android:key="pref_opt_rescan">
+        </PreferenceScreen>
         <!-- 
          <CheckBoxPreference
             android:defaultValue="false"

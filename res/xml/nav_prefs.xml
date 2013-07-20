@@ -7,12 +7,5 @@
             android:summaryOff="@string/pref_use_back_off"
             android:summaryOn="@string/pref_use_back_on"
             android:title="@string/pref_use_back" />
-        
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="useQuickActions"
-            android:summaryOff="@string/pref_quickactions_off"
-            android:summaryOn="@string/pref_quickactions_on"
-            android:title="@string/pref_quickactions" />
 
 </PreferenceScreen>

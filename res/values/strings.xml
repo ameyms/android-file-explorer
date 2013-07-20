@@ -29,7 +29,8 @@
 	<string name="alarms">Alarms</string>
 
 	<string name="pick_file">Pick a file</string>
-	<string name="media_rescan_started">Media rescan started</string>
+    <string name="media_rescan_started">Media rescan started</string>
+    <string name="media_rescan_started_desc">New photos and video will soon be added to the gallery. New audio files will appear in music players and ringtone settings</string>
 	<string name="msg_delete_success">Path successfully deleted</string>
 	<string name="msg_delete_fail">Path could not be deleted</string>
 	
@@ -206,8 +207,8 @@
 	<string name="pref_show_sdcard_options_on">Enable advanced options like media rescan</string>
 	<string name="pref_show_sdcard_options_off">SD Card Options are hidden</string>
 
-	<string name="pref_media_scan_exclusion">Enable Media Scan Exclusions</string>
-	<string name="pref_media_scan_exclusion_desc">Provide an option to exclude certain folders from galleries, audio libraries and other local media listings</string>
+	<string name="pref_media_rescan">Rescan Media</string>
+	<string name="pref_media_rescan_desc">Scans external storage for newly added media (photos, audio, video)</string>
 	
 	<string name="pref_rate">Rate FileExplorer</string>
 	<string name="pref_rate_desc">Rate and write a review on the Google Play Store</string>

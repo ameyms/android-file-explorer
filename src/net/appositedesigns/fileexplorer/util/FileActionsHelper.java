@@ -1,22 +1,11 @@
 package net.appositedesigns.fileexplorer.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.activity.FileListActivity;
-import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
-import net.appositedesigns.fileexplorer.callbacks.OperationCallback;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.workers.Trasher;
-import net.appositedesigns.fileexplorer.workers.Unzipper;
-import net.appositedesigns.fileexplorer.workers.Zipper;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Instrumentation.ActivityResult;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -27,6 +16,20 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
+import net.appositedesigns.fileexplorer.callbacks.OperationCallback;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.workers.Trasher;
+import net.appositedesigns.fileexplorer.workers.Unzipper;
+import net.appositedesigns.fileexplorer.workers.Zipper;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileActionsHelper {
 
@@ -104,14 +107,7 @@ public class FileActionsHelper {
 		}
 		if(Util.isSdCard(file))
 		{
-			if(prefs.isEnableSdCardOptions())
-			{
-				return new int[]{R.id.menu_rescan, R.id.menu_props};
-			}
-			else
-			{
-				return new int[]{R.id.menu_props};
-			}
+            return new int[]{R.id.menu_props};
 			
 		}
 		else if(file.isDirectory())
@@ -394,10 +390,6 @@ public class FileActionsHelper {
 			unzip(mContext, zipFiles, null);
 			break;
 			
-		case R.id.menu_rescan:
-			rescanMedia(mContext);
-			break;
-			
 		case R.id.menu_props:
 			showProperties(entry, mContext);
 			break;
@@ -407,12 +399,27 @@ public class FileActionsHelper {
 		
 	}
 	
-	public static void rescanMedia(FileListActivity mContext) {
+	public static void rescanMedia(Activity mContext) {
 
 		mContext.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri
 				.parse("file://" + Environment.getExternalStorageDirectory()))); 
 		
 		Toast.makeText(mContext, R.string.media_rescan_started, Toast.LENGTH_SHORT).show();
+        Notification noti = new Notification.Builder(mContext)
+                .setContentTitle(mContext.getString(R.string.media_rescan_started))
+                .setContentText(mContext.getString(R.string.media_rescan_started_desc))
+                .setSmallIcon(R.drawable.ic_notif_sdcard_rescan)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(0, noti);
+
+
 	}
 
 	public static void share(File file, Context mContext) {

@@ -1,24 +1,5 @@
 package net.appositedesigns.fileexplorer.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-
-import net.appositedesigns.fileexplorer.FileExplorerApp;
-import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.adapters.FileListAdapter;
-import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
-import net.appositedesigns.fileexplorer.callbacks.FileActionsCallback;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.model.FileListing;
-import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
-import net.appositedesigns.fileexplorer.util.FileActionsHelper;
-import net.appositedesigns.fileexplorer.util.Util;
-import net.appositedesigns.fileexplorer.workers.FileMover;
-import net.appositedesigns.fileexplorer.workers.Finder;
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
@@ -42,6 +23,24 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import net.appositedesigns.fileexplorer.FileExplorerApp;
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.adapters.FileListAdapter;
+import net.appositedesigns.fileexplorer.callbacks.CancellationCallback;
+import net.appositedesigns.fileexplorer.callbacks.FileActionsCallback;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.model.FileListing;
+import net.appositedesigns.fileexplorer.util.FileActionsHelper;
+import net.appositedesigns.fileexplorer.util.Util;
+import net.appositedesigns.fileexplorer.workers.FileMover;
+import net.appositedesigns.fileexplorer.workers.Finder;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileListActivity extends BaseFileListActivity {
 
@@ -154,7 +153,7 @@ public class FileListActivity extends BaseFileListActivity {
 					return false;
 				}
 				explorerListView.setEnabled(false);
-				QuickActionHelper.get(FileListActivity.this).setShowActions(false);
+
 				mCurrentActionMode = FileListActivity.this
 						.startActionMode(new FileActionsCallback(
 								FileListActivity.this, fileListEntry) {
@@ -164,7 +163,6 @@ public class FileListActivity extends BaseFileListActivity {
 									ActionMode mode) {
 								view.setSelected(false);
 								mCurrentActionMode = null;
-								QuickActionHelper.get(FileListActivity.this).setShowActions(true);
 								explorerListView.setEnabled(true);
 							}
 

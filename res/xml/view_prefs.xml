@@ -20,7 +20,7 @@
             android:summary="@string/pref_home_folder_desc"
             android:title="@string/pref_home_folder" />
 
-        <ListPreference
+       <!-- <ListPreference
             android:defaultValue="theme_white"
             android:dialogTitle="@string/pref_theme_title"
             android:entries="@array/theme_entries"
@@ -28,6 +28,7 @@
             android:key="theme"
             android:summary="@string/pref_theme_desc"
             android:title="@string/pref_theme" />
+        -->
         
     </PreferenceCategory>
     

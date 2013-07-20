@@ -11,6 +11,7 @@
         <item name="action_icon_copy">@drawable/ic_action_copy_light</item>
         <item name="action_icon_delete">@drawable/ic_action_delete_light</item>
         <item name="action_icon_paste">@drawable/ic_action_paste_light</item>
+        <item name="android:listSelector">@drawable/list_item_bg_light</item>
     </style>
 
     <style name="Theme.FileExplorer" parent="android:Theme.Holo">
@@ -23,6 +24,7 @@
         <item name="action_icon_copy">@drawable/ic_action_copy</item>
         <item name="action_icon_delete">@drawable/ic_action_delete</item>
         <item name="action_icon_paste">@drawable/ic_action_paste</item>
+        <item name="android:listSelector">@drawable/list_item_bg_dark</item>
     </style>
 
         <style name="Theme.FileExplorer.Light.BrownActionBar" parent="android:Theme.Holo.Light.DarkActionBar">
@@ -35,5 +37,6 @@
         <item name="action_icon_copy">@drawable/ic_action_copy</item>
         <item name="action_icon_delete">@drawable/ic_action_delete</item>
         <item name="action_icon_paste">@drawable/ic_action_paste</item>
+        <item name="android:listSelector">@drawable/list_item_bg_light</item>
     </style>
 </resources>

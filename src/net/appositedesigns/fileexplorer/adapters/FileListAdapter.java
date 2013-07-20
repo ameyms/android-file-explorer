@@ -1,20 +1,18 @@
 package net.appositedesigns.fileexplorer.adapters;
 
-import java.util.List;
-
-import net.appositedesigns.fileexplorer.FileExplorerApp;
-import net.appositedesigns.fileexplorer.R;
-import net.appositedesigns.fileexplorer.activity.FileListActivity;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
-import net.appositedesigns.fileexplorer.quickactions.QuickActionHelper;
-import net.appositedesigns.fileexplorer.util.Util;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import net.appositedesigns.fileexplorer.R;
+import net.appositedesigns.fileexplorer.activity.FileListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+import net.appositedesigns.fileexplorer.util.Util;
+
+import java.util.List;
 
 public class FileListAdapter extends BaseAdapter {
 
@@ -22,7 +20,6 @@ public class FileListAdapter extends BaseAdapter {
 	{
 	  public TextView resName;
 	  public ImageView resIcon;
-	  public ImageView resActions;
 	  public TextView resMeta;
 	}
 
@@ -80,19 +77,12 @@ public class FileListAdapter extends BaseAdapter {
 		ViewHolder holder = null;
         if (convertView == null) 
         {
-        	if(FileExplorerApp.THEME_BLACK == mContext.getPreferenceHelper().getTheme())
-        	{
-        		convertView = mInflater.inflate(R.layout.explorer_item, parent, false);	
-        	}
-        	else
-        	{
-        		convertView = mInflater.inflate(R.layout.explorer_item_light, parent, false);
-        	}
+            convertView = mInflater.inflate(R.layout.explorer_item, parent, false);
             holder = new ViewHolder();
             holder.resName = (TextView)convertView.findViewById(R.id.explorer_resName);
             holder.resMeta = (TextView)convertView.findViewById(R.id.explorer_resMeta);
             holder.resIcon = (ImageView)convertView.findViewById(R.id.explorer_resIcon);
-            holder.resActions = (ImageView)convertView.findViewById(R.id.explorer_resActions);
+
             convertView.setTag(holder);
         } 
         else
@@ -104,24 +94,7 @@ public class FileListAdapter extends BaseAdapter {
         holder.resIcon.setImageDrawable(Util.getIcon(mContext, currentFile.getPath()));
         String meta = Util.prepareMeta(currentFile, mContext);
         holder.resMeta.setText(meta);
-        if(!Util.canShowQuickActions(currentFile, mContext))
-        {
-        	holder.resActions.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-        	holder.resActions.setVisibility(View.VISIBLE);
-        	holder.resActions.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					
-					QuickActionHelper helper = QuickActionHelper.get(mContext);
-					helper.showQuickActions((ImageView)v, currentFile);
 
-				}
-			});
-        }
         
         return convertView;
 	}

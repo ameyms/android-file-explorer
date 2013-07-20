@@ -1,15 +1,17 @@
 package net.appositedesigns.fileexplorer.util;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+
+import net.appositedesigns.fileexplorer.activity.BookmarkListActivity;
+import net.appositedesigns.fileexplorer.model.FileListEntry;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import net.appositedesigns.fileexplorer.activity.BookmarkListActivity;
-import net.appositedesigns.fileexplorer.model.FileListEntry;
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 
 public final class BookmarksHelper {
 
@@ -49,7 +51,7 @@ public final class BookmarksHelper {
 	
 					SharedPreferences.Editor editor = mContext
 							.getSharedPreferences(BOOKMARKS_FILE,
-									Context.MODE_WORLD_WRITEABLE).edit();
+									Context.MODE_PRIVATE).edit();
 					editor.putString(BOOKMARKS, bookmarkCsv + "\n" + path);
 					editor.commit();
 	
@@ -121,50 +123,51 @@ public final class BookmarksHelper {
 	}
 
 	public void removeBookmark(final String path) {
-	
-		new Thread(new Runnable() {
-	
-			@Override
-			public void run() {
-				String bookmarkCsv = mContext.getSharedPreferences(
-						BOOKMARKS_FILE, Context.MODE_PRIVATE).getString(
-						BOOKMARKS, "");
-	
-				StringTokenizer tokens = new StringTokenizer(bookmarkCsv, "\n");
-				final StringBuffer buffer = new StringBuffer();
-	
-				while (tokens.hasMoreTokens()) {
-					String bookmark = tokens.nextToken();
-	
-					if (bookmark != null && !bookmark.equals(path)) {
-						buffer.append("\n");
-						buffer.append(bookmark);
-					}
-				}
-	
-				SharedPreferences.Editor editor = mContext
-						.getSharedPreferences(BOOKMARKS_FILE,
-								Context.MODE_WORLD_WRITEABLE).edit();
-				editor.putString(BOOKMARKS, buffer.toString());
-				editor.commit();
-	
-				refreshBookmarkCache();
-				mContext.runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						if(mContext instanceof BookmarkListActivity)
-						{
-							BookmarkListActivity bookmarkListActivity = (BookmarkListActivity)mContext;
-							bookmarkListActivity.refresh();
-						}
-						
-					}
-				});
-	
-			}
-		}).start();
+
+        AsyncTask<String, String, String> task = new AsyncTask<String, String, String>(){
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String bookmarkCsv = mContext.getSharedPreferences(
+                        BOOKMARKS_FILE, Context.MODE_PRIVATE).getString(
+                        BOOKMARKS, "");
+
+                StringTokenizer tokens = new StringTokenizer(bookmarkCsv, "\n");
+                final StringBuffer buffer = new StringBuffer();
+
+                while (tokens.hasMoreTokens()) {
+                    String bookmark = tokens.nextToken();
+
+                    if (bookmark != null && !bookmark.equals(path)) {
+                        buffer.append("\n");
+                        buffer.append(bookmark);
+                    }
+                }
+
+                SharedPreferences.Editor editor = mContext
+                        .getSharedPreferences(BOOKMARKS_FILE,
+                                Context.MODE_PRIVATE).edit();
+                editor.putString(BOOKMARKS, buffer.toString());
+                editor.commit();
+
+                refreshBookmarkCache();
+                mContext.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        if(mContext instanceof BookmarkListActivity)
+                        {
+                            BookmarkListActivity bookmarkListActivity = (BookmarkListActivity)mContext;
+                            bookmarkListActivity.refresh();
+                        }
+
+                    }
+                });
+
+                return null;
+            }
+        }.execute();
 	}
 
 }

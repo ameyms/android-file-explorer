@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip"
-    android:background="@drawable/list_item_bg">
+    android:padding="6dip">
 
     <ImageView
         android:id="@+id/explorer_resIcon"
@@ -15,20 +14,7 @@
         android:layout_marginRight="6dip"
 
         android:src="@drawable/filetype_generic" />
-        
-        
-    <ImageView
-        android:id="@+id/explorer_resActions"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-		android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:paddingLeft="6dip"
-        android:paddingRight="6dip"
-        android:src="@drawable/list_actions" 
-        android:onClick="showPopupMenu"
-        />
+
 
     <TextView
         android:id="@+id/explorer_resMeta"
@@ -37,16 +23,13 @@
         android:layout_height="26dip" 
         android:layout_toRightOf="@id/explorer_resIcon"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/explorer_resActions"
         android:singleLine="true"
-        android:ellipsize="marquee"
-        android:text="Path meta" />
+        android:ellipsize="marquee" />
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
 		android:id="@+id/explorer_resName"
-		android:layout_toLeftOf="@id/explorer_resActions"
         android:layout_toRightOf="@id/explorer_resIcon"
         android:layout_alignParentTop="true"
         android:layout_above="@id/explorer_resMeta"
@@ -57,5 +40,14 @@
         android:includeFontPadding="true"
         android:gravity="center_vertical"
         android:ellipsize="marquee"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/overflow_button"
+            android:src="@android:drawable/ic_menu_more"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/explorer_resMeta"
+            android:layout_marginRight="8dp"/>
 
 </RelativeLayout>
