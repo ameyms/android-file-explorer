@@ -1,4 +1,4 @@
 gen
-.idea
+.idea/*
 android-file-explorer.iml
 out
